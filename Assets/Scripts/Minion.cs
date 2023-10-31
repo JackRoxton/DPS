@@ -21,6 +21,11 @@ public class Minion : MonoBehaviour
         Follow();
     }
 
+    public void TakeDamage()
+    {
+        Destroy(this.gameObject);
+    }
+
     protected void Follow()
     {
         if (player != null)
