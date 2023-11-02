@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
 
     private void AddScore()
     {
-
+        GameManager.Instance.AddScore(10);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

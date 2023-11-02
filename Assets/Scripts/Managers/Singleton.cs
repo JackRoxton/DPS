@@ -2,17 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
-    // Start is called before the first frame update
-    void Start()
+    private static T instance;
+
+    public static T Instance => instance;
+
+    public static bool IsInitialized => instance != null;
+
+    /*[SerializeField]
+    [Tooltip("If is pesistant, will go to don't destroy on load.")]
+    private bool _isPersistant = false;*/
+
+    protected virtual void Awake()
     {
-        
+        if (instance != null)
+        {
+            Debug.Log(string.Format("[Singleton] Trying to instantiate a second instance of singleton class {0}", GetType().Name));
+
+            /*if (_isPersistant)
+                Destroy(gameObject);
+            else*/
+            Destroy(this);
+        }
+        else
+        {
+            instance = (T)this;
+
+            /*if (_isPersistant)
+            {
+                transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }*/
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void OnDestroy()
     {
-        
+        if (instance == this)
+        {
+            instance = null;
+        }
     }
 }
