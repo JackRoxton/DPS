@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RoomManager : Singleton<RoomManager>
 {
+
+    public List<GameObject> Paterns = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,10 @@ public class RoomManager : Singleton<RoomManager>
     void Update()
     {
         
+    }
+
+    public void ChangeRoom()
+    {
+
     }
 }

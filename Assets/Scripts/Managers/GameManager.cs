@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     public float Timer = 360f;
-    public float altTimer = 30f;
+    public float altTimer = 15f;
     public float speedMod = 1f;
 
 
@@ -40,7 +40,7 @@ public class GameManager : Singleton<GameManager>
 
         if (altTimer <= 0)
         {
-            
+            ChangeRoom();   
         }
     }
 
@@ -70,14 +70,16 @@ public class GameManager : Singleton<GameManager>
         combo = 0;
     }
 
-    public void Accelerate()
+    public void ChangeRoom()
     {
         speedMod *= 1.05f;
         altTimer = 30f;
+        RoomManager.Instance.ChangeRoom();
     }
 
     public void Quit()
     {
         Application.Quit(); // ajouter sauvegarde
     }
+
 }
