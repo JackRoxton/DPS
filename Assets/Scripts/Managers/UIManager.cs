@@ -13,9 +13,6 @@ public class UIManager : Singleton<UIManager>
 
     public TMP_Text timerText, scoreText, comboText;
 
-
-    //public List<GameObject> existingObjects = new List<GameObject>();
-
     public enum menuStates
     {
         MainMenu,
@@ -26,68 +23,77 @@ public class UIManager : Singleton<UIManager>
     }
     public menuStates currentState;
 
-    // Start is called before the first frame update
-    void Start()
+    new void Awake()
     {
         currentState = menuStates.MainMenu;
+        MainMenuPanel.SetActive(true);
         SkillTreePanel.SetActive(false);
         InGamePanel.SetActive(false);
         PausePanel.SetActive(false);
         SettingsPanel.SetActive(false);
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        timerText.text = GameManager.Instance.score.ToString();
-        scoreText.text = GameManager.Instance.combo.ToString();
-        comboText.text = GameManager.Instance.Timer.ToString();
+        if (currentState == menuStates.InGame)
+        {
+            timerText.text = ((int)GameManager.Instance.Timer).ToString();
+            scoreText.text = GameManager.Instance.score.ToString();
+            comboText.text = GameManager.Instance.combo.ToString();
+        }
 
-        if(Input.GetKeyDown(KeyCode.Keypad1)) { Play(); }
-        if(Input.GetKeyDown(KeyCode.Keypad2)) { MainMenu(); }
     }
 
     public void Play()
     {
-        /*foreach (GameObject obj in existingObjects){
-            Destroy(obj);
-        }
-        existingObjects.Clear();
-        existingObjects.Add(Instantiate(InGamePanel));*/
         currentState = menuStates.InGame;
 
         GameManager.Instance.Play();
+
+        MainMenuPanel.SetActive(false);
+        InGamePanel.SetActive(true);
+    }
+
+    public void Resume()
+    {
+        currentState = menuStates.InGame;
+
+        GameManager.Instance.Resume();
+
+        PausePanel.SetActive(false);
+        SettingsPanel.SetActive(false);
     }
 
     public void MainMenu()
     {
-        /*foreach (GameObject obj in existingObjects){
-            Destroy(obj);
-        }
-        existingObjects.Clear();
-        existingObjects.Add(Instantiate(MainMenuPanel));*/
         currentState = menuStates.MainMenu;
+
+        MainMenuPanel.SetActive(true);
+        InGamePanel.SetActive(false);
+        PausePanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+    }
+
+    public void Pause()
+    {
+        currentState = menuStates.Pause;
+        PausePanel.SetActive(true);
     }
 
     public void SkillTree()
     {
-        /*foreach (GameObject obj in existingObjects){
-            Destroy(obj);
-        }
-        existingObjects.Clear();
-        existingObjects.Add(Instantiate(SkillTreePanel));*/
         currentState = menuStates.SkillTree;
-    }
-
-    public void PauseMenu()
-    {
-        //existingObjects.Add(Instantiate(PausePanel));
-        currentState = menuStates.Pause;
     }
 
     public void Settings()
     {
-        //existingObjects.Add(Instantiate(PausePanel));
         currentState = menuStates.Settings;
     }
 

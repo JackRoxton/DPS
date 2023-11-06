@@ -38,18 +38,6 @@ public class Weapon : MonoBehaviour
         {
             if (hitboxActive) collision.gameObject.GetComponent<Minion>().TakeDamage();
         }
-
-        /*var collide = collision.gameObject.GetComponent<Component>();
-        switch (collide)
-        {
-            case Mage mage:
-                if (hitboxActive) ;//dégâts mage
-                break;
-
-            case Minion minion:
-                if (hitboxActive) minion.TakeDamage();//dégâts mininon
-                break;
-        }*/
     }
 
 }

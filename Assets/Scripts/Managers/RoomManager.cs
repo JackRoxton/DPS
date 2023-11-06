@@ -21,6 +21,6 @@ public class RoomManager : Singleton<RoomManager>
 
     public void ChangeRoom()
     {
-
+        Debug.Log("change");
     }
 }

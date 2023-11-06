@@ -20,12 +20,12 @@ public class GameManager : Singleton<GameManager>
         Settings,
         InGame
     }
-    public gameStates currentState;
+    public gameStates currentState = gameStates.MainMenu;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
@@ -47,9 +47,31 @@ public class GameManager : Singleton<GameManager>
     public void Play()
     {
         ResetVariables();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
 
         currentState = gameStates.InGame;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+
+        currentState = gameStates.InGame;
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+
+        currentState = gameStates.Pause;
+    }
+
+    public void ToMenu()
+    {
+        Time.timeScale = 1;
+
+        currentState = gameStates.MainMenu;
     }
 
     public void ResetVariables()
@@ -67,6 +89,7 @@ public class GameManager : Singleton<GameManager>
 
     public void TakeDamage()
     {
+        Debug.Log("a");
         combo = 0;
     }
 

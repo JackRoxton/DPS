@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
     private void TakeDamage()
     {
-
+        GameManager.Instance.TakeDamage();
     }
 
     private void AddScore()
@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
-            if (currentState != states.Parry) TakeDamage();
+            if (currentState != states.Parry && !weapon.hitboxActive) TakeDamage();
             else AddScore();//destroy or stun minon
         }
 
