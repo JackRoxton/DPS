@@ -32,7 +32,7 @@ public class RoomManager : Singleton<RoomManager>
             mageWhere = Random.Range(0, MageSpots.Count);
         } while (mageWhere == lastMageSpot);
         lastMageSpot = mageWhere;
-        mage.Teleport(mageWhere);
+        mage.Teleport(MageSpots[mageWhere]);
         //warning
         Instantiate(WallPaterns[wallWhat], WallSpots[wallWhere]);
         

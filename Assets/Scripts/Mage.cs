@@ -29,4 +29,9 @@ public class Mage : MonoBehaviour
     {
 
     }
+
+    public void TakeDamage()
+    {
+        GameManager.Instance.AddScore(10);
+    }
 }
