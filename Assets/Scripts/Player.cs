@@ -78,8 +78,8 @@ public class Player : MonoBehaviour
     private void Dodge()
     {
         controller.Play("Dodge", 0);
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = mousePos - new Vector2(this.transform.position.x,this.transform.position.y);
+        Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
+        Vector3 dir = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
         dir.Normalize();
         body.velocity = new Vector2(dir.x * dashPower,dir.y * dashPower);
     }
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
             if (currentState != states.Parry && !weapon.hitboxActive) TakeDamage();
-            else AddScore();//destroy or stun minon
+            else AddScore();//destroy or stun minon  //check tag, séparer dans minion ?
         }
 
         /*var collide = collision.gameObject.GetComponent<Component>();
