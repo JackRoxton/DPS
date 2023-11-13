@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
 
 
     public float score = 0, combo = 0;
+    public float money = 0;
 
     public enum gameStates // peut-être certains à enlever
     {

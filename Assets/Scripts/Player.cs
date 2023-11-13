@@ -59,6 +59,10 @@ public class Player : MonoBehaviour
         {
             Dodge();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.Pause();
+        }
 
         body.velocity *= 0.99f;
         this.transform.position += new Vector3(movement.x, movement.y, 0) * speed / 100;
@@ -78,7 +82,8 @@ public class Player : MonoBehaviour
     private void Dodge()
     {
         controller.Play("Dodge", 0);
-        Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
+
+        Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0);
         Vector3 dir = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
         dir.Normalize();
         body.velocity = new Vector2(dir.x * dashPower,dir.y * dashPower);
