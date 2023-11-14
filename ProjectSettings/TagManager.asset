@@ -5,14 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Weapon
+  - Minion
+  - Mage
+  - Spell
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ennemies
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

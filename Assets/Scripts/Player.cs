@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
 
     private void AddScore()
     {
-        GameManager.Instance.AddScore(10);
+        GameManager.Instance.AddScore();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -105,26 +105,30 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.GetComponent<MageProjectile>() != null ) {
             if (currentState != states.Dodge) TakeDamage();
-            else AddScore();//destroy projectile
+            else
+            {
+                Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),collision,true);
+                AddScore();
+                //UIManager.Instance.dps.DLight(true);
+            }
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
             if (currentState != states.Parry && !weapon.hitboxActive) TakeDamage();
-            else AddScore();//destroy or stun minon  //check tag, séparer dans minion ?
+            else if (currentState == states.Parry) 
+            {
+                Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                collision.gameObject.GetComponent<Minion>().Stunned();
+                AddScore();
+            }
         }
+    }
 
-        /*var collide = collision.gameObject.GetComponent<Component>();
-        switch(collide)
-        {
-            case MageProjectile mageprojectile:
-                if (currentState != states.Dodge) TakeDamage();
-                else AddScore();
-                break;
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision == null) return;
 
-            case Minion minion:
-                if (currentState != states.Parry) TakeDamage();
-                else AddScore();
-                break;
-        }*/
+        if (collision.gameObject.GetComponent<Minion>() != null)
+            Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, false);
     }
 }

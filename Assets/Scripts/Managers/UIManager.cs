@@ -12,6 +12,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject SettingsPanel; //tuto, end
 
     public TMP_Text timerText, scoreText, comboText;
+    public DPSCycle dps;
 
     public enum menuStates
     {

@@ -9,9 +9,10 @@ public class GameManager : Singleton<GameManager>
     public float altTimer = 15f;
     public float speedMod = 1f;
 
-
     public float score = 0, combo = 0;
     public float money = 0;
+
+    public float playerAttack = 10;
 
     public enum gameStates // peut-être certains à enlever
     {
@@ -82,10 +83,16 @@ public class GameManager : Singleton<GameManager>
         combo = 0;
     }
 
-    public void AddScore(int x)
+    public void AddScore()
     {
         combo++;
-        score += x * combo;
+        score += playerAttack * combo;
+    }
+
+    public void DPSCycle()
+    {
+        combo += 5;
+        score += playerAttack * combo;
     }
 
     public void TakeDamage()
