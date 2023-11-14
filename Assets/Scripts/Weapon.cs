@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
 {
     Animator controller;
     public bool hitboxActive = false;
+    public Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +33,20 @@ public class Weapon : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Mage>() != null)
         {
-            if (hitboxActive) collision.gameObject.GetComponent<Mage>().TakeDamage();
+            if (hitboxActive)
+            {
+                collision.gameObject.GetComponent<Mage>().TakeDamage();
+                UIManager.Instance.dps.SLight(true);
+                player.KnockBack(player.transform.position - collision.gameObject.transform.position);
+            }
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
-            if (hitboxActive) collision.gameObject.GetComponent<Minion>().TakeDamage();
+            if (hitboxActive && !collision.isTrigger) 
+            {
+                collision.gameObject.GetComponent<Minion>().TakeDamage();
+                UIManager.Instance.dps.SLight(true);
+            }
             else Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
         }
         else if (collision.gameObject.GetComponent<MageProjectile>() != null)

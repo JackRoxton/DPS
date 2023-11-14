@@ -22,17 +22,7 @@ public class UIManager : Singleton<UIManager>
         Settings,
         InGame
     }
-    public menuStates currentState;
-
-    new void Awake()
-    {
-        currentState = menuStates.MainMenu;
-        MainMenuPanel.SetActive(true);
-        SkillTreePanel.SetActive(false);
-        InGamePanel.SetActive(false);
-        PausePanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-    }
+    public menuStates currentState = menuStates.MainMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -101,6 +91,7 @@ public class UIManager : Singleton<UIManager>
     public void Quit()
     {
         GameManager.Instance.Quit();
+        Debug.Log("quit");
     }
 
 }

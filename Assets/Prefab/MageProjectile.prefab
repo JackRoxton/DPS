@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5717790739917788762}
   - component: {fileID: 5717790739917788761}
   - component: {fileID: 5717790739917788758}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: MageProjectile
   m_TagString: Spell
   m_Icon: {fileID: 0}

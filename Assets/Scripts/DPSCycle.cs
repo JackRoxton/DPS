@@ -15,9 +15,17 @@ public class DPSCycle : MonoBehaviour
         if(state == Dstate) return;
 
         if (state)
+        {
             D.GetComponent<Image>().color = Color.yellow;
+            Dstate = true;
+        }
         else
+        {
             D.GetComponent<Image>().color = Color.white;
+            Dstate = false;
+        }
+
+        CheckLights();
     }
 
     public void PLight(bool state)
@@ -25,9 +33,17 @@ public class DPSCycle : MonoBehaviour
         if (state == Pstate) return;
 
         if (state)
+        {
             P.GetComponent<Image>().color = Color.yellow;
+            Pstate = true;
+        }
         else
+        {
             P.GetComponent<Image>().color = Color.white;
+            Pstate = false;
+        }
+
+        CheckLights();
     }
 
     public void SLight(bool state)
@@ -35,9 +51,25 @@ public class DPSCycle : MonoBehaviour
         if (state == Sstate) return;
 
         if (state)
+        {
             S.GetComponent<Image>().color = Color.yellow;
+            Sstate = true;
+        }
         else
+        {
             S.GetComponent<Image>().color = Color.white;
+            Sstate = false;
+        }
+
+        CheckLights();
+    }
+
+    public void CheckLights()
+    {
+        if(Dstate && Pstate && Sstate)
+        {
+            ResetLights();
+        }
     }
 
     public void ResetLights()

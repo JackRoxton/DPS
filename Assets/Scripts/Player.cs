@@ -23,10 +23,9 @@ public class Player : MonoBehaviour
     public float speed = 1f;
 
     [Range(0f, 50f)]
-    public float dashPower = 10f;
-    
-    // public float attacPower;
-    //public float attackSpeed?
+    public float dashPower = 20f;
+
+    float kbForce = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -49,15 +48,18 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Attack();
+            if(currentState == states.Base)
+                Attack();
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Parry();
+            if(currentState == states.Base)
+                Parry();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Dodge();
+            if(currentState == states.Base)
+                Dodge();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -99,6 +101,11 @@ public class Player : MonoBehaviour
         GameManager.Instance.AddScore();
     }
 
+    public void KnockBack(Vector2 kb)
+    {
+        body.velocity += kb.normalized * kbForce;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision == null) return;
@@ -109,15 +116,20 @@ public class Player : MonoBehaviour
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),collision,true);
                 AddScore();
-                //UIManager.Instance.dps.DLight(true);
+                UIManager.Instance.dps.DLight(true);
             }
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
-            if (currentState != states.Parry && !weapon.hitboxActive) TakeDamage();
-            else if (currentState == states.Parry) 
+            if (currentState != states.Parry && !weapon.hitboxActive && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun)
+            {
+                TakeDamage();
+                collision.gameObject.GetComponent<Minion>().hitboxActive = false;
+            }
+            else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                UIManager.Instance.dps.PLight(true);
                 collision.gameObject.GetComponent<Minion>().Stunned();
                 AddScore();
             }

@@ -6,12 +6,15 @@ public class RoomManager : Singleton<RoomManager>
 {
     public GameObject magePrefab;
     GameObject mage;
+    public GameObject minionPrefab;
+    GameObject minion;
 
     public GameObject player;
 
     public List<GameObject> WallPaterns = new List<GameObject>();
     public List<Transform> WallSpots = new List<Transform>();
     public List<Transform> MageSpots = new List<Transform>();
+    public List<Transform> MinionSpots = new List<Transform>();
 
     List<GameObject> CurrentWalls = new List<GameObject>();
 
@@ -30,7 +33,7 @@ public class RoomManager : Singleton<RoomManager>
     public void ChangeRoom()
     {
         Debug.Log("change");
-        StartCoroutine(RoomChange());   
+        StartCoroutine(RoomChange());
     }
 
     public IEnumerator FirstRoomChange()
@@ -38,11 +41,12 @@ public class RoomManager : Singleton<RoomManager>
         int wallWhat = Random.Range(0, WallPaterns.Count);
         int wallWhere = Random.Range(0, WallSpots.Count);
         int mageWhere = Random.Range(0, MageSpots.Count);
+        int minionWhere = Random.Range(0, MinionSpots.Count);
         lastMageSpot = mageWhere;
-        mage = Instantiate(magePrefab, MageSpots[mageWhere]);
-        mage.GetComponent<Mage>().Player = player;
-        //warning
+        mage = Instantiate(magePrefab, MageSpots[mageWhere]).GetComponent<Mage>().Player = player;
+        //warnings
         yield return new WaitForSeconds(2);
+        minion = Instantiate(minionPrefab, MinionSpots[minionWhere]).GetComponent<Minion>().player = this.player;
         CurrentWalls.Add(Instantiate(WallPaterns[wallWhat], WallSpots[wallWhere]));
     }
 
@@ -57,6 +61,7 @@ public class RoomManager : Singleton<RoomManager>
 
         int wallWhat = Random.Range(0, WallPaterns.Count);
         int wallWhere = Random.Range(0, WallSpots.Count);
+        int minionWhere = Random.Range(0, MinionSpots.Count);
         int mageWhere;
         do
         {
@@ -66,6 +71,8 @@ public class RoomManager : Singleton<RoomManager>
         mage.GetComponent<Mage>().Teleport(MageSpots[mageWhere]);
         //warning
         yield return new WaitForSeconds(2);
-        Instantiate(WallPaterns[wallWhat], WallSpots[wallWhere]);
+        if(minion == null)
+            minion = Instantiate(minionPrefab, MinionSpots[minionWhere]).GetComponent<Minion>().player = this.player;
+        CurrentWalls.Add(Instantiate(WallPaterns[wallWhat], WallSpots[wallWhere]));
     }
 }
