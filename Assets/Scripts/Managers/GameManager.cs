@@ -38,7 +38,7 @@ public class GameManager : Singleton<GameManager>
             altTimer -= Time.deltaTime;
             }
 
-        if (Timer <= 0) Debug.Log("fin");
+        if (Timer <= 0) EndGame();
 
         if (altTimer <= 0)
         {
@@ -67,6 +67,8 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0;
 
         currentState = gameStates.Pause;
+
+        UIManager.Instance.Pause();
     }
 
     public void ToMenu()
@@ -106,6 +108,13 @@ public class GameManager : Singleton<GameManager>
         speedMod *= 1.05f;
         altTimer = 30f;
         RoomManager.Instance.ChangeRoom();
+
+    }
+
+    public void EndGame()
+    {
+        money += score;
+        UIManager.Instance.EndGame();
     }
 
     public void Quit()

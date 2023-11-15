@@ -8,7 +8,7 @@ using TMPro;
 public class UIManager : Singleton<UIManager>
 {
     public GameObject MainMenuPanel, SkillTreePanel;
-    public GameObject InGamePanel, PausePanel;
+    public GameObject InGamePanel, PausePanel, EndPanel;
     public GameObject SettingsPanel; //tuto, end
 
     public TMP_Text timerText, scoreText, comboText;
@@ -69,13 +69,15 @@ public class UIManager : Singleton<UIManager>
         MainMenuPanel.SetActive(true);
         InGamePanel.SetActive(false);
         PausePanel.SetActive(false);
-        SettingsPanel.SetActive(false);
+
+        GameManager.Instance.ToMenu();
     }
 
     public void Pause()
     {
         currentState = menuStates.Pause;
         PausePanel.SetActive(true);
+
     }
 
     public void SkillTree()
@@ -86,6 +88,12 @@ public class UIManager : Singleton<UIManager>
     public void Settings()
     {
         currentState = menuStates.Settings;
+    }
+
+    public void EndGame()
+    {
+        InGamePanel.SetActive(false);
+        EndPanel.SetActive(true);
     }
 
     public void Quit()
