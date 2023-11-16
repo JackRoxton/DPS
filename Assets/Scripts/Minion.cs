@@ -14,6 +14,7 @@ public class Minion : MonoBehaviour
     public bool hitboxActive = false;
     public bool stop = false;
     public bool stun = false;
+    public bool dmgFlag = false;
     
     float stunTimer = 2f;
     float stopTimer = 2f;
@@ -39,14 +40,21 @@ public class Minion : MonoBehaviour
         if (stun)
         {
             timer -= Time.deltaTime;
+            dmgFlag = false;
             if (timer <= 0)
+            {
                 stun = false;
+                dmgFlag = false;
+            }
         }
         else if (stop)
         {
             timer -= Time.deltaTime;
             if (timer <= 0)
+            {
                 stop = false;
+                dmgFlag = false;
+            }
         }
         else
             Follow();
@@ -79,6 +87,7 @@ public class Minion : MonoBehaviour
 
     IEnumerator Attack()
     {
+        dmgFlag = true;
         controller.Play("MinionAttack", 0);
         stop = true;
         timer = stopTimer;

@@ -9,6 +9,7 @@ public class Weapon : MonoBehaviour
     Animator controller;
     public bool hitboxActive = false;
     public Player player;
+    bool attackFlag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,9 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(attackFlag)
+            if(!hitboxActive)
+                attackFlag = false;
     }
 
     public void Attack()
@@ -31,7 +34,7 @@ public class Weapon : MonoBehaviour
     {
         if (collision == null) return;
 
-        if (collision.gameObject.GetComponent<Mage>() != null)
+        /*if (collision.gameObject.GetComponent<Mage>() != null)
         {
             if (hitboxActive)
             {
@@ -39,7 +42,7 @@ public class Weapon : MonoBehaviour
                 UIManager.Instance.dps.SLight(true);
                 player.KnockBack(player.transform.position - collision.gameObject.transform.position);
             }
-        }
+        }*/
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
             if (hitboxActive && !collision.isTrigger) 
@@ -55,7 +58,23 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision == null) return;
+
+        if (collision.gameObject.GetComponent<Mage>() != null)
+        {
+            if (hitboxActive && !attackFlag)
+            {
+                collision.gameObject.GetComponent<Mage>().TakeDamage();
+                UIManager.Instance.dps.SLight(true);
+                player.KnockBack(player.transform.position - collision.gameObject.transform.position);
+                attackFlag = true;
+            }
+        }
+    }
+
+        private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision == null) return;
 

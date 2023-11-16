@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MageProjectile : MonoBehaviour
 {
@@ -20,7 +21,22 @@ public class MageProjectile : MonoBehaviour
         lifeTimer -= Time.deltaTime;
         if(lifeTimer <= 0)
         {
-            Destroy(this.gameObject);
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(this.gameObject );
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null) return;
+
+        if(collision.gameObject.GetComponent<TilemapCollider2D>() != null)
+        {
+            Die();
         }
     }
 }

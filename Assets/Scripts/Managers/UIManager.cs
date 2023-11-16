@@ -9,9 +9,10 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject MainMenuPanel, SkillTreePanel;
     public GameObject InGamePanel, PausePanel, EndPanel;
-    public GameObject SettingsPanel; //tuto, end
+    public GameObject SettingsPanel; //tuto, dialogue
 
     public TMP_Text timerText, scoreText, comboText;
+    public TMP_Text endComboText, endScoreText;
     public DPSCycle dps;
 
     public enum menuStates
@@ -35,7 +36,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (currentState == menuStates.InGame)
         {
-            timerText.text = ((int)GameManager.Instance.Timer).ToString();
+            timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
             comboText.text = GameManager.Instance.combo.ToString();
         }
@@ -69,6 +70,7 @@ public class UIManager : Singleton<UIManager>
         MainMenuPanel.SetActive(true);
         InGamePanel.SetActive(false);
         PausePanel.SetActive(false);
+        EndPanel.SetActive(false);
 
         GameManager.Instance.ToMenu();
     }
@@ -94,8 +96,9 @@ public class UIManager : Singleton<UIManager>
     {
         InGamePanel.SetActive(false);
         EndPanel.SetActive(true);
+        endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
+        endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
     }
-
     public void Quit()
     {
         GameManager.Instance.Quit();

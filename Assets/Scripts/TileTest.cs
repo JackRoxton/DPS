@@ -5,9 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class TileTest : MonoBehaviour
 {
-    public Tilemap WallTilemap;
-    public Tile[] tiles;
-    public Vector2[] tilePos;
+    public Tilemap AddWallTilemap;
+    public List<Tilemap> Paterns;
+    public Vector3Int[] tilePos;
+    int rand;
 
     void Update()
     {
@@ -24,11 +25,28 @@ public class TileTest : MonoBehaviour
 
     void SpawnTiles()
     {
-        WallTilemap.SetTile(WallTilemap.WorldToCell(tilePos[0]), tiles[0]);
+        rand = Random.Range(0,tilePos.Length);
+        int rand2 = Random.Range(0, Paterns.Count);
+        Tilemap current = Paterns[rand2];
+        AddPaternToTilemap(current);
     }
 
     void ClearTiles()
     {
-        WallTilemap.DeleteCells(WallTilemap.WorldToCell(tilePos[0]),1,1,0);
+        AddWallTilemap.ClearAllTiles();
+    }
+
+    public void AddPaternToTilemap(Tilemap tilemap)
+    {    
+        BoundsInt bounds = tilemap.cellBounds;
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            Tile tile = tilemap.GetTile<Tile>(pos);
+            if (tile != null)
+            {
+                //AddWallTilemap.SetTile(pos, tile);
+                AddWallTilemap.SetTile(tilePos[rand]+pos, tile);
+            }
+        }
     }
 }

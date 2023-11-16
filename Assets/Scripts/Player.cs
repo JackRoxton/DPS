@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 
     public Weapon weapon;
 
+    public bool endFlag = false;
+
     public enum states
     {
         Base,
@@ -37,14 +39,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0) // voir meilleurs inputs
-        {
-            movement.x = Input.GetAxis("Horizontal");
-        }
-        if (Input.GetAxis("Vertical") != 0)
-        {
-            movement.y = Input.GetAxis("Vertical");
-        }
+        if (endFlag) return;
+
+        movement.x = Input.GetAxis("Horizontal");
+        movement.y = Input.GetAxis("Vertical");
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -68,7 +66,7 @@ public class Player : MonoBehaviour
 
         body.velocity *= 0.99f;
         this.transform.position += new Vector3(movement.x, movement.y, 0) * speed / 100;
-        movement = Vector2.zero;
+        //movement = Vector2.zero;
     }
 
     private void Attack()
@@ -111,20 +109,24 @@ public class Player : MonoBehaviour
         if(collision == null) return;
 
         if(collision.gameObject.GetComponent<MageProjectile>() != null ) {
-            if (currentState != states.Dodge) TakeDamage();
+            if (currentState != states.Dodge)
+            {
+                TakeDamage();
+                collision.gameObject.GetComponent<MageProjectile>().Die();
+            }
             else
             {
-                Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),collision,true);
+                Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
                 AddScore();
                 UIManager.Instance.dps.DLight(true);
             }
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
-            if (currentState != states.Parry && !weapon.hitboxActive && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun)
+            if (currentState != states.Parry && !weapon.hitboxActive && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && collision.gameObject.GetComponent<Minion>().dmgFlag)
             {
                 TakeDamage();
-                collision.gameObject.GetComponent<Minion>().hitboxActive = false;
+                collision.gameObject.GetComponent<Minion>().dmgFlag = false;
             }
             else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun)
             {

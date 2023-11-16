@@ -43,7 +43,7 @@ public class Mage : MonoBehaviour
     {
         controller.Play("SpellCast",0);
         yield return new WaitUntil(SpellCast);
-        CurrentSpell = Instantiate(SpellPrefab, this.transform);
+        CurrentSpell = Instantiate(SpellPrefab, this.transform.position,Quaternion.identity);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),CurrentSpell.GetComponent<Collider2D>());
         CurrentSpell.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y -this.transform.position.y).normalized)*spellSpeed;
         yield return null;
