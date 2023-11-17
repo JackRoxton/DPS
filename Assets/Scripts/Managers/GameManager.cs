@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     bool endFlag = false;
 
     public float playerAttack = 10;
+    public float playerSpeedUp = 1;
 
     public enum gameStates // peut-être certains à enlever
     {
@@ -59,6 +60,8 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
 
         currentState = gameStates.InGame;
+
+        RoomManager.Instance.playerSpeed(playerSpeedUp);
     }
 
     public void Resume()
@@ -81,6 +84,16 @@ public class GameManager : Singleton<GameManager>
             currentState = gameStates.Pause;
             UIManager.Instance.Pause();
         }
+    }
+    
+    public void SkillTree()
+    {
+        currentState = gameStates.SkillTree;
+    }
+
+    public void MainMenuBack()
+    {
+        currentState = gameStates.MainMenu;
     }
 
     public void ToMenu()
@@ -138,9 +151,38 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(1);
     }
 
+    public bool Affordable(int cost)
+    {
+        if (money - cost >= 0) return true;
+        else return false;
+    }
+
     public void Quit()
     {
         Application.Quit(); // ajouter sauvegarde
+    }
+
+    public enum Skills
+    {
+        AttackUp,
+        SpeedUp
+    }
+
+    public void BuySkill(Skills type, int cost)
+    {
+        money -= cost;
+
+        switch (type)
+        {
+            case Skills.AttackUp:
+                playerAttack += 5;
+                break;
+
+            case Skills.SpeedUp:
+                playerSpeedUp += 0.1f;
+                break;
+
+        }
     }
 
 }

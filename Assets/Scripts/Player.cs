@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     [Range(0f, 10f)]
     public float speed = 1f;
 
+    public float speedUpgrade = 1f;
+
     [Range(0f, 50f)]
     public float dashPower = 20f;
 
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
         }
 
         body.velocity *= 0.99f;
-        this.transform.position += new Vector3(movement.x, movement.y, 0) * speed / 100;
+        this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed / 100 * speedUpgrade);
         //movement = Vector2.zero;
     }
 

@@ -13,6 +13,7 @@ public class UIManager : Singleton<UIManager>
 
     public TMP_Text timerText, scoreText, comboText;
     public TMP_Text endComboText, endScoreText;
+    public TMP_Text moneyText;
     public DPSCycle dps;
 
     public enum menuStates
@@ -85,11 +86,24 @@ public class UIManager : Singleton<UIManager>
     public void SkillTree()
     {
         currentState = menuStates.SkillTree;
+        MainMenuPanel.SetActive(false);
+        SkillTreePanel.SetActive(true);
+        GameManager.Instance.SkillTree();
+        moneyText.text = GameManager.Instance.money.ToString();
     }
 
     public void Settings()
     {
         currentState = menuStates.Settings;
+    }
+
+    public void MainMenuBack()
+    {
+        currentState = menuStates.MainMenu;
+        MainMenuPanel.SetActive(true);
+        SkillTreePanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+        GameManager.Instance.MainMenuBack();
     }
 
     public void EndGame()

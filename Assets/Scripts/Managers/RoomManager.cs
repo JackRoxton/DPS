@@ -113,4 +113,9 @@ public class RoomManager : Singleton<RoomManager>
         Destroy(minion);
         player.GetComponent<Player>().endFlag = true;
     }
+
+    public void playerSpeed(float speedMod)
+    {
+        player.GetComponent<Player>().speedUpgrade = speedMod;
+    }
 }
