@@ -7,7 +7,7 @@ using UnityEngine.iOS;
 public class Minion : MonoBehaviour
 {
     protected float hp;
-    protected float speed;
+    protected float speed = 1f;
 
     public GameObject player;
 
@@ -19,7 +19,7 @@ public class Minion : MonoBehaviour
     float stunTimer = 2f;
     float stopTimer = 2f;
     float timer = 0;
-    float stunPower = 20f;
+    float stunPower = 10f;
     float dashPower = 20f;
 
 
@@ -30,7 +30,7 @@ public class Minion : MonoBehaviour
     void Start()
     {
         controller = GetComponent<Animator>();
-        speed = 0.5f;
+        speed = 1f;
         rb = this.GetComponent<Rigidbody2D>();
     }
 

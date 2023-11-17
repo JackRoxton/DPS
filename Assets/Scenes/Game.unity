@@ -1440,6 +1440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magePrefab: {fileID: 1215607283832134488, guid: f5ecb7b6e4b67024a82bb3ddd8241c88, type: 3}
   minionPrefab: {fileID: 7014656980860405107, guid: d309cacdf31903641a0c7d8a878a257c, type: 3}
+  warning: {fileID: 6891843197255496856, guid: d6f57662a2b353b4fb4db9613a098835, type: 3}
   player: {fileID: 5097674866877607321}
   AddWallTilemap: {fileID: 2066760552}
   WallPaterns:
@@ -1464,7 +1465,6 @@ MonoBehaviour:
   MinionSpots:
   - {fileID: 186274177}
   - {fileID: 1942002150}
-  lastMageSpot: 0
 --- !u!4 &92777368
 Transform:
   m_ObjectHideFlags: 0
@@ -8299,8 +8299,12 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5097674866760596053, guid: c2255662fdc103047a70e8868695593c, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097674866760596053, guid: c2255662fdc103047a70e8868695593c, type: 3}
       propertyPath: dashPower
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5097674866760596055, guid: c2255662fdc103047a70e8868695593c, type: 3}
       propertyPath: m_RootOrder

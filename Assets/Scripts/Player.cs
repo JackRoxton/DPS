@@ -22,12 +22,12 @@ public class Player : MonoBehaviour
     public states currentState = states.Base;
 
     [Range(0f, 10f)]
-    public float speed = 1f;
+    public float speed = 2f;
 
     public float speedUpgrade = 1f;
 
     [Range(0f, 50f)]
-    public float dashPower = 20f;
+    public float dashPower = 5f;
 
     float kbForce = 2f;
 
@@ -116,10 +116,12 @@ public class Player : MonoBehaviour
                 TakeDamage();
                 collision.gameObject.GetComponent<MageProjectile>().Die();
             }
-            else
+            else 
             {
+                if (collision.gameObject.GetComponent<MageProjectile>().hitFlag == true)
+                    AddScore();
+                collision.gameObject.GetComponent<MageProjectile>().hitFlag = false;
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
-                AddScore();
                 UIManager.Instance.dps.DLight(true);
             }
         }

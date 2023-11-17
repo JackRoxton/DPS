@@ -7,7 +7,9 @@ public class MageProjectile : MonoBehaviour
 {
     public Rigidbody2D body;
 
-    float lifeTimer = 4f;
+    float lifeTimer = 5f;
+
+    public bool hitFlag = true;
 
     // Start is called before the first frame update
     void Start()

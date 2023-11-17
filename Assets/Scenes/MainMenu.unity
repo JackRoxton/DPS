@@ -1124,6 +1124,7 @@ MonoBehaviour:
   maxCombo: 0
   money: 0
   playerAttack: 10
+  playerSpeedUp: 1
   currentState: 0
 --- !u!4 &313329225
 Transform:
@@ -2282,7 +2283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ea5547bcdee4e4a8cb4705499aabe76d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

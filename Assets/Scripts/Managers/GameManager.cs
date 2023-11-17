@@ -61,7 +61,7 @@ public class GameManager : Singleton<GameManager>
 
         currentState = gameStates.InGame;
 
-        RoomManager.Instance.playerSpeed(playerSpeedUp);
+        
     }
 
     public void Resume()
