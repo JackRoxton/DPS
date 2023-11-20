@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool skillActive = false;
+    public bool locked = false;
     public int Cost;
     Image spr;
 
@@ -15,14 +17,23 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public GameManager.Skills skill;
 
+    public TMP_Text costText;
+
+    public Skill[] nextSkills;
+
     private void Start()
     {
         spr = this.GetComponent<Image>();
+        if(locked)
+        {
+            spr.color = Color.gray;
+        }
     }
 
     private void Update()
     {
         if (skillActive) return;
+        if(locked) return;
 
         if (mouseOver && Input.GetMouseButton(0))
         {
@@ -31,6 +42,14 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 skillActive = true;
                 spr.color = Color.yellow;
                 GameManager.Instance.BuySkill(skill, Cost);
+                if (nextSkills != null)
+                {
+                    foreach (Skill skill in nextSkills)
+                    {
+                        skill.locked = false;
+                        skill.spr.color = Color.white;
+                    }
+                }
             }
         }
 
@@ -38,23 +57,23 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(!skillActive ) { spr.color = Color.blue; }
+        if (locked) return;
+        if (!skillActive ) 
+        { 
+            spr.color = Color.blue; 
+            costText.text = Cost.ToString();
+        }
         mouseOver = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!skillActive) { spr.color = Color.white; }
-        mouseOver = false;
-    }
-
-    private void OnMouseUp()
-    {
-        if(GameManager.Instance.Affordable(Cost)) 
+        if (locked) return;
+        if (!skillActive) 
         { 
-            skillActive = true;
-            spr.color = Color.yellow;
-            GameManager.Instance.BuySkill(skill,Cost);
+            spr.color = Color.white;
+            costText.text = "Cost";
         }
+        mouseOver = false;
     }
 }

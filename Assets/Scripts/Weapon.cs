@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -49,6 +47,7 @@ public class Weapon : MonoBehaviour
             {
                 collision.gameObject.GetComponent<Minion>().TakeDamage();
                 UIManager.Instance.dps.SLight(true);
+                SoundManager.Instance.Play("hit");
             }
             else Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
         }
@@ -70,6 +69,7 @@ public class Weapon : MonoBehaviour
                 UIManager.Instance.dps.SLight(true);
                 player.KnockBack(player.transform.position - collision.gameObject.transform.position);
                 attackFlag = true;
+                SoundManager.Instance.Play("hit");
             }
         }
     }

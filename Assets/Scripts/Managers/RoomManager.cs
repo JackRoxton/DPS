@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class RoomManager : Singleton<RoomManager>
 {
@@ -94,6 +93,8 @@ public class RoomManager : Singleton<RoomManager>
 
         yield return new WaitForSeconds(2);
 
+        SoundManager.Instance.Play("spawn");
+
         if (minion == null)
         {
             minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
@@ -141,11 +142,11 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, (WallSpots[wallWhere].position)*0.8f + pos, Quaternion.identity);
+                Instantiate(warning, (WallSpots[wallWhere].position)*0.8f + pos /*+ new Vector3(((int)tilemap.cellSize.x)/2, ((int)tilemap.cellSize.y) / 2)*/, Quaternion.identity);;
             }
         }
 
-        Instantiate(warning, (MinionSpots[minionWhere].position)*0.8f, Quaternion.identity);
+        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
 
         BoundsInt bounds2 = tilemap2.cellBounds;
         foreach (Vector3Int pos in bounds2.allPositionsWithin)
@@ -153,7 +154,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, (WallSpots[wallWhere2].position)*0.8f + pos, Quaternion.identity);
+                Instantiate(warning, (WallSpots[wallWhere2].position)*0.8f + pos /*+ new Vector3(((int)tilemap.cellSize.x) / 2, ((int)tilemap.cellSize.y) / 2)*/, Quaternion.identity);
             }
         }
 
@@ -164,6 +165,13 @@ public class RoomManager : Singleton<RoomManager>
         Destroy(mage);
         Destroy(minion);
         player.GetComponent<Player>().endFlag = true;
+    }
+
+    public void Pause(bool pause)
+    {
+        player.GetComponent<Player>().Pause(pause);
+        if(minion != null)
+            minion.GetComponent<Minion>().Pause(pause);
     }
 
     public void playerSpeed(float speedMod)

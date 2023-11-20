@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,7 +7,7 @@ using TMPro;
 public class UIManager : Singleton<UIManager>
 {
     public GameObject MainMenuPanel, SkillTreePanel;
-    public GameObject InGamePanel, PausePanel, EndPanel;
+    public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject SettingsPanel; //tuto, dialogue
 
     public TMP_Text timerText, scoreText, comboText;
@@ -54,6 +53,16 @@ public class UIManager : Singleton<UIManager>
         InGamePanel.SetActive(true);
     }
 
+    public void PlayShort()
+    {
+        currentState = menuStates.InGame;
+
+        GameManager.Instance.PlayShort();
+
+        MainMenuPanel.SetActive(false);
+        InGamePanel.SetActive(true);
+    }
+
     public void Resume()
     {
         currentState = menuStates.InGame;
@@ -92,9 +101,17 @@ public class UIManager : Singleton<UIManager>
         moneyText.text = GameManager.Instance.money.ToString();
     }
 
+    public void Credits()
+    {
+        MainMenuPanel.SetActive(false);
+        CreditsPanel.SetActive(true);
+    }
+
     public void Settings()
     {
         currentState = menuStates.Settings;
+        SettingsPanel.SetActive(true);
+        MainMenuPanel.SetActive(false);
     }
 
     public void MainMenuBack()
@@ -103,6 +120,7 @@ public class UIManager : Singleton<UIManager>
         MainMenuPanel.SetActive(true);
         SkillTreePanel.SetActive(false);
         SettingsPanel.SetActive(false);
+        CreditsPanel.SetActive(false);
         GameManager.Instance.MainMenuBack();
     }
 

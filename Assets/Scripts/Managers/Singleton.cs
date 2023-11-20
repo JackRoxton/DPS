@@ -23,7 +23,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
             /*if (_isPersistant)
                 Destroy(gameObject);
             else*/
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         else
         {

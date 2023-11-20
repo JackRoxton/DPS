@@ -33,6 +33,7 @@ public class GameManager : Singleton<GameManager>
     {
         timer = altTimer;
         DontDestroyOnLoad(this.gameObject);
+
     }
 
     // Update is called once per frame
@@ -56,12 +57,24 @@ public class GameManager : Singleton<GameManager>
     public void Play()
     {
         ResetVariables();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
         Time.timeScale = 1;
 
         currentState = gameStates.InGame;
+        SoundManager.Instance.PlayMusic((Random.Range(0, 9) + 1).ToString());
+    }
 
-        
+
+    public void PlayShort()
+    {
+        ResetVariables();
+        globalTimer = 60f;
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1;
+
+        currentState = gameStates.InGame;
+        SoundManager.Instance.PlayMusic((Random.Range(0, 9) + 1).ToString());
+
     }
 
     public void Resume()
@@ -77,12 +90,14 @@ public class GameManager : Singleton<GameManager>
         if(currentState == gameStates.Pause)
         {
             UIManager.Instance.Resume();
+            RoomManager.Instance.Pause(false);
         }
         else if (currentState == gameStates.InGame)
         {
             Time.timeScale = 0;
             currentState = gameStates.Pause;
             UIManager.Instance.Pause();
+            RoomManager.Instance.Pause(true);
         }
     }
     
@@ -99,8 +114,10 @@ public class GameManager : Singleton<GameManager>
     public void ToMenu()
     {
         Time.timeScale = 1;
-
+        money += score;
+        score = 0;
         currentState = gameStates.MainMenu;
+        SceneManager.LoadScene(0);
     }
 
     public void ResetVariables()
@@ -137,6 +154,8 @@ public class GameManager : Singleton<GameManager>
     {
         //speedMod *= 1.05f;
         timer = altTimer;
+        SoundManager.Instance.PlayMusic((Random.Range(0,9)+1).ToString());
+        SoundManager.Instance.Play("change");
         RoomManager.Instance.ChangeRoom();
 
     }
@@ -148,11 +167,12 @@ public class GameManager : Singleton<GameManager>
         endFlag = true;
         UIManager.Instance.EndGame();
         RoomManager.Instance.EndGame();
-        SceneManager.LoadScene(1);
+        
     }
 
     public bool Affordable(int cost)
     {
+        UIManager.Instance.moneyText.text = money.ToString();
         if (money - cost >= 0) return true;
         else return false;
     }

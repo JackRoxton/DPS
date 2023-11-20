@@ -41,6 +41,7 @@ public class Mage : MonoBehaviour
 
     public IEnumerator CastSpell()
     {
+        SoundManager.Instance.Play("spell");
         controller.Play("SpellCast",0);
         yield return new WaitUntil(SpellCast);
         CurrentSpell = Instantiate(SpellPrefab, this.transform.position,Quaternion.identity);

@@ -69,6 +69,7 @@ public class DPSCycle : MonoBehaviour
         if(Dstate && Pstate && Sstate)
         {
             ResetLights();
+            SoundManager.Instance.Play("dps");
         }
     }
 

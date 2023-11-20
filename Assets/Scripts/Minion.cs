@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.iOS;
 
 public class Minion : MonoBehaviour
 {
@@ -22,6 +21,7 @@ public class Minion : MonoBehaviour
     float stunPower = 10f;
     float dashPower = 20f;
 
+    bool pause = false;
 
     Rigidbody2D rb;
     Animator controller;
@@ -37,6 +37,8 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pause) return;
+
         if (stun)
         {
             timer -= Time.deltaTime;
@@ -60,6 +62,11 @@ public class Minion : MonoBehaviour
             Follow();
 
         rb.velocity *= 0.99f;
+    }
+
+    public void Pause(bool pause)
+    {
+        this.pause = pause;
     }
 
     public void TakeDamage()

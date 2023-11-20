@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
 
     public bool endFlag = false;
 
+    bool pause = false;
+
     public enum states
     {
         Base,
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (endFlag) return;
+        if (pause) return;
 
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
@@ -71,6 +74,11 @@ public class Player : MonoBehaviour
         //movement = Vector2.zero;
     }
 
+    public void Pause(bool pause)
+    {
+        this.pause = pause;
+    }
+
     private void Attack()
     {
         weapon.Attack();
@@ -79,11 +87,13 @@ public class Player : MonoBehaviour
     private void Parry()
     {
         controller.Play("Parry", 0);
+        SoundManager.Instance.Play("parry");
     }
 
     private void Dodge()
     {
         controller.Play("Dodge", 0);
+        SoundManager.Instance.Play("dodge");
 
         Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0);
         Vector3 dir = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
@@ -94,6 +104,7 @@ public class Player : MonoBehaviour
     private void TakeDamage()
     {
         GameManager.Instance.TakeDamage();
+        SoundManager.Instance.Play("phit");
     }
 
     private void AddScore()
@@ -132,7 +143,7 @@ public class Player : MonoBehaviour
                 TakeDamage();
                 collision.gameObject.GetComponent<Minion>().dmgFlag = false;
             }
-            else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun)
+            else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && !collision.isTrigger)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
                 UIManager.Instance.dps.PLight(true);
