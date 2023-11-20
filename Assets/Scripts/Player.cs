@@ -23,12 +23,10 @@ public class Player : MonoBehaviour
     }
     public states currentState = states.Base;
 
-    [Range(0f, 10f)]
-    public float speed = 2f;
+    public float speed = 0.15f;
 
     public float speedUpgrade = 1f;
 
-    [Range(0f, 50f)]
     public float dashPower = 5f;
 
     float kbForce = 2f;
@@ -45,9 +43,6 @@ public class Player : MonoBehaviour
     {
         if (endFlag) return;
         if (pause) return;
-
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -69,9 +64,19 @@ public class Player : MonoBehaviour
             GameManager.Instance.Pause();
         }
 
-        body.velocity *= 0.99f;
-        this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed / 100 * speedUpgrade);
+        
         //movement = Vector2.zero;
+    }
+
+    private void FixedUpdate()
+    {
+        if (endFlag) return;
+        if (pause) return;
+
+        movement.x = Input.GetAxis("Horizontal");
+        movement.y = Input.GetAxis("Vertical");
+        body.velocity *= 0.9f;
+        this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed * speedUpgrade);
     }
 
     public void Pause(bool pause)

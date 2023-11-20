@@ -30,12 +30,12 @@ public class Minion : MonoBehaviour
     void Start()
     {
         controller = GetComponent<Animator>();
-        speed = 1f;
+        speed = 0.08f;
         rb = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (pause) return;
 
@@ -61,7 +61,7 @@ public class Minion : MonoBehaviour
         else
             Follow();
 
-        rb.velocity *= 0.99f;
+        rb.velocity *= 0.9f;
     }
 
     public void Pause(bool pause)
@@ -88,7 +88,7 @@ public class Minion : MonoBehaviour
         if (player != null)
         {
             Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, 0);
-            transform.position = Vector3.MoveTowards(transform.position, newPos, speed / 100);
+            transform.position = Vector3.MoveTowards(transform.position, newPos, speed);
         }
     }
 

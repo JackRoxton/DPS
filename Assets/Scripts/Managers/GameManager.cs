@@ -80,7 +80,7 @@ public class GameManager : Singleton<GameManager>
     public void Resume()
     {
         Time.timeScale = 1;
-
+        RoomManager.Instance.Pause(false);
         currentState = gameStates.InGame;
     }
 
@@ -89,8 +89,10 @@ public class GameManager : Singleton<GameManager>
         Debug.Log(currentState);
         if(currentState == gameStates.Pause)
         {
+            //Time.timeScale = 1;
+            //currentState = gameStates.InGame;
             UIManager.Instance.Resume();
-            RoomManager.Instance.Pause(false);
+            //RoomManager.Instance.Pause(false);
         }
         else if (currentState == gameStates.InGame)
         {
