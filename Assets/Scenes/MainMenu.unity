@@ -1851,6 +1851,7 @@ MonoBehaviour:
   playerAttack: 10
   playerSpeedUp: 1
   playerDashOnMovement: 0
+  shortGame: 0
   currentState: 0
 --- !u!4 &313329225
 Transform:

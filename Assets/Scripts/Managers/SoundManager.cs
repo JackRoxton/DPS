@@ -54,6 +54,13 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
+    public void Start()
+    {
+        ModifyAllVolume(masterVolume);
+        ModifyMusicVolume(musicVolume);
+        ModifySFXVolume(sfxVolume);
+    }
+
     public void Play(string name)
     {
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
@@ -119,19 +126,19 @@ public class SoundManager : Singleton<SoundManager>
 
     public void ModifyAllVolume(float i)
     {
-        audioMix.SetFloat("MasterVolume", Mathf.Log10(i) * 20);
+        audioMix.SetFloat("Master", Mathf.Log10(i) * 20);
         masterVolume = i;
     }
 
     public void ModifyMusicVolume(float i)
     {
-        audioMix.SetFloat("MusicsVolume", Mathf.Log10(i) * 20);
+        audioMix.SetFloat("Musics", Mathf.Log10(i) * 20);
         musicVolume = i;
     }
 
     public void ModifySFXVolume(float i)
     {
-        audioMix.SetFloat("SFXVolume", Mathf.Log10(i) * 20);
+        audioMix.SetFloat("SoundEffects", Mathf.Log10(i) * 20);
         sfxVolume = i;
     }
 
