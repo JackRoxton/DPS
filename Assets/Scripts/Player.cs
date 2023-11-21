@@ -65,8 +65,16 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.Pause();
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if(dashOnMovement)
+                dashOnMovement = false;
+            else
+                dashOnMovement = true;
+            Debug.Log(dashOnMovement);
+        }
 
-        
+
         //movement = Vector2.zero;
     }
 
