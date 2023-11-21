@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     public float playerAttack = 10;
     public float playerSpeedUp = 1;
 
+    int currentMusic = 0;
+
     public enum gameStates // peut-être certains à enlever
     {
         MainMenu,
@@ -79,6 +81,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Resume()
     {
+        SoundManager.Instance.UnpauseMusic(currentMusic.ToString());
         Time.timeScale = 1;
         RoomManager.Instance.Pause(false);
         currentState = gameStates.InGame;
@@ -89,13 +92,11 @@ public class GameManager : Singleton<GameManager>
         Debug.Log(currentState);
         if(currentState == gameStates.Pause)
         {
-            //Time.timeScale = 1;
-            //currentState = gameStates.InGame;
             UIManager.Instance.Resume();
-            //RoomManager.Instance.Pause(false);
         }
         else if (currentState == gameStates.InGame)
         {
+            SoundManager.Instance.PauseMusic(currentMusic.ToString());
             Time.timeScale = 0;
             currentState = gameStates.Pause;
             UIManager.Instance.Pause();
@@ -156,7 +157,8 @@ public class GameManager : Singleton<GameManager>
     {
         //speedMod *= 1.05f;
         timer = altTimer;
-        SoundManager.Instance.PlayMusic((Random.Range(0,9)+1).ToString());
+        currentMusic = (Random.Range(0, 9) + 1);
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
         SoundManager.Instance.Play("change");
         RoomManager.Instance.ChangeRoom();
 
@@ -165,7 +167,7 @@ public class GameManager : Singleton<GameManager>
     public void EndGame()
     {
         Time.timeScale = 0;
-        money += score;
+        //money += score;
         endFlag = true;
         UIManager.Instance.EndGame();
         RoomManager.Instance.EndGame();

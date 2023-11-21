@@ -1272,7 +1272,7 @@ MonoBehaviour:
   audioMix: {fileID: 24100000, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
   masterVolume: 1
   musicVolume: 1
-  sfxVolume: 1
+  sfxVolume: 0.8
 --- !u!1 &219727987
 GameObject:
   m_ObjectHideFlags: 0
