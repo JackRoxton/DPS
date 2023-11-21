@@ -97,7 +97,6 @@ public class GameManager : Singleton<GameManager>
 
     public void Pause()
     {
-        Debug.Log(currentState);
         if(currentState == gameStates.Pause)
         {
             UIManager.Instance.Resume();

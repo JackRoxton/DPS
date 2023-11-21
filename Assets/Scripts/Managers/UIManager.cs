@@ -15,7 +15,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text moneyText;
     public DPSCycle dps;
 
-
+    public Slider masterSlider, musicsSlider, effectsSlider;
 
     public enum menuStates
     {
@@ -141,6 +141,19 @@ public class UIManager : Singleton<UIManager>
     public void ResetVariables()
     {
         dps.ResetLights();
+    }
+
+    public void MasterSlider()
+    {
+        SoundManager.Instance.ModifyAllVolume(masterSlider.value);
+    }
+    public void MusicsSlider()
+    {
+        SoundManager.Instance.ModifyMusicVolume(musicsSlider.value);
+    }
+    public void EffectsSlider()
+    {
+        SoundManager.Instance.ModifySFXVolume(effectsSlider.value);
     }
 
     public void Quit()

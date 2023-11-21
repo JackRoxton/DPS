@@ -117,4 +117,16 @@ public class Minion : MonoBehaviour
             StartCoroutine(Attack());
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision == null) return;
+
+        if (collision.gameObject.GetComponent<Player>() != null)
+        {
+            rb.velocity = Vector2.zero;
+            stop = true;
+            timer = stopTimer;
+        }
+    }
 }

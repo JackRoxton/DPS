@@ -8,11 +8,9 @@ public class Player : MonoBehaviour
     Vector2 movement;
     Animator controller;
     Rigidbody2D body;
-
     public Weapon weapon;
 
     public bool endFlag = false;
-
     bool pause = false;
 
     public enum states
@@ -24,14 +22,18 @@ public class Player : MonoBehaviour
     public states currentState = states.Base;
 
     public float speed = 0.15f;
-
     public float speedUpgrade = 1f;
-
     public float dashPower = 5f;
-
     float kbForce = 2f;
 
     public bool dashOnMovement = false;
+
+    bool IFrame = true;
+    bool IFrameFlag = false;
+    float IFrameCD = 1f;
+    float IFrameTimer = 0.1f;
+    float timer;
+    GameObject parriedMinion;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +74,33 @@ public class Player : MonoBehaviour
             else
                 dashOnMovement = true;
             Debug.Log(dashOnMovement);
+        }
+
+        if(IFrameFlag)
+        {
+            timer -= Time.deltaTime;
+            if(currentState == states.Parry) 
+            {
+                IFrameFlag = false;
+                IFrame = true;
+                UIManager.Instance.dps.PLight(true);
+                parriedMinion.GetComponent<Minion>().Stunned();
+                AddScore();
+            }
+            if(timer <= 0)
+            {
+                IFrameFlag = false;
+                IFrame = false;
+                timer = IFrameCD;
+            }
+        }
+        if (!IFrame)
+        {
+            timer -= Time.deltaTime;
+            if(timer <= 0)
+            {
+                IFrame = true;
+            }
         }
 
 
@@ -165,8 +194,18 @@ public class Player : MonoBehaviour
         {
             if (currentState != states.Parry && !weapon.hitboxActive && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && collision.gameObject.GetComponent<Minion>().dmgFlag)
             {
-                TakeDamage();
-                collision.gameObject.GetComponent<Minion>().dmgFlag = false;
+                if (IFrame)
+                {
+                    if(!IFrameFlag)
+                        timer = IFrameTimer;
+                    IFrameFlag = true;
+                    parriedMinion = collision.gameObject;
+                }
+                else
+                {
+                    TakeDamage();
+                    collision.gameObject.GetComponent<Minion>().dmgFlag = false;
+                }
             }
             else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && !collision.isTrigger)
             {
@@ -185,4 +224,5 @@ public class Player : MonoBehaviour
         if (collision.gameObject.GetComponent<Minion>() != null)
             Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, false);
     }
+
 }
