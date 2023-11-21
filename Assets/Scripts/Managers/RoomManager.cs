@@ -16,21 +16,21 @@ public class RoomManager : Singleton<RoomManager>
 
     public Tilemap AddWallTilemap;
     public List<Tilemap> WallPaterns;
-    //public Vector3Int[] tilePos;
+
     int wallWhere;
     int wallWhere2;
 
-    //public List<GameObject> WallPaterns = new List<GameObject>();
     public List<Transform> WallSpots = new List<Transform>();
     public List<Transform> MageSpots = new List<Transform>();
     public List<Transform> MinionSpots = new List<Transform>();
 
-    int lastMageSpot = 0; //so the mage can't tp where he already was
+    int lastMageSpot = 0;
 
     void Start()
     {
         StartCoroutine(FirstRoomChange());
-        playerSpeed(GameManager.Instance.playerSpeedUp);
+        PlayerSpeed(GameManager.Instance.playerSpeedUp);
+        PlayerDash(GameManager.Instance.playerDashOnMovement);
     }
 
     void Update()
@@ -142,7 +142,8 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, (WallSpots[wallWhere].position)*0.8f + pos /*+ new Vector3(((int)tilemap.cellSize.x)/2, ((int)tilemap.cellSize.y) / 2)*/, Quaternion.identity);;
+                Instantiate(warning, (WallSpots[wallWhere].position) * 0.8f + pos + new Vector3((tilemap.cellSize.x)/2, (tilemap.cellSize.y) / 2), Quaternion.identity);
+                
             }
         }
 
@@ -154,7 +155,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, (WallSpots[wallWhere2].position)*0.8f + pos /*+ new Vector3(((int)tilemap.cellSize.x) / 2, ((int)tilemap.cellSize.y) / 2)*/, Quaternion.identity);
+                Instantiate(warning, (WallSpots[wallWhere2].position) * 0.8f + pos + new Vector3((tilemap.cellSize.x) / 2, (tilemap.cellSize.y) / 2), Quaternion.identity);
             }
         }
 
@@ -174,8 +175,13 @@ public class RoomManager : Singleton<RoomManager>
             minion.GetComponent<Minion>().Pause(pause);
     }
 
-    public void playerSpeed(float speedMod)
+    public void PlayerSpeed(float speedMod)
     {
         player.GetComponent<Player>().speedUpgrade = speedMod;
+    }
+
+    public void PlayerDash(bool OnMovement)
+    {
+        player.GetComponent<Player>().dashOnMovement = OnMovement;
     }
 }

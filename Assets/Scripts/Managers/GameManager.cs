@@ -17,6 +17,9 @@ public class GameManager : Singleton<GameManager>
 
     public float playerAttack = 10;
     public float playerSpeedUp = 1;
+    public bool playerDashOnMovement = false;
+
+    public bool shortGame = false;
 
     int currentMusic = 0;
 
@@ -62,8 +65,11 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(1);
         Time.timeScale = 1;
 
+        shortGame = false;
+
         currentState = gameStates.InGame;
         SoundManager.Instance.PlayMusic((Random.Range(0, 9) + 1).ToString());
+        
     }
 
 
@@ -73,6 +79,8 @@ public class GameManager : Singleton<GameManager>
         globalTimer = 60f;
         SceneManager.LoadScene(1);
         Time.timeScale = 1;
+
+        shortGame = true;
 
         currentState = gameStates.InGame;
         SoundManager.Instance.PlayMusic((Random.Range(0, 9) + 1).ToString());
@@ -131,6 +139,7 @@ public class GameManager : Singleton<GameManager>
         maxCombo = 0;
         timer = altTimer;
         endFlag = false;
+        UIManager.Instance.ResetVariables();
     }
 
     public void AddScore()

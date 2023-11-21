@@ -11,9 +11,11 @@ public class UIManager : Singleton<UIManager>
     public GameObject SettingsPanel; //tuto, dialogue
 
     public TMP_Text timerText, scoreText, comboText;
-    public TMP_Text endComboText, endScoreText;
+    public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
     public DPSCycle dps;
+
+
 
     public enum menuStates
     {
@@ -130,7 +132,17 @@ public class UIManager : Singleton<UIManager>
         EndPanel.SetActive(true);
         endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
         endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
+        if(GameManager.Instance.shortGame)
+            endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
+        else
+            endDpsText.text = "DPS : " + (GameManager.Instance.score / 360).ToString();
     }
+
+    public void ResetVariables()
+    {
+        dps.ResetLights();
+    }
+
     public void Quit()
     {
         GameManager.Instance.Quit();

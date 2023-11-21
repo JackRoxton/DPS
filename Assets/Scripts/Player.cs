@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 
     float kbForce = 2f;
 
+    public bool dashOnMovement = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -100,8 +102,18 @@ public class Player : MonoBehaviour
         controller.Play("Dodge", 0);
         SoundManager.Instance.Play("dodge");
 
-        Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0);
-        Vector3 dir = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
+        Vector3 dir = Vector3.zero;
+
+        if (dashOnMovement)
+        {
+            dir = movement;
+        }
+        else
+        {
+            Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0);
+            dir = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
+        }
+
         dir.Normalize();
         body.velocity = new Vector2(dir.x * dashPower,dir.y * dashPower);
     }
