@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    float duration = 1f;
+    public AnimationCurve shake;
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator ScreenShake()
     {
-        
+        Vector3 startPos = transform.position;
+        float time = 0f;
+        while(time < duration)
+        {
+            time += Time.deltaTime;
+            float strength = shake.Evaluate(time/duration);
+            transform.position = startPos+Random.insideUnitSphere * strength;
+            yield return null;
+        }
+        transform.position = startPos;
     }
 }

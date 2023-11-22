@@ -71,6 +71,7 @@ public class Minion : MonoBehaviour
 
     public void TakeDamage()
     {
+        GameManager.Instance.ScreenShake();
         GameManager.Instance.AddScore();
         Destroy(this.gameObject);
     }

@@ -58,6 +58,7 @@ public class Mage : MonoBehaviour
 
     public void TakeDamage()
     {
+        GameManager.Instance.ScreenShake();
         GameManager.Instance.AddScore();
     }
 
