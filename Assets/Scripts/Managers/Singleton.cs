@@ -18,7 +18,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
         if (instance != null)
         {
-            Debug.Log(string.Format("[Singleton] Trying to instantiate a second instance of singleton class {0}", GetType().Name));
+            //Debug.Log(string.Format("[Singleton] Trying to instantiate a second instance of singleton class {0}", GetType().Name));
 
             /*if (_isPersistant)
                 Destroy(gameObject);

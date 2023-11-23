@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public float globalTimer = 360f;
     public float altTimer = 7.5f;
     float timer;
+    bool tpeffectFlag = false;
     //public float speedMod = 1f;
 
     public float score = 0, combo = 0;
@@ -53,9 +54,15 @@ public class GameManager : Singleton<GameManager>
 
         if (globalTimer <= 0) EndGame();
 
+        if(timer <= 2 && !tpeffectFlag)
+        {
+            tpeffectFlag = true;
+            TeleportEffect.Instance.Effect();
+        }
         if (timer <= 0 )
         {
-            ChangeRoom();   
+            ChangeRoom();
+            tpeffectFlag = false;
         }
     }
 
@@ -68,8 +75,9 @@ public class GameManager : Singleton<GameManager>
         shortGame = false;
 
         currentState = gameStates.InGame;
-        SoundManager.Instance.PlayMusic((Random.Range(0, 9) + 1).ToString());
-        
+        currentMusic = Random.Range(0, 9) + 1;
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
+
     }
 
 
@@ -83,7 +91,8 @@ public class GameManager : Singleton<GameManager>
         shortGame = true;
 
         currentState = gameStates.InGame;
-        SoundManager.Instance.PlayMusic((Random.Range(0, 9) + 1).ToString());
+        currentMusic = Random.Range(0, 9) + 1;
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
 
     }
 

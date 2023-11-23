@@ -75,10 +75,6 @@ public class Player : MonoBehaviour
                 dashOnMovement = true;
             Debug.Log(dashOnMovement);
         }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            TeleportEffect.Instance.SetEffect();
-        }
 
         if (IFrameFlag)
         {

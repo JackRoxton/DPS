@@ -65,7 +65,6 @@ public class RoomManager : Singleton<RoomManager>
 
     public void ChangeRoom()
     {
-        Debug.Log("change");
         StartCoroutine(RoomChange());
     }
 
@@ -192,8 +191,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, WallSpots[wallWhere].position * 0.8f + pos + new Vector3((tilemap.cellSize.x) / 2, (tilemap.cellSize.y) / 2), Quaternion.identity);
-                /*Instantiate(warning, Vector3Int.FloorToInt(WallSpots[wallWhere].position * tilemap.cellSize.x) + pos + new Vector3((tilemap.cellSize.x)/2, (tilemap.cellSize.y) / 2), Quaternion.identity);*/
+                Instantiate(warning, WallSpots[wallWhere].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
                 
             }
         }
@@ -204,8 +202,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, WallSpots[wallWhere2].position * 0.8f + pos + new Vector3((tilemap2.cellSize.x) / 2, (tilemap2.cellSize.y) / 2), Quaternion.identity);
-                /*Instantiate(warning, Vector3Int.FloorToInt(WallSpots[wallWhere2].position * tilemap.cellSize.x) + pos + new Vector3((tilemap.cellSize.x) / 2, (tilemap.cellSize.y) / 2), Quaternion.identity);*/
+                Instantiate(warning, WallSpots[wallWhere2].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 
@@ -215,8 +212,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap3.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, WallSpots[wallWhere3].position * 0.8f + pos + new Vector3((tilemap3.cellSize.x) / 2, (tilemap3.cellSize.y) / 2), Quaternion.identity);
-                /*Instantiate(warning, Vector3Int.FloorToInt(WallSpots[wallWhere2].position * tilemap.cellSize.x) + pos + new Vector3((tilemap.cellSize.x) / 2, (tilemap.cellSize.y) / 2), Quaternion.identity);*/
+                Instantiate(warning, WallSpots[wallWhere3].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 

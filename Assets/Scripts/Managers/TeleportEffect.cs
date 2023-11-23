@@ -26,12 +26,12 @@ public class TeleportEffect : Singleton<TeleportEffect>
         DSr = Distortion.GetComponent<SpriteRenderer>();
     }
 
-    public void SetEffect()
+    public void Effect()
     {
-        StartCoroutine(Effect());
+        StartCoroutine(_Effect());
     }
 
-    public IEnumerator Effect()
+    public IEnumerator _Effect()
     {
         float time = 0f;
         float _alpha = 0f;

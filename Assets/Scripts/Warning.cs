@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Warning : MonoBehaviour
 {
-    float lifeTimer = 2f;
+    float lifeTimer = 1.9f;
+    bool playerInHb = false;
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,35 @@ public class Warning : MonoBehaviour
         lifeTimer -= Time.deltaTime;
         if(lifeTimer < 0)
         {
-            Destroy(this.gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        if(playerInHb)
+        {
+            player.GetComponent<Rigidbody2D>().velocity = new Vector3(Random.Range(-1,2), Random.Range(-1, 2), 0)*20f;
+        }
+
+        Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null) return;
+
+        if (collision.GetComponent<Player>() != null) 
+        {
+            playerInHb = true;
+            player = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision == null) return;
+
+        if (collision.GetComponent<Player>() != null) playerInHb = false;
     }
 }
