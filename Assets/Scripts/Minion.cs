@@ -113,7 +113,17 @@ public class Minion : MonoBehaviour
     {
         if (collision == null) return;
 
-        if(collision.gameObject.GetComponent<Player>() != null && !stop && !stun)
+        if(collision.gameObject.GetComponent<Player>() != null && !dmgFlag && !stop && !stun)
+        {
+            StartCoroutine(Attack());
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision == null) return;
+
+        if (collision.gameObject.GetComponent<Player>() != null && !dmgFlag && !stop && !stun)
         {
             StartCoroutine(Attack());
         }

@@ -18,7 +18,7 @@ TagManager:
   - Player
   - Weapon
   - Spell
-  - 
+  - Distortion
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Distortion
+    uniqueID: 1745776899
     locked: 0

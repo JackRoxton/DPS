@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    float duration = 0.3f;
+    float duration = 0.2f;
     public AnimationCurve shake;
 
     public IEnumerator ScreenShake()
