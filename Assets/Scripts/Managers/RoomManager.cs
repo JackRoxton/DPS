@@ -146,6 +146,8 @@ public class RoomManager : Singleton<RoomManager>
 
     public void AddPaternToTilemap(Tilemap tilemap, Tilemap tilemap2, Tilemap tilemap3)
     {
+        //if player eject
+
         BoundsInt bounds = tilemap.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {

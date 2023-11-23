@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TeleportEffect : Singleton<TeleportEffect>
+{
+    public GameObject Effects;
+    public AnimationCurve alpha;
+    float duration = 2f;
+
+    public GameObject Ripple;
+    //public AnimationCurve Rstrength;
+    //Material RMat;
+    SpriteRenderer RSr;
+
+    public GameObject Distortion;
+    //public AnimationCurve Dtrength;
+    //Material DMat;
+    SpriteRenderer DSr;
+
+    private void Start()
+    {
+        //RMat = Ripple.GetComponent<Material>();
+        //DMat = Distortion.GetComponent<Material>();
+        RSr = Ripple.GetComponent<SpriteRenderer>();
+        DSr = Distortion.GetComponent<SpriteRenderer>();
+    }
+
+    public void SetEffect()
+    {
+        StartCoroutine(Effect());
+    }
+
+    public IEnumerator Effect()
+    {
+        float time = 0f;
+        float _alpha = 0f;
+        Color Rcolor = RSr.color;
+        Color Dcolor = DSr.color;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            _alpha = alpha.Evaluate(time/duration);
+            Rcolor.a = _alpha/15;
+            Dcolor.a = _alpha*15;
+            RSr.color = Rcolor;
+            DSr.color = Dcolor;
+            
+            yield return null;
+        }
+        Rcolor.a = 0;
+        Dcolor.a = 0;
+        RSr.color = Rcolor;
+        DSr.color = Dcolor;
+    }
+}

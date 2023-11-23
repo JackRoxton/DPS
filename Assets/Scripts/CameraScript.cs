@@ -7,7 +7,12 @@ public class CameraScript : MonoBehaviour
     float duration = 0.2f;
     public AnimationCurve shake;
 
-    public IEnumerator ScreenShake()
+    public void ScreenShake()
+    {
+        StartCoroutine(_ScreenShake()); 
+    }
+
+    public IEnumerator _ScreenShake()
     {
         Vector3 startPos = transform.position;
         float time = 0f;

@@ -219,7 +219,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ScreenShake()
     {
-        StartCoroutine(Camera.main.GetComponent<CameraScript>().ScreenShake());
+        Camera.main.GetComponent<CameraScript>().ScreenShake();
     }
 
 }
