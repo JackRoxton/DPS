@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,16 +17,15 @@ public class RoomManager : Singleton<RoomManager>
     public GameObject player;
 
     public Tilemap AddWallTilemap;
-    public List<Tilemap> WallPaterns;
-
-    int wallWhere;
-    int wallWhere2;
-    int wallWhere3;
+    public List<Tilemap> inWallPaterns;
+    public List<Tilemap> outWallPaterns;
 
     public GameObject walls;
+    public GameObject outWalls;
     public GameObject mages;
     public GameObject minions;
-    List<Transform> WallSpots = new List<Transform>();
+    List<Transform> inWallSpots = new List<Transform>();
+    List<Transform> outWallSpots = new List<Transform>();
     List<Transform> MageSpots = new List<Transform>();
     List<Transform> MinionSpots = new List<Transform>();
 
@@ -36,9 +36,15 @@ public class RoomManager : Singleton<RoomManager>
         Transform[] tr = walls.GetComponentsInChildren<Transform>();
         foreach (Transform t in tr)
         {
-            WallSpots.Add(t);
+            inWallSpots.Add(t);
         }
-        WallSpots.Remove(walls.GetComponent<Transform>());
+        inWallSpots.Remove(walls.GetComponent<Transform>());
+        tr = outWalls.GetComponentsInChildren<Transform>();
+        foreach (Transform t in tr)
+        {
+            outWallSpots.Add(t);
+        }
+        outWallSpots.Remove(outWalls.GetComponent<Transform>());
         tr = mages.GetComponentsInChildren<Transform>();
         foreach(Transform t in tr)
         {
@@ -51,6 +57,7 @@ public class RoomManager : Singleton<RoomManager>
             MinionSpots.Add(t);
         }
         MinionSpots.Remove(minions.GetComponent<Transform>());
+
 
 
         StartCoroutine(FirstRoomChange());
@@ -70,60 +77,33 @@ public class RoomManager : Singleton<RoomManager>
 
     public IEnumerator FirstRoomChange()
     {
-        int wallWhat = Random.Range(0, WallPaterns.Count);
-        int wallWhat2 = Random.Range(0, WallPaterns.Count);
-        int wallWhat3 = Random.Range(0, WallPaterns.Count);
-        wallWhere = Random.Range(0, WallSpots.Count);
+        int inWallWhat = Random.Range(0, inWallPaterns.Count);
+        int inWallWhat2 = Random.Range(0, inWallPaterns.Count);
+        int outWallWhat = Random.Range(0, outWallPaterns.Count);
+        int outWallWhat2 = Random.Range(0, outWallPaterns.Count);
+
+        int inWallWhere = Random.Range(0, inWallSpots.Count);
+        int inWallWhere2;
         do
         {
-            wallWhere2 = Random.Range(0, WallSpots.Count);
-        } while(wallWhere2 == wallWhere);
+            inWallWhere2 = Random.Range(0, inWallSpots.Count);
+        } while (inWallWhere2 == inWallWhere);
+        int outWallWhere = Random.Range(0, outWallSpots.Count);
+        int outWallWhere2;
         do
         {
-            wallWhere3 = Random.Range(0, WallSpots.Count);
-        } while (wallWhere3 == wallWhere || wallWhere3 == wallWhere2);
-        int mageWhere = Random.Range(0, MageSpots.Count);
+            outWallWhere2 = Random.Range(0, outWallSpots.Count);
+        } while (outWallWhere2 == outWallWhere);
+
         int minionWhere = Random.Range(0, MinionSpots.Count);
+        int mageWhere = Random.Range(0, MageSpots.Count);
         lastMageSpot = mageWhere;
-        mage = Instantiate(magePrefab, MageSpots[mageWhere].position, Quaternion.identity);
+        mage = Instantiate(magePrefab, MageSpots[mageWhere].position,Quaternion.identity);
         mage.GetComponent<Mage>().Player = player;
 
-        AddWarnings(WallPaterns[wallWhat], WallPaterns[wallWhat2], WallPaterns[wallWhat3], minionWhere);
-
-        yield return new WaitForSeconds(2);
-
-        minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position,Quaternion.identity);
-        minion.GetComponent<Minion>().player = this.player;
-
-        AddPaternToTilemap(WallPaterns[wallWhat], WallPaterns[wallWhat2], WallPaterns[wallWhat3]);
-    }
-
-    public IEnumerator RoomChange()
-    {
-        ClearTiles();
-
-        int wallWhat = Random.Range(0, WallPaterns.Count);
-        int wallWhat2 = Random.Range(0, WallPaterns.Count);
-        int wallWhat3 = Random.Range(0, WallPaterns.Count);
-        wallWhere = Random.Range(0, WallSpots.Count);
-        do
-        {
-            wallWhere2 = Random.Range(0, WallSpots.Count);
-        } while (wallWhere2 == wallWhere);
-        do
-        {
-            wallWhere3 = Random.Range(0, WallSpots.Count);
-        } while (wallWhere3 == wallWhere || wallWhere3 == wallWhere2);
-        int minionWhere = Random.Range(0, MinionSpots.Count);
-        int mageWhere;
-        do
-        {
-            mageWhere = Random.Range(0, MageSpots.Count);
-        } while (mageWhere == lastMageSpot);
-        lastMageSpot = mageWhere;
-        mage.GetComponent<Mage>().Teleport(MageSpots[mageWhere]);
-
-        AddWarnings(WallPaterns[wallWhat], WallPaterns[wallWhat2],WallPaterns[wallWhat3], minionWhere);
+        AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
+        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
+        AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
         yield return new WaitForSeconds(2);
 
@@ -135,7 +115,56 @@ public class RoomManager : Singleton<RoomManager>
             minion.GetComponent<Minion>().player = this.player;
         }
 
-        AddPaternToTilemap(WallPaterns[wallWhat], WallPaterns[wallWhat2], WallPaterns[wallWhat3]);
+        AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
+        AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
+    }
+
+    public IEnumerator RoomChange()
+    {
+        ClearTiles();
+        int inWallWhat = Random.Range(0, inWallPaterns.Count);
+        int inWallWhat2 = Random.Range(0, inWallPaterns.Count);
+        int outWallWhat = Random.Range(0, outWallPaterns.Count);
+        int outWallWhat2 = Random.Range(0, outWallPaterns.Count);
+
+        int inWallWhere = Random.Range(0, inWallSpots.Count);
+        int inWallWhere2;
+        do
+        {
+            inWallWhere2 = Random.Range(0, inWallSpots.Count);
+        } while (inWallWhere2 == inWallWhere);
+        int outWallWhere = Random.Range(0, outWallSpots.Count);
+        int outWallWhere2;
+        do
+        {
+            outWallWhere2 = Random.Range(0, outWallSpots.Count);
+        } while (outWallWhere2 == outWallWhere);
+
+        int minionWhere = Random.Range(0, MinionSpots.Count);
+        int mageWhere;
+        do
+        {
+            mageWhere = Random.Range(0, MageSpots.Count);
+        } while (mageWhere == lastMageSpot);
+        lastMageSpot = mageWhere;
+        mage.GetComponent<Mage>().Teleport(MageSpots[mageWhere]);
+
+        AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
+        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
+        AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
+
+        yield return new WaitForSeconds(2);
+
+        SoundManager.Instance.Play("spawn");
+
+        if (minion == null)
+        {
+            minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+            minion.GetComponent<Minion>().player = this.player;
+        }
+
+        AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
+        AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
     }
 
     void ClearTiles()
@@ -143,18 +172,15 @@ public class RoomManager : Singleton<RoomManager>
         AddWallTilemap.ClearAllTiles();
     }
 
-    public void AddPaternToTilemap(Tilemap tilemap, Tilemap tilemap2, Tilemap tilemap3)
+    public void AddInsidePaterns(Tilemap tilemap, Tilemap tilemap2, int where, int where2)
     {
-        //if player eject
-
         BoundsInt bounds = tilemap.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                //AddWallTilemap.SetTile(pos, tile);
-                AddWallTilemap.SetTile(Vector3Int.FloorToInt(WallSpots[wallWhere].position + pos), tile);
+                AddWallTilemap.SetTile(Vector3Int.FloorToInt(inWallSpots[where].position + pos), tile);
             }
         }
 
@@ -164,26 +190,37 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                //AddWallTilemap.SetTile(pos, tile);
-                AddWallTilemap.SetTile(Vector3Int.FloorToInt(WallSpots[wallWhere2].position + pos), tile);
+                AddWallTilemap.SetTile(Vector3Int.FloorToInt(inWallSpots[where2].position + pos), tile);
             }
         }
 
-        BoundsInt bounds3 = tilemap3.cellBounds;
-        foreach (Vector3Int pos in bounds3.allPositionsWithin)
+    }
+
+    public void AddOutsidePaterns(Tilemap tilemap, Tilemap tilemap2, int where, int where2)
+    {
+        BoundsInt bounds = tilemap.cellBounds;
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
-            Tile tile = tilemap3.GetTile<Tile>(pos);
+            Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                //AddWallTilemap.SetTile(pos, tile);
-                AddWallTilemap.SetTile(Vector3Int.FloorToInt(WallSpots[wallWhere3].position + pos), tile);
+                AddWallTilemap.SetTile(Vector3Int.FloorToInt(outWallSpots[where].position + pos), tile);
+            }
+        }
+
+        BoundsInt bounds2 = tilemap2.cellBounds;
+        foreach (Vector3Int pos in bounds2.allPositionsWithin)
+        {
+            Tile tile = tilemap2.GetTile<Tile>(pos);
+            if (tile != null)
+            {
+                AddWallTilemap.SetTile(Vector3Int.FloorToInt(outWallSpots[where2].position + pos), tile);
             }
         }
     }
 
-    public void AddWarnings(Tilemap tilemap, Tilemap tilemap2,Tilemap tilemap3, int minionWhere)
+    public void AddInWarnings(Tilemap tilemap, Tilemap tilemap2, int where, int where2)
     {
-        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
 
         BoundsInt bounds = tilemap.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
@@ -191,7 +228,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, WallSpots[wallWhere].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, inWallSpots[where].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
                 
             }
         }
@@ -202,17 +239,32 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, WallSpots[wallWhere2].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, inWallSpots[where2].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 
-        BoundsInt bounds3 = tilemap3.cellBounds;
-        foreach (Vector3Int pos in bounds3.allPositionsWithin)
+    }
+    public void AddOutWarnings(Tilemap tilemap, Tilemap tilemap2, int where, int where2)
+    {
+
+        BoundsInt bounds = tilemap.cellBounds;
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
-            Tile tile = tilemap3.GetTile<Tile>(pos);
+            Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, WallSpots[wallWhere3].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, outWallSpots[where].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+
+            }
+        }
+
+        BoundsInt bounds2 = tilemap2.cellBounds;
+        foreach (Vector3Int pos in bounds2.allPositionsWithin)
+        {
+            Tile tile = tilemap2.GetTile<Tile>(pos);
+            if (tile != null)
+            {
+                Instantiate(warning, outWallSpots[where2].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 

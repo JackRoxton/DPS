@@ -34,7 +34,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GradientScale: 1
+    - _GradientScale: 2
     m_Colors:
     - _DistortionPower: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _DistortionSpeed: {r: 1, g: 1, b: 0, a: 0}

@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     bool tpeffectFlag = false;
     //public float speedMod = 1f;
 
+    public float mageHP = 100000;
     public float score = 0, combo = 0;
     public float maxCombo = 0;
     public float money = 0;
@@ -46,6 +47,8 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         if(endFlag) return;
+
+
 
         if (currentState == gameStates.InGame) {
             globalTimer -= Time.deltaTime;
@@ -154,7 +157,12 @@ public class GameManager : Singleton<GameManager>
     {
         combo++;
         if (combo > maxCombo) maxCombo = combo;
-        score += playerAttack * combo;
+            score += playerAttack * combo;
+
+        /*if(score >= mageHP)
+        {
+            
+        }*/
     }
 
     public void DPSCycle()
@@ -212,6 +220,7 @@ public class GameManager : Singleton<GameManager>
     public void BuySkill(Skills type, int cost)
     {
         money -= cost;
+        UIManager.Instance.moneyText.text = money.ToString();
 
         switch (type)
         {

@@ -41,7 +41,7 @@ public class TeleportEffect : Singleton<TeleportEffect>
         {
             time += Time.deltaTime;
             _alpha = alpha.Evaluate(time/duration);
-            Rcolor.a = _alpha/15;
+            Rcolor.a = _alpha/12;
             Dcolor.a = _alpha*15;
             RSr.color = Rcolor;
             DSr.color = Dcolor;
