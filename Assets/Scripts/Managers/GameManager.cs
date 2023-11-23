@@ -159,10 +159,10 @@ public class GameManager : Singleton<GameManager>
         if (combo > maxCombo) maxCombo = combo;
             score += playerAttack * combo;
 
-        /*if(score >= mageHP)
+        if(score >= mageHP)
         {
-            
-        }*/
+            WinGame();
+        }
     }
 
     public void DPSCycle()
@@ -197,6 +197,15 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.EndGame();
         RoomManager.Instance.EndGame();
         
+    }
+
+    public void WinGame()
+    {
+        Debug.Log("Game Won");
+        Time.timeScale = 0;
+        endFlag = true;
+        UIManager.Instance.WinGame();
+        RoomManager.Instance.WinGame();
     }
 
     public bool Affordable(int cost)

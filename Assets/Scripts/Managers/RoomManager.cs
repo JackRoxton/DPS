@@ -277,6 +277,13 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().endFlag = true;
     }
 
+    public void WinGame()
+    {
+        Destroy(mage);
+        Destroy(minion);
+        player.GetComponent<Player>().endFlag = true;
+    }
+
     public void Pause(bool pause)
     {
         player.GetComponent<Player>().Pause(pause);

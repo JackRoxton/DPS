@@ -138,6 +138,12 @@ public class UIManager : Singleton<UIManager>
             endDpsText.text = "DPS : " + (GameManager.Instance.score / 360).ToString();
     }
 
+    public void WinGame()
+    {
+        InGamePanel.SetActive(false);
+        EndPanel.SetActive(true);
+    }
+
     public void ResetVariables()
     {
         dps.ResetLights();
