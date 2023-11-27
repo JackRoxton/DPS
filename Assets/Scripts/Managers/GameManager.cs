@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     public bool playerDashOnMovement = false;
 
     public bool shortGame = false;
+    public bool tutorial = true;
 
     int currentMusic = 0;
 
@@ -31,7 +32,8 @@ public class GameManager : Singleton<GameManager>
         SkillTree,
         Pause,
         Settings,
-        InGame
+        InGame,
+        Tutorial
     }
     public gameStates currentState = gameStates.MainMenu;
 
@@ -72,23 +74,41 @@ public class GameManager : Singleton<GameManager>
     public void Play()
     {
         ResetVariables();
-        SceneManager.LoadScene(1);
-        Time.timeScale = 1;
+        if(tutorial)
+        {
+            tutorial = false;
+            //UIManager.Instance.Fade(2);
+            //SceneManager.LoadScene(2);
+            currentState = gameStates.Tutorial;
+            Time.timeScale = 1;
+            //UIManager.Instance.TutoDialogue();
+        }
+        else
+        {
+            //UIManager.Instance.Fade(1);
+            //SceneManager.LoadScene(1);
+            currentState = gameStates.InGame;
+            Time.timeScale = 1;
 
-        shortGame = false;
+            shortGame = false;
 
-        currentState = gameStates.InGame;
-        currentMusic = Random.Range(0, 9) + 1;
-        SoundManager.Instance.PlayMusic(currentMusic.ToString());
+            currentMusic = Random.Range(0, 9) + 1;
+            SoundManager.Instance.PlayMusic(currentMusic.ToString());
+        }
 
     }
 
+    public void ChangeScene(int i)
+    {
+        SceneManager.LoadScene(i);
+    }
 
     public void PlayShort()
     {
         ResetVariables();
         globalTimer = 60f;
-        SceneManager.LoadScene(1);
+        //UIManager.Instance.Fade(1);
+        //SceneManager.LoadScene(1);
         Time.timeScale = 1;
 
         shortGame = true;
@@ -139,7 +159,8 @@ public class GameManager : Singleton<GameManager>
         money += score;
         score = 0;
         currentState = gameStates.MainMenu;
-        SceneManager.LoadScene(0);
+        //UIManager.Instance.Fade(0);
+        //SceneManager.LoadScene(0);
     }
 
     public void ResetVariables()

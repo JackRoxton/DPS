@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CameraScript : MonoBehaviour
 {
-    float duration = 0.2f;
+    float shakeDuration = 0.2f;
     public AnimationCurve shake;
 
     public void ScreenShake()
@@ -16,13 +18,15 @@ public class CameraScript : MonoBehaviour
     {
         Vector3 startPos = transform.position;
         float time = 0f;
-        while(time < duration)
+        while(time < shakeDuration)
         {
             time += Time.deltaTime;
-            float strength = shake.Evaluate(time/duration);
+            float strength = shake.Evaluate(time/ shakeDuration);
             transform.position = startPos+Random.insideUnitSphere * strength;
             yield return null;
         }
         transform.position = startPos;
     }
+
+    
 }

@@ -8,14 +8,23 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject MainMenuPanel, SkillTreePanel;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
-    public GameObject SettingsPanel; //tuto, dialogue
+    public GameObject SettingsPanel, DialoguePanel;
 
     public TMP_Text timerText, scoreText, comboText;
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
+    public TMP_Text dialogueText, nameText;
+    public Image dialogueImage;
     public DPSCycle dps;
 
+    public Dialogue Tuto, End;
+
+    public Fade fade;
+
     public Slider masterSlider, musicsSlider, effectsSlider;
+    public bool tutorial = true;
+    bool tutoFlag = true;
+
 
     public enum menuStates
     {
@@ -23,7 +32,8 @@ public class UIManager : Singleton<UIManager>
         SkillTree,
         Pause,
         Settings,
-        InGame
+        InGame,
+        Tutorial
     }
     public menuStates currentState = menuStates.MainMenu;
 
@@ -43,20 +53,40 @@ public class UIManager : Singleton<UIManager>
             comboText.text = GameManager.Instance.combo.ToString();
         }
 
+        if(currentState == menuStates.Tutorial && tutoFlag) 
+        {
+            TutoDialogue();
+            tutoFlag = false;
+        }
     }
 
     public void Play()
     {
-        currentState = menuStates.InGame;
+        if(tutorial)
+        {
+            Fade(2);
+            currentState = menuStates.Tutorial;
+            DialoguePanel.SetActive(true);
+            tutorial = false;
+        }
+        else
+        {
+            Fade(1);
+            currentState = menuStates.InGame;
+            InGamePanel.SetActive(true);
+        }
+        
 
         GameManager.Instance.Play();
 
         MainMenuPanel.SetActive(false);
-        InGamePanel.SetActive(true);
+        
     }
 
     public void PlayShort()
     {
+        Fade(1);
+
         currentState = menuStates.InGame;
 
         GameManager.Instance.PlayShort();
@@ -77,6 +107,8 @@ public class UIManager : Singleton<UIManager>
 
     public void MainMenu()
     {
+        Fade(0);
+
         currentState = menuStates.MainMenu;
 
         MainMenuPanel.SetActive(true);
@@ -160,6 +192,38 @@ public class UIManager : Singleton<UIManager>
     public void EffectsSlider()
     {
         SoundManager.Instance.ModifySFXVolume(effectsSlider.value);
+    }
+
+    public bool DialogueIsActive()
+    {
+        return DialoguePanel.activeSelf;
+    }
+
+    public void TutoDialogue()
+    {
+        //DialogueManager.Instance.dialogueText = dialogueText;
+        //DialogueManager.Instance.nameText = nameText;
+        DialoguePanel.SetActive(true);
+        DialogueManager.Instance.StartDialogue(Tuto);
+    }
+
+    public void NextDialogue()
+    {
+        DialogueManager.Instance.DisplayNextSentence();
+    }
+
+    public void EndDialogue()
+    {
+        DialoguePanel.SetActive(false);
+        if(currentState == menuStates.Tutorial)
+        {
+            Play();
+        }
+    }
+
+    public void Fade(int i)
+    {
+        fade.FadeOut(i);
     }
 
     public void Quit()
