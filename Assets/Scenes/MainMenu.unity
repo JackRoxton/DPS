@@ -2429,23 +2429,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8654e72be1fe6b54885ce3ce4114c58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 0.4
   fade:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.0068244934
       value: 0.99560547
-      inSlope: -0.9983212
-      outSlope: -0.9983212
+      inSlope: -2.5216854
+      outSlope: -2.5216854
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0019076
+      time: 0.40077233
       value: 0.002192982
-      inSlope: -0.9983212
-      outSlope: -0.9983212
+      inSlope: -2.5216854
+      outSlope: -2.5216854
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
