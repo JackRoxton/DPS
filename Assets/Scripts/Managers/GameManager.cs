@@ -77,16 +77,11 @@ public class GameManager : Singleton<GameManager>
         if(tutorial)
         {
             tutorial = false;
-            //UIManager.Instance.Fade(2);
-            //SceneManager.LoadScene(2);
             currentState = gameStates.Tutorial;
             Time.timeScale = 1;
-            //UIManager.Instance.TutoDialogue();
         }
         else
         {
-            //UIManager.Instance.Fade(1);
-            //SceneManager.LoadScene(1);
             currentState = gameStates.InGame;
             Time.timeScale = 1;
 
@@ -106,16 +101,26 @@ public class GameManager : Singleton<GameManager>
     public void PlayShort()
     {
         ResetVariables();
+        if (tutorial)
+        {
+            tutorial = false;
+            currentState = gameStates.Tutorial;
+            Time.timeScale = 1;
+        }
+        else
+        {
+            currentState = gameStates.InGame;
+            Time.timeScale = 1;
+
+            //shortGame = true;
+
+            currentMusic = Random.Range(0, 9) + 1;
+            SoundManager.Instance.PlayMusic(currentMusic.ToString());
+        }
         globalTimer = 60f;
-        //UIManager.Instance.Fade(1);
-        //SceneManager.LoadScene(1);
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
 
         shortGame = true;
-
-        currentState = gameStates.InGame;
-        currentMusic = Random.Range(0, 9) + 1;
-        SoundManager.Instance.PlayMusic(currentMusic.ToString());
 
     }
 
@@ -136,7 +141,7 @@ public class GameManager : Singleton<GameManager>
         else if (currentState == gameStates.InGame)
         {
             SoundManager.Instance.PauseMusic(currentMusic.ToString());
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             currentState = gameStates.Pause;
             UIManager.Instance.Pause();
             RoomManager.Instance.Pause(true);
@@ -195,7 +200,7 @@ public class GameManager : Singleton<GameManager>
 
     public void TakeDamage()
     {
-        Debug.Log("a");
+        ScreenShake();
         combo = 0;
     }
 

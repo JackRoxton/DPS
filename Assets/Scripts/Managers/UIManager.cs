@@ -25,6 +25,8 @@ public class UIManager : Singleton<UIManager>
     public bool tutorial = true;
     bool tutoFlag = true;
 
+    float fadeTime = 0.1f;
+    bool fadeFlag = true;
 
     public enum menuStates
     {
@@ -46,7 +48,7 @@ public class UIManager : Singleton<UIManager>
     // Update is called once per frame
     void Update()
     {
-        if (currentState == menuStates.InGame)
+        if (currentState == menuStates.InGame || currentState == menuStates.Tutorial)
         {
             timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
@@ -58,41 +60,95 @@ public class UIManager : Singleton<UIManager>
             TutoDialogue();
             tutoFlag = false;
         }
+
+
+    }
+
+    IEnumerator FadeTime(int i)
+    {
+        yield return new WaitForSeconds(fadeTime);
+        fadeFlag = false;
+
+        switch(i){
+            case 0: 
+                Play();
+                break;
+            case 1:
+                PlayShort();
+                break;
+            case 2:
+                MainMenu();
+                break;
+        }
     }
 
     public void Play()
     {
+        if (fadeFlag)
+        {
+            if (tutorial)
+                Fade(2);
+            else
+                Fade(1);
+
+            StartCoroutine(FadeTime(0));
+            return;
+        }
+
         if(tutorial)
         {
-            Fade(2);
+            //Fade(2);
             currentState = menuStates.Tutorial;
             DialoguePanel.SetActive(true);
             tutorial = false;
         }
         else
         {
-            Fade(1);
+            //Fade(1);
             currentState = menuStates.InGame;
-            InGamePanel.SetActive(true);
+            
         }
         
 
         GameManager.Instance.Play();
 
         MainMenuPanel.SetActive(false);
-        
+        InGamePanel.SetActive(true);
+        fadeFlag = true;
     }
 
     public void PlayShort()
     {
-        Fade(1);
+        if (fadeFlag)
+        {
+            if (tutorial)
+                Fade(2);
+            else
+                Fade(1);
 
-        currentState = menuStates.InGame;
+            StartCoroutine(FadeTime(1));
+            return;
+        }
+        //Fade(1);
+        if (tutorial)
+        {
+            //Fade(2);
+            currentState = menuStates.Tutorial;
+            DialoguePanel.SetActive(true);
+            tutorial = false;
+        }
+        else
+        {
+            //Fade(1);
+            currentState = menuStates.InGame;
+            
+        }
 
         GameManager.Instance.PlayShort();
 
         MainMenuPanel.SetActive(false);
         InGamePanel.SetActive(true);
+        fadeFlag = true;
     }
 
     public void Resume()
@@ -107,7 +163,14 @@ public class UIManager : Singleton<UIManager>
 
     public void MainMenu()
     {
-        Fade(0);
+        if (fadeFlag)
+        {
+            Fade(0);
+
+            StartCoroutine(FadeTime(2));
+            return;
+        }
+        //Fade(0);
 
         currentState = menuStates.MainMenu;
 
@@ -117,6 +180,8 @@ public class UIManager : Singleton<UIManager>
         EndPanel.SetActive(false);
 
         GameManager.Instance.ToMenu();
+
+        fadeFlag = true;
     }
 
     public void Pause()
@@ -201,8 +266,6 @@ public class UIManager : Singleton<UIManager>
 
     public void TutoDialogue()
     {
-        //DialogueManager.Instance.dialogueText = dialogueText;
-        //DialogueManager.Instance.nameText = nameText;
         DialoguePanel.SetActive(true);
         DialogueManager.Instance.StartDialogue(Tuto);
     }

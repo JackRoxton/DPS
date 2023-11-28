@@ -19,6 +19,10 @@ public class Warning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.currentState == GameManager.gameStates.Pause)
+        {
+            return;
+        }
         lifeTimer -= Time.deltaTime;
         if(lifeTimer < 0)
         {

@@ -61,9 +61,10 @@ public class DialogueManager : Singleton<DialogueManager>
             EndDialogue();
             return;
         }
+        string name = names.Dequeue();
+
         
         string sentence = sentences.Dequeue();
-        string name = names.Dequeue();
         if (name.ToString() == "Player")
             image.sprite = characters[0];
         else

@@ -106,6 +106,10 @@ public class RoomManager : Singleton<RoomManager>
         AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
         yield return new WaitForSeconds(2);
+        while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
+        {
+            yield return new WaitForEndOfFrame();
+        }
 
         SoundManager.Instance.Play("spawn");
 
@@ -154,6 +158,10 @@ public class RoomManager : Singleton<RoomManager>
         AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
         yield return new WaitForSeconds(2);
+        while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
+        {
+            yield return new WaitForEndOfFrame();
+        }
 
         SoundManager.Instance.Play("spawn");
 
@@ -228,7 +236,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, inWallSpots[where].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, inWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
                 
             }
         }
@@ -239,7 +247,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, inWallSpots[where2].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, inWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 
@@ -253,7 +261,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, outWallSpots[where].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, outWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
 
             }
         }
@@ -264,7 +272,7 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, outWallSpots[where2].position * 0.8f + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                Instantiate(warning, outWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 

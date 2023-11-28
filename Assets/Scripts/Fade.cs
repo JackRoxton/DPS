@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Fade : MonoBehaviour
 {
-    public float fadeDuration = 0.4f;
+    public float fadeDuration = 0.1f;
     public AnimationCurve fade;
     public Image spr;
 
