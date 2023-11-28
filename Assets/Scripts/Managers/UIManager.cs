@@ -44,6 +44,7 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        
     }
 
     // Update is called once per frame

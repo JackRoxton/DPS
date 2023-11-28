@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (endFlag) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.Pause();
+        }
+
         if (pause) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -62,10 +68,6 @@ public class Player : MonoBehaviour
         {
             if(currentState == states.Base)
                 Dodge();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameManager.Instance.Pause();
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
