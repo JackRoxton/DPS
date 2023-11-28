@@ -47,6 +47,9 @@ public class Weapon : MonoBehaviour
             {
                 collision.gameObject.GetComponent<Minion>().TakeDamage();
                 UIManager.Instance.dps.SLight(true);
+                Transform trs = this.transform;
+                trs.position = Physics2D.ClosestPoint(this.transform.position,collision);
+                VFXManager.Instance.PlayEffectAt("Hit",trs);
                 SoundManager.Instance.Play("hit");
             }
             else Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
@@ -68,6 +71,9 @@ public class Weapon : MonoBehaviour
                 collision.gameObject.GetComponent<Mage>().TakeDamage();
                 UIManager.Instance.dps.SLight(true);
                 player.KnockBack(player.transform.position - collision.gameObject.transform.position);
+                Transform trs = this.transform;
+                trs.position = Physics2D.ClosestPoint(this.transform.position, collision);
+                VFXManager.Instance.PlayEffectAt("Hit", trs);
                 attackFlag = true;
                 SoundManager.Instance.Play("hit");
             }

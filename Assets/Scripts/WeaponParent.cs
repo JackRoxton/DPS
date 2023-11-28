@@ -7,7 +7,7 @@ using Vector3 = UnityEngine.Vector3;
 public class WeaponParent : MonoBehaviour
 {
     public Vector3 mousePos;
-    bool faceR = true;
+    public bool faceR = true;
     public GameObject player;
 
     private void Update()

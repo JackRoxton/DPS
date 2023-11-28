@@ -26,8 +26,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void StartDialogue(Dialogue dialogue)
     {
-
-
         sentences.Clear();
         names.Clear();
 

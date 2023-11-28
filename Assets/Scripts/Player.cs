@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
                 IFrame = true;
                 UIManager.Instance.dps.PLight(true);
                 parriedMinion.GetComponent<Minion>().Stunned();
+                VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
                 AddScore();
             }
             if(timer <= 0)
@@ -138,6 +139,7 @@ public class Player : MonoBehaviour
     {
         controller.Play("Dodge", 0);
         SoundManager.Instance.Play("dodge");
+        VFXManager.Instance.PlayEffectOn("DodgeTrail",this.gameObject);
 
         Vector3 dir = Vector3.zero;
 
@@ -184,10 +186,16 @@ public class Player : MonoBehaviour
             else 
             {
                 if (collision.gameObject.GetComponent<MageProjectile>().hitFlag == true)
+                {
                     AddScore();
+                    UIManager.Instance.dps.DLight(true);
+                    if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
+                        VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
+                    else
+                        VFXManager.Instance.PlayEffectAt("Dodge", this.transform);
+                }
                 collision.gameObject.GetComponent<MageProjectile>().hitFlag = false;
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
-                UIManager.Instance.dps.DLight(true);
             }
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
@@ -213,6 +221,7 @@ public class Player : MonoBehaviour
                 UIManager.Instance.dps.PLight(true);
                 collision.gameObject.GetComponent<Minion>().Stunned();
                 AddScore();
+                VFXManager.Instance.PlayEffectOn("Parry",this.gameObject);
             }
         }
     }

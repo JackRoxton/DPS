@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     bool tpeffectFlag = false;
     //public float speedMod = 1f;
 
-    public float mageHP = 100000;
+    public float mageHP = 10000;
     public float score = 0, combo = 0;
     public float maxCombo = 0;
     public float money = 0;
@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
         MainMenu,
         SkillTree,
         Pause,
-        Settings,
+        Settings,//
         InGame,
         Tutorial
     }
@@ -116,6 +116,7 @@ public class GameManager : Singleton<GameManager>
 
             currentMusic = Random.Range(0, 9) + 1;
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
+            //shortGame = true;
         }
         globalTimer = 60f;
         //Time.timeScale = 1;
@@ -183,7 +184,8 @@ public class GameManager : Singleton<GameManager>
     {
         combo++;
         if (combo > maxCombo) maxCombo = combo;
-            score += playerAttack * combo;
+
+        score += playerAttack * combo;
 
         if(score >= mageHP)
         {
@@ -194,8 +196,7 @@ public class GameManager : Singleton<GameManager>
     public void DPSCycle()
     {
         combo += 5;
-        if(combo > maxCombo) maxCombo = combo;
-        score += playerAttack * combo;
+        AddScore();
     }
 
     public void TakeDamage()
@@ -217,7 +218,7 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         //money += score;
         endFlag = true;
         UIManager.Instance.EndGame();
@@ -228,7 +229,7 @@ public class GameManager : Singleton<GameManager>
     public void WinGame()
     {
         Debug.Log("Game Won");
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         endFlag = true;
         UIManager.Instance.WinGame();
         RoomManager.Instance.WinGame();

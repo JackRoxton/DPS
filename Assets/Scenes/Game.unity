@@ -9716,6 +9716,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1970017172}
+  - component: {fileID: 1970017173}
   m_Layer: 0
   m_Name: VFXManager
   m_TagString: Untagged
@@ -9738,6 +9739,23 @@ Transform:
   m_Father: {fileID: 906417713}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970017173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970017171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99cd5b67ce7206840a89419fd31b9015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+  - {fileID: 1737076673091573975, guid: 6be0928ed7c5e20418840be51ca7df58, type: 3}
+  - {fileID: 5735178423047464951, guid: 24bc1a50063991047ac499464d5994c5, type: 3}
+  - {fileID: 8354731240332490430, guid: d627faeed50c15740a5983ecc3f2fa43, type: 3}
+  - {fileID: 766259924853196108, guid: 9452d88c53411e14b813df92abbcd39e, type: 3}
 --- !u!1 &2066760547
 GameObject:
   m_ObjectHideFlags: 0

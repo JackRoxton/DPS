@@ -2358,7 +2358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &261781533
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2486,7 +2486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalTimer: 360
   altTimer: 7.5
-  mageHP: 100000
+  mageHP: 10000
   score: 0
   combo: 0
   maxCombo: 0
@@ -4310,7 +4310,7 @@ MonoBehaviour:
   dialogueImage: {fileID: 1906642595}
   dps: {fileID: 1658510659}
   Tuto: {fileID: 845080339}
-  End: {fileID: 1119908501}
+  Win: {fileID: 1119908501}
   fade: {fileID: 261781536}
   masterSlider: {fileID: 549388873}
   musicsSlider: {fileID: 1086462393}
@@ -4736,10 +4736,14 @@ MonoBehaviour:
   - Player
   - Mage
   - Player
+  - Mage
+  - Mage
   sentences:
-  - I speak
-  - My turn now
-  - I speak again
+  - Left Click to Slash the Mage and Minions,
+  - Right Click to Parry the Minions attacks,
+  - Space to dodge the Mages spell,
+  - Do all three to complete the DPS Cycle.
+  - Get as much score as possible to defeat the Mage, Good Luck !
 --- !u!1 &871129992
 GameObject:
   m_ObjectHideFlags: 0
@@ -6671,7 +6675,7 @@ GameObject:
   - component: {fileID: 1119908500}
   - component: {fileID: 1119908501}
   m_Layer: 5
-  m_Name: DialogueEnd
+  m_Name: DialogueWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6712,9 +6716,11 @@ MonoBehaviour:
   names:
   - Mage
   - Mage
+  - Player
   sentences:
   - Ono am ded
-  - Bye
+  - Bye gg no re
+  - Yay
 --- !u!1 &1135827600
 GameObject:
   m_ObjectHideFlags: 0

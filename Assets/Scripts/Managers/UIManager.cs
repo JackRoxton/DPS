@@ -17,7 +17,8 @@ public class UIManager : Singleton<UIManager>
     public Image dialogueImage;
     public DPSCycle dps;
 
-    public Dialogue Tuto, End;
+    public Dialogue Tuto, Win;
+    Dialogue currentDialogue;
 
     public Fade fade;
 
@@ -33,7 +34,7 @@ public class UIManager : Singleton<UIManager>
         MainMenu,
         SkillTree,
         Pause,
-        Settings,
+        Settings,//
         InGame,
         Tutorial
     }
@@ -80,6 +81,7 @@ public class UIManager : Singleton<UIManager>
                 MainMenu();
                 break;
         }
+        fade.gameObject.SetActive(false);
     }
 
     public void Play()
@@ -237,8 +239,9 @@ public class UIManager : Singleton<UIManager>
 
     public void WinGame()
     {
+        WinDialogue();
         InGamePanel.SetActive(false);
-        EndPanel.SetActive(true);
+        //EndPanel.SetActive(true);
     }
 
     public void ResetVariables()
@@ -268,6 +271,14 @@ public class UIManager : Singleton<UIManager>
     {
         DialoguePanel.SetActive(true);
         DialogueManager.Instance.StartDialogue(Tuto);
+        currentDialogue = Tuto;
+    }
+
+    public void WinDialogue()
+    {
+        DialoguePanel.SetActive(true);
+        DialogueManager.Instance.StartDialogue(Win);
+        currentDialogue = Win;
     }
 
     public void NextDialogue()
@@ -278,14 +289,22 @@ public class UIManager : Singleton<UIManager>
     public void EndDialogue()
     {
         DialoguePanel.SetActive(false);
-        if(currentState == menuStates.Tutorial)
+        if(currentDialogue == Tuto)
         {
-            Play();
+            if(GameManager.Instance.shortGame)
+                PlayShort();
+            else
+                Play();
+        }
+        else if(currentDialogue == Win)
+        {
+            EndGame();
         }
     }
 
     public void Fade(int i)
     {
+        fade.gameObject.SetActive(true);
         fade.FadeOut(i);
     }
 
