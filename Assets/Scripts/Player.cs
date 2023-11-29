@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
     {
         Base,
         Dodge,
-        Parry
+        Parry,
+        Dialogue
     }
     public states currentState = states.Base;
 

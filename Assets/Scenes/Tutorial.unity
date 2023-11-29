@@ -9098,6 +9098,10 @@ PrefabInstance:
       propertyPath: dashPower
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5097674866760596053, guid: c2255662fdc103047a70e8868695593c, type: 3}
+      propertyPath: currentState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5097674866760596055, guid: c2255662fdc103047a70e8868695593c, type: 3}
       propertyPath: m_RootOrder
       value: 1

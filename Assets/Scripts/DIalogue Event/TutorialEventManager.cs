@@ -31,18 +31,24 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
                 yield return new WaitForSeconds(1);
                 break;
             case "WaitSlash":
+                player.GetComponent<Player>().currentState = Player.states.Base;//??
                 yield return new WaitUntil(UIManager.Instance.dps.GetS);
+                player.GetComponent<Player>().currentState = Player.states.Dialogue;
                 break;
             case "WaitDodge":
                 mage.GetComponent<Mage>().tuto = false;
+                player.GetComponent<Player>().currentState = Player.states.Base;
                 yield return new WaitUntil(UIManager.Instance.dps.GetD);
+                player.GetComponent<Player>().currentState = Player.states.Dialogue;
                 mage.GetComponent<Mage>().tuto = true;
                 break;
             case "WaitParry":
                 minion = Instantiate(minionPrefab, minionSpot.position, Quaternion.identity);
                 minion.GetComponent<Minion>().player = player;
                 minion.GetComponent<Minion>().invincible = true;
+                player.GetComponent<Player>().currentState = Player.states.Base;
                 yield return new WaitUntil(UIManager.Instance.dps.GetP);
+                player.GetComponent<Player>().currentState = Player.states.Dialogue;
                 Destroy(minion);
                 break;
         }
