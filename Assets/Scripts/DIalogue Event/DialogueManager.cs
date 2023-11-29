@@ -60,9 +60,14 @@ public class DialogueManager : Singleton<DialogueManager>
             return;
         }
         string name = names.Dequeue();
-
-        
         string sentence = sentences.Dequeue();
+
+        if(name == "Event")
+        {
+            TutorialEventManager.Instance.Event(sentence);
+            return;
+        }
+        
         if (name.ToString() == "Player")
             image.sprite = characters[0];
         else

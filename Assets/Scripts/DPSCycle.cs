@@ -9,59 +9,80 @@ public class DPSCycle : MonoBehaviour
     bool Dstate = false;
     bool Pstate = false;
     bool Sstate = false;
+    bool doneOnce = false;
 
-    public void DLight(bool state)
+    public void Light(string name, bool state)
     {
-        if(state == Dstate) return;
-
-        if (state)
+        switch(name)
         {
-            D.GetComponent<Image>().color = Color.yellow;
-            Dstate = true;
+            case "D":
+                if (state == Dstate) return;
+                if (state)
+                {
+                    D.GetComponent<Image>().color = Color.yellow;
+                    Dstate = true;
+                }
+                else
+                {
+                    D.GetComponent<Image>().color = Color.white;
+                    Dstate = false;
+                }
+                break;
+            case "P":
+                if (state == Pstate) return;
+                if (state)
+                {
+                    P.GetComponent<Image>().color = Color.yellow;
+                    Pstate = true;
+                }
+                else
+                {
+                    P.GetComponent<Image>().color = Color.white;
+                    Pstate = false;
+                }
+                break;
+            case "S":
+                if (state == Sstate) return;
+                if (state)
+                {
+                    S.GetComponent<Image>().color = Color.yellow;
+                    Sstate = true;
+                }
+                else
+                {
+                    S.GetComponent<Image>().color = Color.white;
+                    Sstate = false;
+                }
+                break;
         }
-        else
-        {
-            D.GetComponent<Image>().color = Color.white;
-            Dstate = false;
-        }
-
         CheckLights();
     }
 
-    public void PLight(bool state)
+    /*public bool GetState(string name)
     {
-        if (state == Pstate) return;
-
-        if (state)
+        switch (name)
         {
-            P.GetComponent<Image>().color = Color.yellow;
-            Pstate = true;
+            case "D":
+                return Dstate;
+            case "P":
+                return Pstate;
+            case "S":
+                return Sstate;
         }
-        else
-        {
-            P.GetComponent<Image>().color = Color.white;
-            Pstate = false;
-        }
+        return false;
+    }*/
 
-        CheckLights();
+    public bool GetD()
+    {
+        return Dstate;
     }
-
-    public void SLight(bool state)
+    public bool GetP()
     {
-        if (state == Sstate) return;
-
-        if (state)
-        {
-            S.GetComponent<Image>().color = Color.yellow;
-            Sstate = true;
-        }
-        else
-        {
-            S.GetComponent<Image>().color = Color.white;
-            Sstate = false;
-        }
-
-        CheckLights();
+        return doneOnce;//pour tuto
+    }
+    public bool GetS()
+    {
+        return Sstate;
     }
 
     public void CheckLights()
@@ -71,13 +92,14 @@ public class DPSCycle : MonoBehaviour
             ResetLights();
             GameManager.Instance.DPSCycle();
             SoundManager.Instance.Play("dps");
+            doneOnce = true;
         }
     }
 
     public void ResetLights()
     {
-        DLight(false);
-        PLight(false);
-        SLight(false);
+        Light("D",false);
+        Light("P",false);
+        Light("S",false);
     }
 }

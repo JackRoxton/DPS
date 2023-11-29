@@ -23,6 +23,8 @@ public class UIManager : Singleton<UIManager>
     public Fade fade;
 
     public Slider masterSlider, musicsSlider, effectsSlider;
+    public Toggle dodgeToggle;
+
     public bool tutorial = true;
     bool tutoFlag = true;
 
@@ -89,6 +91,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (fadeFlag)
         {
+            GameManager.Instance.SetTimeScale(1);
             if (tutorial)
                 Fade(2);
             else
@@ -124,6 +127,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (fadeFlag)
         {
+            GameManager.Instance.SetTimeScale(1);
             if (tutorial)
                 Fade(2);
             else
@@ -168,6 +172,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (fadeFlag)
         {
+            GameManager.Instance.SetTimeScale(1);
             Fade(0);
 
             StartCoroutine(FadeTime(2));
@@ -313,6 +318,11 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager.Instance.Quit();
         Debug.Log("quit");
+    }
+
+    public void DodgeControlCheck()
+    {
+        GameManager.Instance.playerDashOnMovement = dodgeToggle.isOn;
     }
 
 }

@@ -14,6 +14,8 @@ public class Minion : MonoBehaviour
     public bool stop = false;
     public bool stun = false;
     public bool dmgFlag = false;
+
+    public bool invincible = false;
     
     float stunTimer = 2f;
     float stopTimer = 2f;
@@ -71,6 +73,11 @@ public class Minion : MonoBehaviour
 
     public void TakeDamage()
     {
+        if(invincible)
+        {
+            Debug.Log("lol");
+            return;
+        }
         GameManager.Instance.ScreenShake();
         GameManager.Instance.AddScore();
         Destroy(this.gameObject);

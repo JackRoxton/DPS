@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
             {
                 IFrameFlag = false;
                 IFrame = true;
-                UIManager.Instance.dps.PLight(true);
+                UIManager.Instance.dps.Light("P",true);
                 parriedMinion.GetComponent<Minion>().Stunned();
                 VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
                 AddScore();
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour
                 if (collision.gameObject.GetComponent<MageProjectile>().hitFlag == true)
                 {
                     AddScore();
-                    UIManager.Instance.dps.DLight(true);
+                    UIManager.Instance.dps.Light("D",true);
                     if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                         VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
                     else
@@ -220,7 +220,7 @@ public class Player : MonoBehaviour
             else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && !collision.isTrigger)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
-                UIManager.Instance.dps.PLight(true);
+                UIManager.Instance.dps.Light("P",true);
                 collision.gameObject.GetComponent<Minion>().Stunned();
                 AddScore();
                 VFXManager.Instance.PlayEffectOn("Parry",this.gameObject);

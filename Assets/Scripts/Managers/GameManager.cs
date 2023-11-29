@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -78,12 +79,12 @@ public class GameManager : Singleton<GameManager>
         {
             tutorial = false;
             currentState = gameStates.Tutorial;
-            Time.timeScale = 1;
+            SetTimeScale(1);
         }
         else
         {
             currentState = gameStates.InGame;
-            Time.timeScale = 1;
+            SetTimeScale(1);
 
             shortGame = false;
 
@@ -105,12 +106,12 @@ public class GameManager : Singleton<GameManager>
         {
             tutorial = false;
             currentState = gameStates.Tutorial;
-            Time.timeScale = 1;
+            SetTimeScale(1);
         }
         else
         {
             currentState = gameStates.InGame;
-            Time.timeScale = 1;
+            SetTimeScale(1);
 
             //shortGame = true;
 
@@ -125,10 +126,15 @@ public class GameManager : Singleton<GameManager>
 
     }
 
+    public void SetTimeScale(int i)
+    {
+        Time.timeScale = i;
+    }
+
     public void Resume()
     {
         SoundManager.Instance.UnpauseMusic(currentMusic.ToString());
-        Time.timeScale = 1;
+        SetTimeScale(1);
         RoomManager.Instance.Pause(false);
         currentState = gameStates.InGame;
     }
@@ -142,7 +148,7 @@ public class GameManager : Singleton<GameManager>
         else if (currentState == gameStates.InGame)
         {
             SoundManager.Instance.PauseMusic(currentMusic.ToString());
-            //Time.timeScale = 0;
+            //SetTimeScale(0);
             currentState = gameStates.Pause;
             UIManager.Instance.Pause();
             RoomManager.Instance.Pause(true);
@@ -161,7 +167,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ToMenu()
     {
-        Time.timeScale = 1;
+        SetTimeScale(1);
         money += score;
         score = 0;
         currentState = gameStates.MainMenu;

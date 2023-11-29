@@ -1725,7 +1725,7 @@ MonoBehaviour:
   audioMix: {fileID: 24100000, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
   masterVolume: 1
   musicVolume: 1
-  sfxVolume: 0.05
+  sfxVolume: 0.5
 --- !u!1 &192311827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,8 +1757,9 @@ RectTransform:
   - {fileID: 122262293}
   - {fileID: 845080338}
   - {fileID: 1119908500}
+  - {fileID: 2002266546}
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1794,7 +1795,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3290,7 +3291,7 @@ RectTransform:
   - {fileID: 1898666276}
   - {fileID: 1081070597}
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4033,7 +4034,7 @@ RectTransform:
   - {fileID: 1175319484}
   - {fileID: 1658510658}
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4259,7 +4260,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 695633535}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: DodgeControlCheck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &695633534
 GameObject:
@@ -4309,12 +4322,13 @@ MonoBehaviour:
   nameText: {fileID: 118012860}
   dialogueImage: {fileID: 1906642595}
   dps: {fileID: 1658510659}
-  Tuto: {fileID: 845080339}
+  Tuto: {fileID: 2002266547}
   Win: {fileID: 1119908501}
   fade: {fileID: 261781536}
   masterSlider: {fileID: 549388873}
   musicsSlider: {fileID: 1086462393}
   effectsSlider: {fileID: 1089515846}
+  dodgeToggle: {fileID: 689291644}
   tutorial: 1
   currentState: 0
 --- !u!4 &695633536
@@ -4694,7 +4708,7 @@ GameObject:
   - component: {fileID: 845080338}
   - component: {fileID: 845080339}
   m_Layer: 5
-  m_Name: DialogueTuto
+  m_Name: _DialogueTuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6242,7 +6256,7 @@ MonoBehaviour:
       - m_Target: {fileID: 695633535}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: MusicsSlider
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6345,7 +6359,7 @@ MonoBehaviour:
       - m_Target: {fileID: 695633535}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: EffectsSlider
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6522,7 +6536,7 @@ RectTransform:
   - {fileID: 1296655447}
   - {fileID: 106555773}
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 7
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8173,13 +8187,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 562090942}
+  - {fileID: 1098164725}
   - {fileID: 497218383}
   - {fileID: 1639647816}
   - {fileID: 1709305286}
   - {fileID: 608192355}
   - {fileID: 192311828}
   - {fileID: 200556732}
-  - {fileID: 1098164725}
   - {fileID: 1431051749}
   - {fileID: 95187201}
   - {fileID: 261781533}
@@ -8496,7 +8510,7 @@ RectTransform:
   - {fileID: 1089515845}
   - {fileID: 689291643}
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8724,7 +8738,7 @@ RectTransform:
   - {fileID: 630313489}
   - {fileID: 244817516}
   m_Father: {fileID: 1439613228}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9288,6 +9302,107 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906642593}
   m_CullTransparentMesh: 1
+--- !u!1 &2002266545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002266546}
+  - component: {fileID: 2002266547}
+  m_Layer: 5
+  m_Name: DialogueTuto
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2002266546
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002266545}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 192311828}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2002266547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002266545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b4b94577c57184b9b4d37dc28ee45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  names:
+  - Player
+  - Player
+  - Event
+  - Mage
+  - Mage
+  - Mage
+  - Player
+  - Mage
+  - Event
+  - Mage
+  - Player
+  - Mage
+  - Mage
+  - Event
+  - Mage
+  - Player
+  - Mage
+  - Event
+  - Mage
+  - Mage
+  - Player
+  - Mage
+  - Player
+  - Mage
+  - Mage
+  sentences:
+  - I'm here to duel you, evil wizard !
+  - ... He's late
+  - SpawnMage
+  - Sorry had to go get some groceries
+  - You never miss a day, don't you ? Fine by me I get bored easily these days
+  - You remember how to fight ?
+  - Yeah I have to Slash you with Left Click
+  - Try it just in case
+  - WaitSlash
+  - Okay now Dodge this
+  - Dodge ?
+  - So you really did forget. Should be used to it by now.
+  - Use Space to Dodge my spell
+  - WaitDodge
+  - Good. Now Parry my minion and we're good to go
+  - ...
+  - '... Parry with Right Click '
+  - WaitParry
+  - The DPS Cycle completed
+  - As you should know, it is very important to complete it for extra combo.
+  - I will end you reign of terror over the village, evil wizard !
+  - Once again, wrong guy. You don't seem to care so I'm going along with it
+  - Your words won't fool me !
+  - Now now, as usual I'm giving you a few minutes to beat me
+  - If you can't do it, just try again tomorrow you may be a bit stronger
 --- !u!1 &2008738479
 GameObject:
   m_ObjectHideFlags: 0

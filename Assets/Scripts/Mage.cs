@@ -11,10 +11,11 @@ public class Mage : MonoBehaviour
     [NonSerialized]
     public GameObject Player;
     public float spellTimer = 5f;
-    float timer;
+    public float timer;
     public float spellSpeed;
 
     public bool spellCast = false;
+    public bool tuto = false;
 
     Animator controller;
 
@@ -30,6 +31,7 @@ public class Mage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (tuto) return;
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
