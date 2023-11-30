@@ -242,7 +242,10 @@ public class GameManager : Singleton<GameManager>
         
     }
 
-    public void EndPhase() { }
+    public void EndPhase()
+    {
+
+    }
 
     public void NextPhase()
     {
