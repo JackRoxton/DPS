@@ -9,15 +9,16 @@ public class GameManager : Singleton<GameManager>
     public float globalTimer = 60f;
     public float altTimer = 7.5f;
     float timer;
-    float phase = 3;
+    public int phase = 3;
     bool tpeffectFlag = false;
     //public float speedMod = 1f;
 
-    public float mageHP = 10000;
+    public float mageHP = 100000;
     public float score = 0, combo = 0;
     public float maxCombo = 0;
     public float money = 0;
     bool endFlag = false;
+    public bool winFlag = false;
 
     public float playerAttack = 10;
     public float playerSpeedUp = 1;
@@ -52,14 +53,12 @@ public class GameManager : Singleton<GameManager>
     {
         if(endFlag) return;
 
-
-
         if (currentState == gameStates.InGame) {
             globalTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
         }
 
-        if (globalTimer <= 0) EndGame();
+        if (globalTimer <= 0) EndPhase();
 
         if(timer <= 2 && !tpeffectFlag)
         {
@@ -71,6 +70,8 @@ public class GameManager : Singleton<GameManager>
             ChangeRoom();
             tpeffectFlag = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 1f;
     }
 
     public void Play()
@@ -80,12 +81,12 @@ public class GameManager : Singleton<GameManager>
         {
             tutorial = false;
             currentState = gameStates.Tutorial;
-            SetTimeScale(1);
+            //SetTimeScale(1);
         }
         else
         {
             currentState = gameStates.InGame;
-            SetTimeScale(1);
+            //SetTimeScale(1);
 
             shortGame = false;
 
@@ -107,18 +108,15 @@ public class GameManager : Singleton<GameManager>
         {
             tutorial = false;
             currentState = gameStates.Tutorial;
-            SetTimeScale(1);
+            //SetTimeScale(1);
         }
         else
         {
             currentState = gameStates.InGame;
-            SetTimeScale(1);
-
-            //shortGame = true;
+            //SetTimeScale(1);
 
             currentMusic = Random.Range(0, 9) + 1;
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
-            //shortGame = true;
         }
         globalTimer = 60f;
         //Time.timeScale = 1;
@@ -135,7 +133,7 @@ public class GameManager : Singleton<GameManager>
     public void Resume()
     {
         SoundManager.Instance.UnpauseMusic(currentMusic.ToString());
-        SetTimeScale(1);
+        //SetTimeScale(1);
         RoomManager.Instance.Pause(false);
         currentState = gameStates.InGame;
     }
@@ -156,10 +154,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
     
-    public void SkillTree()
-    {
-        currentState = gameStates.SkillTree;
-    }
 
     public void MainMenuBack()
     {
@@ -168,8 +162,10 @@ public class GameManager : Singleton<GameManager>
 
     public void ToMenu()
     {
-        SetTimeScale(1);
+        //SetTimeScale(1);
         //money += score;
+        winFlag = false;
+        endFlag = false;
         score = 0;
         currentState = gameStates.MainMenu;
         //UIManager.Instance.Fade(0);
@@ -185,6 +181,7 @@ public class GameManager : Singleton<GameManager>
         maxCombo = 0;
         timer = altTimer;
         endFlag = false;
+        winFlag = false;
         UIManager.Instance.ResetVariables();
     }
 
@@ -227,29 +224,38 @@ public class GameManager : Singleton<GameManager>
     public void EndGame()
     {
         //Time.timeScale = 0;
-        //money += score;
-        endFlag = true;
-        phase -= 1;
-        if(phase > 0)
-        {
-            //afficher fin puis skill tree puis next phase
-            //laisser le combo intact ?
-            //end phase, next phase
-            return;
-        }
         UIManager.Instance.EndGame();
-        RoomManager.Instance.EndGame();
+        if(RoomManager.Instance != null )
+            RoomManager.Instance.EndGame();
         
     }
 
     public void EndPhase()
     {
+        endFlag = true;
+        if (shortGame) EndGame();
+        money += score;
 
+        phase -= 1;
+        if (phase > 0)
+        {
+            RoomManager.Instance.EndGame();
+            UIManager.Instance.EndPhase();
+            //afficher fin puis skill tree puis next phase
+            //laisser le combo intact ?
+            return;
+        }
+        EndGame();
     }
 
     public void NextPhase()
     {
-
+        endFlag = false;
+        globalTimer = 60f;
+        Debug.Log("?");
+        timer = altTimer;
+        currentState = gameStates.InGame;
+        RoomManager.Instance.NextPhase();
     }
 
     public void WinGame()
@@ -257,8 +263,14 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("Game Won");
         //Time.timeScale = 0;
         endFlag = true;
+        winFlag = true;
         UIManager.Instance.WinGame();
-        RoomManager.Instance.WinGame();
+        RoomManager.Instance.EndGame();
+    }
+
+    public void SkillTree()
+    {
+        currentState = gameStates.SkillTree;
     }
 
     public bool Affordable(int cost)
@@ -292,6 +304,7 @@ public class GameManager : Singleton<GameManager>
 
             case Skills.SpeedUp:
                 playerSpeedUp += 0.1f;
+                RoomManager.Instance.PlayerSpeed(playerSpeedUp);
                 break;
 
         }

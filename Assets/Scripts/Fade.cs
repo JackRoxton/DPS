@@ -14,7 +14,7 @@ public class Fade : MonoBehaviour
         StartCoroutine(_Fade(i));
     }
 
-    public IEnumerator _Fade(int i)
+    public IEnumerator _Fade(int i,bool change = true)
     {
         float time = fadeDuration;
         while (time > 0)
@@ -26,7 +26,8 @@ public class Fade : MonoBehaviour
             spr.color = a;
             yield return null;
         }
-        GameManager.Instance.ChangeScene(i);
+        if(change)
+            GameManager.Instance.ChangeScene(i);
         time = 0f;
         while (time < fadeDuration)
         {

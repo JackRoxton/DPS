@@ -14,7 +14,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
-    public Image dialogueImage;
+    public Image dialogueImageLeft, dialogueImageRight;
     public DPSCycle dps;
 
     public Dialogue Tuto, Win;
@@ -168,15 +168,6 @@ public class UIManager : Singleton<UIManager>
         SettingsPanel.SetActive(false);
     }
 
-    public void EndPhase()
-    {
-
-    }
-
-    public void NextPhase()
-    {
-
-    }
 
     public void MainMenu()
     {
@@ -209,15 +200,6 @@ public class UIManager : Singleton<UIManager>
 
     }
 
-    public void SkillTree()
-    {
-        currentState = menuStates.SkillTree;
-        MainMenuPanel.SetActive(false);
-        SkillTreePanel.SetActive(true);
-        GameManager.Instance.SkillTree();
-        moneyText.text = GameManager.Instance.money.ToString();
-    }
-
     public void Credits()
     {
         MainMenuPanel.SetActive(false);
@@ -241,6 +223,27 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.MainMenuBack();
     }
 
+    public void SkillTree()
+    {
+        currentState = menuStates.SkillTree;
+        //MainMenuPanel.SetActive(false);
+        EndPanel.SetActive(false);
+        SkillTreePanel.SetActive(true);
+        GameManager.Instance.SkillTree();
+        moneyText.text = GameManager.Instance.money.ToString();
+    }
+
+    public void EndButton()
+    {
+        if (GameManager.Instance.winFlag) MainMenu();
+        if(GameManager.Instance.phase > 0)
+        {
+            SkillTree();
+            return;
+        }
+        MainMenu();
+    }
+
     public void EndGame()
     {
         InGamePanel.SetActive(false);
@@ -251,6 +254,24 @@ public class UIManager : Singleton<UIManager>
             endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
         else
             endDpsText.text = "DPS : " + (GameManager.Instance.score / 360).ToString();
+    }
+
+
+    public void EndPhase()
+    {
+        InGamePanel.SetActive(false);
+        EndPanel.SetActive(true);
+        endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
+        endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
+        endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
+    }
+
+    public void NextPhase()
+    {
+        SkillTreePanel.SetActive(false);
+        InGamePanel.SetActive(true);
+        currentState = menuStates.InGame;
+        GameManager.Instance.NextPhase();
     }
 
     public void WinGame()
@@ -333,6 +354,12 @@ public class UIManager : Singleton<UIManager>
     public void DodgeControlCheck()
     {
         GameManager.Instance.playerDashOnMovement = dodgeToggle.isOn;
+    }
+
+    public void ReTuto()
+    {
+        tutorial = true;
+        GameManager.Instance.tutorial = true;
     }
 
 }

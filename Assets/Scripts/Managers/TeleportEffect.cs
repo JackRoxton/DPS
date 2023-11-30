@@ -9,19 +9,13 @@ public class TeleportEffect : Singleton<TeleportEffect>
     float duration = 2f;
 
     public GameObject Ripple;
-    //public AnimationCurve Rstrength;
-    //Material RMat;
     SpriteRenderer RSr;
 
     public GameObject Distortion;
-    //public AnimationCurve Dtrength;
-    //Material DMat;
     SpriteRenderer DSr;
 
     private void Start()
     {
-        //RMat = Ripple.GetComponent<Material>();
-        //DMat = Distortion.GetComponent<Material>();
         RSr = Ripple.GetComponent<SpriteRenderer>();
         DSr = Distortion.GetComponent<SpriteRenderer>();
     }

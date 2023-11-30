@@ -97,6 +97,7 @@ public class Player : MonoBehaviour
                 IFrameFlag = false;
                 IFrame = false;
                 timer = IFrameCD;
+                TakeDamage();
             }
         }
         if (!IFrame)

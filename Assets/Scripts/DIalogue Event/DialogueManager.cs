@@ -8,12 +8,10 @@ public class DialogueManager : Singleton<DialogueManager>
 {
     public TMP_Text nameText;
     public TMP_Text dialogueText;
+    public Image speakerLeft, speakerRight;
 
     private Queue<string> sentences;
     private Queue<string> names;
-
-    public Sprite[] characters;
-    public Image image;
 
     void Start()
     {
@@ -21,7 +19,8 @@ public class DialogueManager : Singleton<DialogueManager>
         names = new Queue<string>();
         nameText = UIManager.Instance.nameText;
         dialogueText = UIManager.Instance.dialogueText;
-        image = UIManager.Instance.dialogueImage;
+        speakerLeft = UIManager.Instance.dialogueImageLeft;
+        speakerRight = UIManager.Instance.dialogueImageRight;
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -59,6 +58,10 @@ public class DialogueManager : Singleton<DialogueManager>
             EndDialogue();
             return;
         }
+        if (TutorialEventManager.Instance != null)
+            if (TutorialEventManager.Instance.eventLock == true)
+                return;
+
         string name = names.Dequeue();
         string sentence = sentences.Dequeue();
 
@@ -67,11 +70,17 @@ public class DialogueManager : Singleton<DialogueManager>
             TutorialEventManager.Instance.Event(sentence);
             return;
         }
-        
+
         if (name.ToString() == "Player")
-            image.sprite = characters[0];
+        {
+            speakerLeft.gameObject.SetActive(true);
+            speakerRight.gameObject.SetActive(false);
+        }
         else
-            image.sprite = characters[1];
+        {
+            speakerLeft.gameObject.SetActive(false);
+            speakerRight.gameObject.SetActive(true);
+        }
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence, name));
     }

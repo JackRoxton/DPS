@@ -11,6 +11,7 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
     public GameObject player;
     public Transform mageSpot;
     public Transform minionSpot;
+    public bool eventLock = false;
 
     public void Event(string sentence)
     {
@@ -20,7 +21,9 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
 
     public IEnumerator _Event(string sentence)
     {
-        switch(sentence)
+        UIManager.Instance.DialoguePanel.SetActive(true);
+        eventLock = true;
+        switch (sentence)
         {
             case "Start":
                 UIManager.Instance.dps.locked = true;
@@ -28,8 +31,8 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
             case "SpawnMage":
                 mage = Instantiate(magePrefab, mageSpot.position, Quaternion.identity);
                 mage.GetComponent<Mage>().tuto = true;
-                mage.GetComponent<Mage>().timer = 1f;
-                mage.GetComponent<Mage>().spellTimer = 1f;
+                mage.GetComponent<Mage>().timer = 2f;
+                mage.GetComponent<Mage>().spellTimer = 2f;
                 mage.GetComponent<Mage>().Player = player;
                 yield return new WaitForSeconds(1);
                 break;
@@ -54,8 +57,13 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
                 UIManager.Instance.dps.locked = true;
                 Destroy(minion);
                 break;
+            case "End":
+                UIManager.Instance.dps.locked = false;
+                TeleportEffect.Instance.Effect();
+                yield return new WaitForSeconds(1.9f);
+                break;
         }
-        UIManager.Instance.DialoguePanel.SetActive(true);
+        eventLock = false;
         DialogueManager.Instance.DisplayNextSentence();
     }
 }

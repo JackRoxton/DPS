@@ -102,8 +102,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpellPrefab: {fileID: 5717790739917788765, guid: 33ff12954a616324aac96357c7f036e7, type: 3}
   spellTimer: 5
+  timer: 0
   spellSpeed: 0
   spellCast: 0
+  tuto: 0
+  pause: 0
 --- !u!50 &-2392196849865266108
 Rigidbody2D:
   serializedVersion: 4

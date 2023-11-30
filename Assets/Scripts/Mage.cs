@@ -16,10 +16,11 @@ public class Mage : MonoBehaviour
 
     public bool spellCast = false;
     public bool tuto = false;
+    public bool pause = false;
 
     Animator controller;
 
-    bool faceR;
+    //bool faceR;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,13 +33,31 @@ public class Mage : MonoBehaviour
     void Update()
     {
         if (tuto) return;
+        if(pause) return;
         timer -= Time.deltaTime;
-        if(timer <= 0)
+
+        /*f (Player.transform.position.x < this.transform.position.x)
+            faceR = true;
+        else
+            faceR = false;*/
+
+        if (timer <= 0)
         {
             spellCast = false;
             StartCoroutine(CastSpell());
             timer = spellTimer + Random.Range(-1, 2);
         }
+    }
+
+    public void Pause(bool pause)
+    {
+        this.pause = pause;
+    }
+
+    private void OnDestroy()
+    {
+        if(CurrentSpell != null)
+            Destroy(CurrentSpell.gameObject);
     }
 
     public IEnumerator CastSpell()

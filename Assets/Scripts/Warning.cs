@@ -50,6 +50,7 @@ public class Warning : MonoBehaviour
             player = collision.gameObject;
         }
 
+        if (collision.isTrigger) return;
         if (collision.GetComponent<Minion>() != null)
         {
             minionInHb = true;
@@ -63,6 +64,7 @@ public class Warning : MonoBehaviour
 
         if (collision.GetComponent<Player>() != null) playerInHb = false;
 
+        if (collision.isTrigger) return;
         if (collision.GetComponent<Minion>() != null) minionInHb = false;
     }
 }

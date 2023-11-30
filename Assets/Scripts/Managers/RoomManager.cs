@@ -280,16 +280,16 @@ public class RoomManager : Singleton<RoomManager>
 
     public void EndGame()
     {
+        ClearTiles();
         Destroy(mage);
         Destroy(minion);
-        player.GetComponent<Player>().endFlag = true;
+        PlayerEndFlag(true);
     }
 
-    public void WinGame()
+    public void NextPhase()
     {
-        Destroy(mage);
-        Destroy(minion);
-        player.GetComponent<Player>().endFlag = true;
+        PlayerEndFlag(false);
+        StartCoroutine(FirstRoomChange());
     }
 
     public void Pause(bool pause)
@@ -297,6 +297,12 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().Pause(pause);
         if(minion != null)
             minion.GetComponent<Minion>().Pause(pause);
+        mage.GetComponent<Mage>().Pause(pause);
+    }
+
+    public void PlayerEndFlag(bool state)
+    {
+        player.GetComponent<Player>().endFlag = state;
     }
 
     public void PlayerSpeed(float speedMod)
@@ -306,6 +312,7 @@ public class RoomManager : Singleton<RoomManager>
 
     public void PlayerDash(bool OnMovement)
     {
-        player.GetComponent<Player>().dashOnMovement = OnMovement;
+        player.GetComponent<Player>().dashOnMovement = OnMovement;//check si ça fonctionne dans les ingame settings
     }
+
 }
