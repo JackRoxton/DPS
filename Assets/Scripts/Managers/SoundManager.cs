@@ -126,7 +126,6 @@ public class SoundManager : Singleton<SoundManager>
 
     public void ModifyAllVolume(float i)
     {
-        Debug.Log(Mathf.Log10(i) * 20);
         audioMix.SetFloat("Master", Mathf.Log10(i) * 20);
         masterVolume = i;
     }

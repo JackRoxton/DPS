@@ -10,10 +10,15 @@ public class DPSCycle : MonoBehaviour
     bool Pstate = false;
     bool Sstate = false;
     bool doneOnce = false;
+    public bool locked = false;
 
     public void Light(string name, bool state)
     {
-        switch(name)
+        if (locked)
+        {
+            return;
+        }
+        switch (name)
         {
             case "D":
                 if (state == Dstate) return;

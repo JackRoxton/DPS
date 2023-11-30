@@ -9352,6 +9352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   names:
+  - Event
   - Player
   - Player
   - Event
@@ -9378,6 +9379,7 @@ MonoBehaviour:
   - Mage
   - Mage
   sentences:
+  - Start
   - I'm here to duel you, evil wizard !
   - ... He's late
   - SpawnMage
