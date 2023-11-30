@@ -2485,7 +2485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9427ad5da7f265408bc1a895802304e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalTimer: 360
+  globalTimer: 60
   altTimer: 7.5
   mageHP: 10000
   score: 0
@@ -8572,6 +8572,7 @@ MonoBehaviour:
   D: {fileID: 949576418}
   P: {fileID: 534255217}
   S: {fileID: 49520998}
+  locked: 0
 --- !u!1 &1698713796
 GameObject:
   m_ObjectHideFlags: 0

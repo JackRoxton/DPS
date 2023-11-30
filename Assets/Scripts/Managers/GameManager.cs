@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public float globalTimer = 360f;
+    public float globalTimer = 60f;
     public float altTimer = 7.5f;
     float timer;
+    float phase = 3;
     bool tpeffectFlag = false;
     //public float speedMod = 1f;
 
@@ -32,7 +33,7 @@ public class GameManager : Singleton<GameManager>
         MainMenu,
         SkillTree,
         Pause,
-        Settings,//
+        Settings,
         InGame,
         Tutorial
     }
@@ -168,7 +169,7 @@ public class GameManager : Singleton<GameManager>
     public void ToMenu()
     {
         SetTimeScale(1);
-        money += score;
+        //money += score;
         score = 0;
         currentState = gameStates.MainMenu;
         //UIManager.Instance.Fade(0);
@@ -177,7 +178,8 @@ public class GameManager : Singleton<GameManager>
 
     public void ResetVariables()
     {
-        globalTimer = 360f;
+        phase = 3;
+        globalTimer = 60f;
         score = 0;
         combo = 0;
         maxCombo = 0;
@@ -227,9 +229,24 @@ public class GameManager : Singleton<GameManager>
         //Time.timeScale = 0;
         //money += score;
         endFlag = true;
+        phase -= 1;
+        if(phase > 0)
+        {
+            //afficher fin puis skill tree puis next phase
+            //laisser le combo intact ?
+            //end phase, next phase
+            return;
+        }
         UIManager.Instance.EndGame();
         RoomManager.Instance.EndGame();
         
+    }
+
+    public void EndPhase() { }
+
+    public void NextPhase()
+    {
+
     }
 
     public void WinGame()

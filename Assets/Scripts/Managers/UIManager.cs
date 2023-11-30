@@ -168,6 +168,16 @@ public class UIManager : Singleton<UIManager>
         SettingsPanel.SetActive(false);
     }
 
+    public void EndPhase()
+    {
+
+    }
+
+    public void NextPhase()
+    {
+
+    }
+
     public void MainMenu()
     {
         if (fadeFlag)
