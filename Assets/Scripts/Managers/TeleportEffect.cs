@@ -22,6 +22,7 @@ public class TeleportEffect : Singleton<TeleportEffect>
 
     public void Effect()
     {
+        Effects.SetActive(true);
         StartCoroutine(_Effect());
     }
 
@@ -46,5 +47,6 @@ public class TeleportEffect : Singleton<TeleportEffect>
         Dcolor.a = 0;
         RSr.color = Rcolor;
         DSr.color = Dcolor;
+        Effects.SetActive(false);
     }
 }

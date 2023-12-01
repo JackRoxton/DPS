@@ -160,6 +160,7 @@ public class UIManager : Singleton<UIManager>
 
     public void Resume()
     {
+        InGamePanel.SetActive(true);
         currentState = menuStates.InGame;
 
         GameManager.Instance.Resume();
@@ -197,7 +198,7 @@ public class UIManager : Singleton<UIManager>
     {
         currentState = menuStates.Pause;
         PausePanel.SetActive(true);
-
+        InGamePanel.SetActive(false);
     }
 
     public void Credits()
@@ -230,7 +231,7 @@ public class UIManager : Singleton<UIManager>
         EndPanel.SetActive(false);
         SkillTreePanel.SetActive(true);
         GameManager.Instance.SkillTree();
-        moneyText.text = GameManager.Instance.money.ToString();
+        moneyText.text = "Money : " + GameManager.Instance.money.ToString();
     }
 
     public void EndButton()

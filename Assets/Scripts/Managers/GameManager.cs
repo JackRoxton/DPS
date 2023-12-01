@@ -168,6 +168,7 @@ public class GameManager : Singleton<GameManager>
         endFlag = false;
         score = 0;
         currentState = gameStates.MainMenu;
+        ResetVariables();
         //UIManager.Instance.Fade(0);
         //SceneManager.LoadScene(0);
     }
@@ -252,10 +253,11 @@ public class GameManager : Singleton<GameManager>
     {
         endFlag = false;
         globalTimer = 60f;
-        Debug.Log("?");
         timer = altTimer;
         currentState = gameStates.InGame;
         RoomManager.Instance.NextPhase();
+        currentMusic = (Random.Range(0, 9) + 1);
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
     }
 
     public void WinGame()
@@ -294,7 +296,7 @@ public class GameManager : Singleton<GameManager>
     public void BuySkill(Skills type, int cost)
     {
         money -= cost;
-        UIManager.Instance.moneyText.text = money.ToString();
+        UIManager.Instance.moneyText.text = "Money : " + money.ToString();
 
         switch (type)
         {
