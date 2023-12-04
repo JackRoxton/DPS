@@ -273,7 +273,7 @@ public class UIManager : Singleton<UIManager>
         endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
         endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
         endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
-        endDialogueText.text = "Remaining Phases : "+ (GameManager.Instance.phase - 1) +" completed";
+        endDialogueText.text = "Remaining Phases : "+ (GameManager.Instance.phase);
     }
 
     public void NextPhase()

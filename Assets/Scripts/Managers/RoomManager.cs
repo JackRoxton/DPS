@@ -310,6 +310,7 @@ public class RoomManager : Singleton<RoomManager>
         Destroy(mage);
         Destroy(minion);
         PlayerEndFlag(true);
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public void NextPhase()
