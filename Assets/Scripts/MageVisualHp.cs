@@ -23,7 +23,8 @@ public class MageVisualHp : MonoBehaviour
             float strength = fade.Evaluate(time / blinkTimer);
             Color a = mat.color;
             a.a = strength;
-            mat.color = a;
+            mat.SetFloat("Width (Max recommended 100)", strength);
+            //mat.color = a;
             yield return null;
         }
         time = 0f;
@@ -33,7 +34,8 @@ public class MageVisualHp : MonoBehaviour
             float strength = fade.Evaluate(time / blinkTimer);
             Color a = mat.color;
             a.a = strength;
-            mat.color = a;
+            mat.SetFloat("Width (Max recommended 100)", strength);
+            //mat.color = a;
             yield return null;
         }
         ResetVal();

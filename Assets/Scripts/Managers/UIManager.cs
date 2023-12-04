@@ -14,6 +14,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
+    public TMP_Text endDialogueText;
     public Image dialogueImageLeft, dialogueImageRight;
     public DPSCycle dps;
 
@@ -182,12 +183,15 @@ public class UIManager : Singleton<UIManager>
         }
         //Fade(0);
 
+
+
         currentState = menuStates.MainMenu;
 
         MainMenuPanel.SetActive(true);
         InGamePanel.SetActive(false);
         PausePanel.SetActive(false);
         EndPanel.SetActive(false);
+        SkillTreePanel.SetActive(false);
 
         GameManager.Instance.ToMenu();
 
@@ -251,10 +255,14 @@ public class UIManager : Singleton<UIManager>
         EndPanel.SetActive(true);
         endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
         endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
-        if(GameManager.Instance.shortGame)
+        if(GameManager.Instance.winFlag)
+            endDialogueText.text = "Game Over. Congratulations !";
+        else
+            endDialogueText.text = "Game Over. Try again !";
+        if (GameManager.Instance.shortGame)
             endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
         else
-            endDpsText.text = "DPS : " + (GameManager.Instance.score / 360).ToString();
+            endDpsText.text = "Total DPS : " + (GameManager.Instance.score / 180).ToString();
     }
 
 
@@ -265,6 +273,7 @@ public class UIManager : Singleton<UIManager>
         endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
         endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
         endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
+        endDialogueText.text = "Phase "+ (GameManager.Instance.phase - 1) +" completed";
     }
 
     public void NextPhase()

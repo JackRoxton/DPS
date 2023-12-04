@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1215607283832134491}
-  - component: {fileID: 1215607283832134490}
+  - component: {fileID: 6652462037633086592}
   - component: {fileID: 1215607283832134489}
   - component: {fileID: -2392196849865266108}
   - component: {fileID: 6006056131498910636}
@@ -37,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1215607283832134490
+--- !u!212 &6652462037633086592
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 583db57eb31993c4b992fa0f13152214, type: 2}
+  - {fileID: 2100000, guid: 4e0ae13635569ec4faae7fbcd37a0854, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.745283, g: 0.57011485, b: 0.4464667, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: eb1b698c58e34e842acace24aa896747, type: 3}
+  m_Color: {r: 0.745283, g: 0.42264542, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
     public float score = 0, combo = 0;
     public float maxCombo = 0;
     public float money = 0;
-    bool endFlag = false;
+    public bool endFlag = false;
     public bool winFlag = false;
 
     public float playerAttack = 10;
@@ -236,6 +236,8 @@ public class GameManager : Singleton<GameManager>
         endFlag = true;
         if (shortGame) EndGame();
         money += score;
+
+        SoundManager.Instance.StopMusic(currentMusic.ToString());
 
         phase -= 1;
         if (phase > 0)

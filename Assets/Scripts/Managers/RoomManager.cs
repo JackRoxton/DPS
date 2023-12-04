@@ -67,7 +67,11 @@ public class RoomManager : Singleton<RoomManager>
 
     void Update()
     {
-        
+        if(GameManager.Instance.endFlag)
+        {
+            ClearTiles();
+            StopAllCoroutines();
+        }
     }
 
     public void ChangeRoom()
@@ -98,6 +102,7 @@ public class RoomManager : Singleton<RoomManager>
         int minionWhere = Random.Range(0, MinionSpots.Count);
         int mageWhere = Random.Range(0, MageSpots.Count);
         lastMageSpot = mageWhere;
+        VFXManager.Instance.PlayEffectAt("Teleport_End", MageSpots[mageWhere]);
         mage = Instantiate(magePrefab, MageSpots[mageWhere].position,Quaternion.identity);
         mage.GetComponent<Mage>().Player = player;
 
@@ -105,6 +110,10 @@ public class RoomManager : Singleton<RoomManager>
         Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
         AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
+        while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
+        {
+            yield return new WaitForEndOfFrame();
+        }
         yield return new WaitForSeconds(2);
         while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
         {
@@ -151,12 +160,17 @@ public class RoomManager : Singleton<RoomManager>
             mageWhere = Random.Range(0, MageSpots.Count);
         } while (mageWhere == lastMageSpot);
         lastMageSpot = mageWhere;
+        VFXManager.Instance.PlayEffectAt("Teleport_End", MageSpots[mageWhere]);
         mage.GetComponent<Mage>().Teleport(MageSpots[mageWhere]);
 
         AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
         Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
         AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
+        while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
+        {
+            yield return new WaitForEndOfFrame();
+        }
         yield return new WaitForSeconds(2);
         while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
         {
@@ -189,6 +203,9 @@ public class RoomManager : Singleton<RoomManager>
             if (tile != null)
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(inWallSpots[where].position + pos), tile);
+                Transform trs = transform;
+                trs.position = inWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos;
+                VFXManager.Instance.PlayEffectAt("Teleport_End",trs);
             }
         }
 
@@ -199,6 +216,9 @@ public class RoomManager : Singleton<RoomManager>
             if (tile != null)
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(inWallSpots[where2].position + pos), tile);
+                Transform trs = transform;
+                trs.position = inWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos;
+                VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
 
@@ -213,6 +233,9 @@ public class RoomManager : Singleton<RoomManager>
             if (tile != null)
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(outWallSpots[where].position + pos), tile);
+                Transform trs = transform;
+                trs.position = outWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos;
+                VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
 
@@ -223,6 +246,9 @@ public class RoomManager : Singleton<RoomManager>
             if (tile != null)
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(outWallSpots[where2].position + pos), tile);
+                Transform trs = transform;
+                trs.position = outWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos;
+                VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
     }

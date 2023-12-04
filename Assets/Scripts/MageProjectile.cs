@@ -5,6 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class MageProjectile : MonoBehaviour
 {
+    public Vector2 velocity;
+    bool flag = false;
+
     public Rigidbody2D body;
 
     float lifeTimer = 5f;
@@ -20,6 +23,24 @@ public class MageProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.currentState == GameManager.gameStates.Pause) 
+        {
+            velocity = this.body.velocity;
+            this.body.velocity = Vector2.zero;
+            flag = true;
+        }
+
+        if (GameManager.Instance.endFlag)
+        {
+            Die();
+        }
+
+        if (flag)
+        {
+            flag = false;
+            this.body.velocity = velocity;
+        }
+
         lifeTimer -= Time.deltaTime;
         if(lifeTimer <= 0)
         {

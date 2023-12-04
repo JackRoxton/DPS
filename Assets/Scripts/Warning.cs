@@ -23,6 +23,10 @@ public class Warning : MonoBehaviour
         {
             return;
         }
+        if (GameManager.Instance.endFlag)
+        {
+            Die();
+        }
         lifeTimer -= Time.deltaTime;
         if(lifeTimer < 0)
         {
