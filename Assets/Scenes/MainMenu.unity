@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 49520999}
   - component: {fileID: 49521001}
   - component: {fileID: 49521000}
+  - component: {fileID: 49521002}
   m_Layer: 5
   m_Name: S
   m_TagString: Untagged
@@ -276,6 +277,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49520998}
   m_CullTransparentMesh: 1
+--- !u!95 &49521002
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49520998}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9264b2e5f1b60ed4b98103965e7c7cbb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &60585467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2464,6 +2486,13 @@ MonoBehaviour:
   playerDashOnMovement: 0
   shortGame: 0
   tutorial: 1
+  skills:
+  - {fileID: 911725739}
+  - {fileID: 841458766}
+  - {fileID: 871129994}
+  - {fileID: 2046001723}
+  - {fileID: 1116479674}
+  - {fileID: 154089153}
   currentState: 0
 --- !u!4 &313329225
 Transform:
@@ -3547,6 +3576,7 @@ GameObject:
   - component: {fileID: 534255218}
   - component: {fileID: 534255220}
   - component: {fileID: 534255219}
+  - component: {fileID: 534255221}
   m_Layer: 5
   m_Name: P
   m_TagString: Untagged
@@ -3613,6 +3643,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534255217}
   m_CullTransparentMesh: 1
+--- !u!95 &534255221
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534255217}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd652b692e5ff9a4b978c362cad1fa94, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &538182473
 GameObject:
   m_ObjectHideFlags: 0
@@ -4161,7 +4212,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BackToMenu
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4510,7 +4561,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &695633534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5675,6 +5726,7 @@ GameObject:
   - component: {fileID: 949576419}
   - component: {fileID: 949576421}
   - component: {fileID: 949576420}
+  - component: {fileID: 949576422}
   m_Layer: 5
   m_Name: D
   m_TagString: Untagged
@@ -5741,6 +5793,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949576418}
   m_CullTransparentMesh: 1
+--- !u!95 &949576422
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949576418}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cce51fdc02b7cce418b68611d2b45727, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &989384381
 GameObject:
   m_ObjectHideFlags: 0
@@ -7551,8 +7624,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 277, y: -134}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 286.3769, y: -125.475525}
+  m_SizeDelta: {x: 178.7538, y: 47.0489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1275313542
 MonoBehaviour:
@@ -7987,7 +8060,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Toggle
+  m_Text: Dodge On Movement
 --- !u!222 &1298378175
 CanvasRenderer:
   m_ObjectHideFlags: 0

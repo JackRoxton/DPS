@@ -23,16 +23,17 @@ public class MageProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.endFlag)
+        {
+            Die();
+        }
+
         if (GameManager.Instance.currentState == GameManager.gameStates.Pause) 
         {
             velocity = this.body.velocity;
             this.body.velocity = Vector2.zero;
             flag = true;
-        }
-
-        if (GameManager.Instance.endFlag)
-        {
-            Die();
+            return;
         }
 
         if (flag)

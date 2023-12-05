@@ -69,6 +69,8 @@ public class Minion : MonoBehaviour
     public void Pause(bool pause)
     {
         this.pause = pause;
+        if (pause)
+            this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public void TakeDamage()

@@ -56,29 +56,29 @@ public class Player : MonoBehaviour
 
         if (pause) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetAxis("Slash") != 0)
         {
             if(currentState == states.Base)
                 Attack();
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetAxis("Parry") != 0)
         {
             if(currentState == states.Base)
                 Parry();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetAxis("Dodge") != 0)
         {
             if(currentState == states.Base)
                 Dodge();
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        /*if (Input.GetKeyDown(KeyCode.Q))
         {
             if(dashOnMovement)
                 dashOnMovement = false;
             else
                 dashOnMovement = true;
             Debug.Log(dashOnMovement);
-        }
+        }*/
 
         if (IFrameFlag)
         {

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool skillActive = false;
+    bool startLocked = false;
     public bool locked = false;
     public int Cost;
     Image spr;
@@ -23,6 +24,9 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Start()
     {
+        if(locked)
+            startLocked = true;
+
         spr = this.GetComponent<Image>();
         if(locked)
         {
@@ -75,5 +79,22 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             costText.text = "Cost";
         }
         mouseOver = false;
+    }
+
+    public void Resetvar()
+    {
+        if(skillActive)
+        {
+            skillActive = false;
+            spr.color = Color.white;
+        }
+
+        if (startLocked)
+        {
+            locked = true;
+            spr.color = Color.gray;
+        }
+
+        
     }
 }

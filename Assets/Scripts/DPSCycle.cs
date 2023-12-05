@@ -26,6 +26,7 @@ public class DPSCycle : MonoBehaviour
                 {
                     D.GetComponent<Image>().color = Color.yellow;
                     Dstate = true;
+                    D.GetComponent<Animator>().Play("DBump");
                 }
                 else
                 {
@@ -39,6 +40,7 @@ public class DPSCycle : MonoBehaviour
                 {
                     P.GetComponent<Image>().color = Color.yellow;
                     Pstate = true;
+                    P.GetComponent<Animator>().Play("PBump");
                 }
                 else
                 {
@@ -52,6 +54,7 @@ public class DPSCycle : MonoBehaviour
                 {
                     S.GetComponent<Image>().color = Color.yellow;
                     Sstate = true;
+                    S.GetComponent<Animator>().Play("SBump");
                 }
                 else
                 {
@@ -94,6 +97,9 @@ public class DPSCycle : MonoBehaviour
     {
         if(Dstate && Pstate && Sstate)
         {
+            S.GetComponent<Animator>().Play("SBump");
+            D.GetComponent<Animator>().Play("DBump");
+            P.GetComponent<Animator>().Play("PBump");
             ResetLights();
             GameManager.Instance.DPSCycle();
             SoundManager.Instance.Play("dps");

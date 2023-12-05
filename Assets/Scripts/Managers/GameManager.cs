@@ -27,6 +27,8 @@ public class GameManager : Singleton<GameManager>
     public bool shortGame = false;
     public bool tutorial = true;
 
+    public Skill[] skills;
+
     int currentMusic = 0;
 
     public enum gameStates // peut-être certains à enlever
@@ -177,12 +179,22 @@ public class GameManager : Singleton<GameManager>
     {
         phase = 3;
         globalTimer = 60f;
+        altTimer = 7.5f;
+        timer = altTimer;
         score = 0;
         combo = 0;
         maxCombo = 0;
-        timer = altTimer;
         endFlag = false;
         winFlag = false;
+
+        foreach(Skill skill in skills)
+        {
+            skill.Resetvar();
+        }
+
+        playerAttack = 10;
+        playerSpeedUp = 1;
+
         UIManager.Instance.ResetVariables();
     }
 

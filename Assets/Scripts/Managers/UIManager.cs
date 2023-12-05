@@ -42,6 +42,7 @@ public class UIManager : Singleton<UIManager>
         Tutorial
     }
     public menuStates currentState = menuStates.MainMenu;
+    menuStates previousMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -161,6 +162,7 @@ public class UIManager : Singleton<UIManager>
 
     public void Resume()
     {
+        RoomManager.Instance.Pause(false);
         InGamePanel.SetActive(true);
         currentState = menuStates.InGame;
 
@@ -200,6 +202,7 @@ public class UIManager : Singleton<UIManager>
 
     public void Pause()
     {
+        RoomManager.Instance.Pause(true);
         currentState = menuStates.Pause;
         PausePanel.SetActive(true);
         InGamePanel.SetActive(false);
@@ -213,19 +216,30 @@ public class UIManager : Singleton<UIManager>
 
     public void Settings()
     {
+        previousMenu = currentState;
         currentState = menuStates.Settings;
         SettingsPanel.SetActive(true);
         MainMenuPanel.SetActive(false);
+        PausePanel.SetActive(false);
     }
 
     public void MainMenuBack()
     {
-        currentState = menuStates.MainMenu;
-        MainMenuPanel.SetActive(true);
-        SkillTreePanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        CreditsPanel.SetActive(false);
-        GameManager.Instance.MainMenuBack();
+        if(previousMenu == menuStates.MainMenu)
+        {
+            currentState = menuStates.MainMenu;
+            MainMenuPanel.SetActive(true);
+            SkillTreePanel.SetActive(false);
+            SettingsPanel.SetActive(false);
+            CreditsPanel.SetActive(false);
+            GameManager.Instance.MainMenuBack();
+        }
+        if(previousMenu == menuStates.Pause)
+        {
+            currentState = menuStates.Pause;
+            SettingsPanel.SetActive(false);
+            PausePanel.SetActive(true);
+        }
     }
 
     public void SkillTree()
@@ -317,7 +331,9 @@ public class UIManager : Singleton<UIManager>
     public void TutoDialogue()
     {
         DialoguePanel.SetActive(true);
-        DialogueManager.Instance.StartDialogue(Tuto);
+        Dialogue tmp = new Dialogue();
+        tmp = Tuto;
+        DialogueManager.Instance.StartDialogue(tmp);
         currentDialogue = Tuto;
     }
 
