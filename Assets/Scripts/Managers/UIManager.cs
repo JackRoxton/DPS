@@ -99,7 +99,7 @@ public class UIManager : Singleton<UIManager>
             else
                 Fade(1);
 
-            StartCoroutine(FadeTime(0));
+            StartCoroutine(FadeTime(1));
             return;
         }
 
