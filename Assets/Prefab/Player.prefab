@@ -250,9 +250,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 5097674865692864695}
+  endFlag: 0
   currentState: 0
-  speed: 1
-  dashPower: 10
+  speed: 0.075
+  speedUpgrade: 1
+  dashPower: 20
+  dashOnMovement: 0
 --- !u!50 &5097674866760596042
 Rigidbody2D:
   serializedVersion: 4
@@ -367,4 +370,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mousePos: {x: 0, y: 0, z: 0}
+  faceR: 1
   player: {fileID: 5097674866760596052}

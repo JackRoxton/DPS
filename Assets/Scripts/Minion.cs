@@ -6,7 +6,7 @@ using UnityEngine;
 public class Minion : MonoBehaviour
 {
     protected float hp;
-    protected float speed = 1f;
+    protected float speed = 0.05f;
 
     public GameObject player;
 
@@ -32,7 +32,7 @@ public class Minion : MonoBehaviour
     void Start()
     {
         controller = GetComponent<Animator>();
-        speed = 0.08f;
+        speed = 0.05f;
         rb = this.GetComponent<Rigidbody2D>();
     }
 

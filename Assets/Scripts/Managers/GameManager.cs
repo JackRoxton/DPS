@@ -13,8 +13,8 @@ public class GameManager : Singleton<GameManager>
     bool tpeffectFlag = false;
     //public float speedMod = 1f;
 
-    public float mageHP = 100000;
-    public float score = 0, combo = 0;
+    public float mageHP = 5000;
+    public float score = 0, combo = 1;
     public float maxCombo = 0;
     public float money = 0;
     public bool endFlag = false;
@@ -47,7 +47,7 @@ public class GameManager : Singleton<GameManager>
     {
         timer = altTimer;
         DontDestroyOnLoad(this.gameObject);
-
+        Time.fixedDeltaTime = Time.timeScale * 0.01f;
     }
 
     // Update is called once per frame
@@ -121,6 +121,7 @@ public class GameManager : Singleton<GameManager>
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
         }
         globalTimer = 60f;
+        phase = 1;
         //Time.timeScale = 1;
 
         shortGame = true;
@@ -165,7 +166,6 @@ public class GameManager : Singleton<GameManager>
     public void ToMenu()
     {
         //SetTimeScale(1);
-        //money += score;
         winFlag = false;
         endFlag = false;
         score = 0;
@@ -182,7 +182,7 @@ public class GameManager : Singleton<GameManager>
         altTimer = 7.5f;
         timer = altTimer;
         score = 0;
-        combo = 0;
+        combo = 1;
         maxCombo = 0;
         endFlag = false;
         winFlag = false;
@@ -200,8 +200,8 @@ public class GameManager : Singleton<GameManager>
 
     public void AddScore()
     {
-        combo++;
-        if (combo > maxCombo) maxCombo = combo;
+        //combo++;
+        //if (combo > maxCombo) maxCombo = combo;
 
         score += playerAttack * combo;
 
@@ -213,14 +213,15 @@ public class GameManager : Singleton<GameManager>
 
     public void DPSCycle()
     {
-        combo += 5;
+        combo += 2;
+        if (combo > maxCombo) maxCombo = combo;
         AddScore();
     }
 
     public void TakeDamage()
     {
         ScreenShake();
-        combo = 0;
+        combo = 1;
     }
 
     public void ChangeRoom()
@@ -256,8 +257,6 @@ public class GameManager : Singleton<GameManager>
         {
             RoomManager.Instance.EndGame();
             UIManager.Instance.EndPhase();
-            //afficher fin puis skill tree puis next phase
-            //laisser le combo intact ?
             return;
         }
         EndGame();
@@ -291,7 +290,7 @@ public class GameManager : Singleton<GameManager>
 
     public bool Affordable(int cost)
     {
-        UIManager.Instance.moneyText.text = money.ToString();
+        UIManager.Instance.moneyText.text = "Money : " + money.ToString();
         if (money - cost >= 0) return true;
         else return false;
     }

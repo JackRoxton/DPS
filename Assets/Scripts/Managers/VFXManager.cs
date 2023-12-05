@@ -8,9 +8,11 @@ using UnityEngine.VFX;
 public class VFXManager : Singleton<VFXManager>
 {
     public VisualEffect[] effects;
-    //public GameObject player;
 
-    float lifeTime = 1f;
+    public AnimationCurve hitStop;
+    public float hitStopLength;
+
+    float lifeTime = 0.75f;
 
     /*private void Update()
     {
@@ -81,5 +83,24 @@ public class VFXManager : Singleton<VFXManager>
     {
         yield return new WaitForSeconds(lifeTime);
         Destroy(effect.gameObject);
+    }
+
+    public void HitStop()
+    {
+        StartCoroutine(_HitStop());
+    }
+
+    IEnumerator _HitStop()
+    {
+        float timer = 0;
+        while (timer < hitStopLength)
+        {
+            timer += Time.unscaledDeltaTime;
+            Time.timeScale = hitStop.Evaluate(timer / hitStopLength);
+            Time.fixedDeltaTime = Time.timeScale * 0.01f;
+            yield return null;
+        }
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = Time.timeScale * 0.01f;
     }
 }

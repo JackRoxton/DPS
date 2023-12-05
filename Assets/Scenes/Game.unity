@@ -9849,11 +9849,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5097674866760596053, guid: c2255662fdc103047a70e8868695593c, type: 3}
       propertyPath: speed
-      value: 0.15
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 5097674866760596053, guid: c2255662fdc103047a70e8868695593c, type: 3}
       propertyPath: dashPower
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5097674866760596055, guid: c2255662fdc103047a70e8868695593c, type: 3}
       propertyPath: m_RootOrder

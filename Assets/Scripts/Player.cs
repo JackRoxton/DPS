@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
 public class Player : MonoBehaviour
@@ -23,12 +24,18 @@ public class Player : MonoBehaviour
     }
     public states currentState = states.Base;
 
-    public float speed = 0.15f;
+    public float speed = 0.25f;
     public float speedUpgrade = 1f;
-    public float dashPower = 5f;
+    public float dashPower = 20f;
     float kbForce = 2f;
 
-    public bool dashOnMovement = false;
+    bool stun = false;
+    float stunTimer = 0.25f;
+
+    public bool dashOnMovement = false; //modif pour faire je usans soruis avec autoaim (+ mannette)
+
+   /*public bool mouseLock = false;
+    Vector2 mouseLastPos = Vector2.zero;*/
 
     bool IFrame = true;
     bool IFrameFlag = false;
@@ -54,6 +61,20 @@ public class Player : MonoBehaviour
             GameManager.Instance.Pause();
         }
 
+        if(stun)
+        {
+            stunTimer -= Time.deltaTime;
+            if(stunTimer <= 0) 
+            {
+                stun = false;
+                stunTimer = 1f;
+            }
+            else
+            {
+                return;
+            }
+        }
+
         if (pause) return;
 
         if (Input.GetAxis("Slash") != 0)
@@ -71,6 +92,14 @@ public class Player : MonoBehaviour
             if(currentState == states.Base)
                 Dodge();
         }
+
+        /*if (Input.GetKeyDown(KeyCode.E))
+        {
+            mouseLock = true;
+            Mouse.current.WarpCursorPosition(Camera.main.WorldToScreenPoint(this.transform.position));
+            mouseLastPos = Camera.main.WorldToScreenPoint(this.transform.position);
+        }*/
+
         /*if (Input.GetKeyDown(KeyCode.Q))
         {
             if(dashOnMovement)
@@ -78,6 +107,20 @@ public class Player : MonoBehaviour
             else
                 dashOnMovement = true;
             Debug.Log(dashOnMovement);
+        }*/
+
+        /*if(mouseLock)
+        {
+            Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0);
+            //Vector2 dist = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
+            Debug.Log(Vector2.Distance(Input.mousePosition, new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0)));
+            
+            if (Vector2.Distance(Input.mousePosition, new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0)) > 150) 
+            {
+                Mouse.current.WarpCursorPosition(mouseLastPos);
+            }
+            else
+                mouseLastPos = Input.mousePosition;
         }*/
 
         if (IFrameFlag)
@@ -90,6 +133,7 @@ public class Player : MonoBehaviour
                 UIManager.Instance.dps.Light("P",true);
                 parriedMinion.GetComponent<Minion>().Stunned();
                 VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
+                VFXManager.Instance.HitStop();
                 AddScore();
             }
             if(timer <= 0)
@@ -117,10 +161,13 @@ public class Player : MonoBehaviour
     {
         if (endFlag) return;
         if (pause) return;
+        if (stun) return;
 
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
         body.velocity *= 0.9f;
+        /*if(mouseLock)
+            Mouse.current.WarpCursorPosition(mouseLastPos + new Vector2(Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).x,Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).y));*/
         this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed * speedUpgrade);
     }
 
@@ -164,6 +211,10 @@ public class Player : MonoBehaviour
 
     private void TakeDamage()
     {
+        VFXManager.Instance.HitStop();
+        stun = true;
+        body.velocity = Vector2.zero;
+        controller.Play("HitStun");
         GameManager.Instance.TakeDamage();
         SoundManager.Instance.Play("phit");
     }
@@ -193,6 +244,7 @@ public class Player : MonoBehaviour
                 if (collision.gameObject.GetComponent<MageProjectile>().hitFlag == true)
                 {
                     AddScore();
+                    VFXManager.Instance.HitStop();
                     UIManager.Instance.dps.Light("D",true);
                     if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                         VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
@@ -226,6 +278,7 @@ public class Player : MonoBehaviour
                 UIManager.Instance.dps.Light("P",true);
                 collision.gameObject.GetComponent<Minion>().Stunned();
                 AddScore();
+                VFXManager.Instance.HitStop();
                 VFXManager.Instance.PlayEffectOn("Parry",this.gameObject);
             }
         }

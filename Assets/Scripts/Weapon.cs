@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     public bool hitboxActive = false;
     public Player player;
     bool attackFlag = false;
+    bool hitflag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +19,24 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(attackFlag)
+        /*if(attackFlag)
             if(!hitboxActive)
-                attackFlag = false;
+                attackFlag = false;*/
     }
 
     public void Attack()
     {
+        if(attackFlag) return; 
         controller.Play("Attack", 0);
+        hitflag = false;
+        attackFlag = true;
+        StartCoroutine(_Attack());
+    }
+
+    public IEnumerator _Attack()
+    {
+        yield return new WaitForSeconds(0.3f);
+        attackFlag = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,6 +62,7 @@ public class Weapon : MonoBehaviour
                 trs.position = Physics2D.ClosestPoint(this.transform.position,collision);
                 VFXManager.Instance.PlayEffectAt("Hit",trs);
                 SoundManager.Instance.Play("hit");
+                VFXManager.Instance.HitStop();
             }
             else Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
         }
@@ -66,7 +78,7 @@ public class Weapon : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Mage>() != null)
         {
-            if (hitboxActive && !attackFlag)
+            if (hitboxActive && !hitflag)
             {
                 collision.gameObject.GetComponent<Mage>().TakeDamage();
                 UIManager.Instance.dps.Light("S",true);
@@ -74,8 +86,9 @@ public class Weapon : MonoBehaviour
                 Transform trs = this.transform;
                 trs.position = Physics2D.ClosestPoint(this.transform.position, collision);
                 VFXManager.Instance.PlayEffectAt("Hit", trs);
-                attackFlag = true;
                 SoundManager.Instance.Play("hit");
+                hitflag = true;
+                VFXManager.Instance.HitStop();
             }
         }
     }

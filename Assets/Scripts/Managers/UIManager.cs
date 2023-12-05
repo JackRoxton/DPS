@@ -99,7 +99,7 @@ public class UIManager : Singleton<UIManager>
             else
                 Fade(1);
 
-            StartCoroutine(FadeTime(1));
+            StartCoroutine(FadeTime(0));
             return;
         }
 
@@ -239,6 +239,7 @@ public class UIManager : Singleton<UIManager>
             currentState = menuStates.Pause;
             SettingsPanel.SetActive(false);
             PausePanel.SetActive(true);
+            GameManager.Instance.MainMenuBack();
         }
     }
 
@@ -331,9 +332,9 @@ public class UIManager : Singleton<UIManager>
     public void TutoDialogue()
     {
         DialoguePanel.SetActive(true);
-        Dialogue tmp = new Dialogue();
-        tmp = Tuto;
-        DialogueManager.Instance.StartDialogue(tmp);
+        /*Dialogue tmp = new Dialogue();
+        tmp = Tuto;*/
+        DialogueManager.Instance.StartDialogue(Tuto);
         currentDialogue = Tuto;
     }
 

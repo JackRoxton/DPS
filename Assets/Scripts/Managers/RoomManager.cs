@@ -339,7 +339,7 @@ public class RoomManager : Singleton<RoomManager>
 
     public void PlayerDash(bool OnMovement)
     {
-        player.GetComponent<Player>().dashOnMovement = OnMovement;//check si ça fonctionne dans les ingame settings
+        player.GetComponent<Player>().dashOnMovement = OnMovement;
     }
 
 }
