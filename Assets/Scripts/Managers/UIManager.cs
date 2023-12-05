@@ -19,6 +19,7 @@ public class UIManager : Singleton<UIManager>
     public DPSCycle dps;
 
     public Dialogue Tuto, Win;
+    Dialogue tmp;
     Dialogue currentDialogue;
 
     public Fade fade;
@@ -332,9 +333,8 @@ public class UIManager : Singleton<UIManager>
     public void TutoDialogue()
     {
         DialoguePanel.SetActive(true);
-        /*Dialogue tmp = new Dialogue();
-        tmp = Tuto;*/
-        DialogueManager.Instance.StartDialogue(Tuto);
+        tmp = Tuto;
+        DialogueManager.Instance.StartDialogue(tmp);
         currentDialogue = Tuto;
     }
 
