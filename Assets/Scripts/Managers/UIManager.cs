@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text dialogueText, nameText;
     public TMP_Text endDialogueText;
     public Image dialogueImageLeft, dialogueImageRight;
+    public Image lifebar;
     public DPSCycle dps;
 
     public Dialogue Tuto, Win;
@@ -59,6 +60,7 @@ public class UIManager : Singleton<UIManager>
             timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
             comboText.text = GameManager.Instance.combo.ToString();
+            lifebar.GetComponent<Slider>().value = ((GameManager.Instance.mageHP - GameManager.Instance.score) / GameManager.Instance.mageHP)*5;
         }
 
         if(currentState == menuStates.Tutorial && tutoFlag) 
