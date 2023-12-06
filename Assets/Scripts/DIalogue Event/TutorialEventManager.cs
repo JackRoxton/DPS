@@ -21,6 +21,7 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
 
     public IEnumerator _Event(string sentence)
     {
+        minion = null;
         UIManager.Instance.DialoguePanel.SetActive(true);
         eventLock = true;
         switch (sentence)

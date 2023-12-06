@@ -19,7 +19,6 @@ public class UIManager : Singleton<UIManager>
     public DPSCycle dps;
 
     public Dialogue Tuto, Win;
-    Dialogue tmp;
     Dialogue currentDialogue;
 
     public Fade fade;
@@ -73,7 +72,7 @@ public class UIManager : Singleton<UIManager>
 
     IEnumerator FadeTime(int i)
     {
-        yield return new WaitForSeconds(fadeTime);
+        yield return new WaitForSeconds(fadeTime*2);
         fadeFlag = false;
 
         switch(i){
@@ -94,7 +93,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (fadeFlag)
         {
-            GameManager.Instance.SetTimeScale(1);
+            //GameManager.Instance.SetTimeScale(1);
             if (tutorial)
                 Fade(2);
             else
@@ -107,6 +106,8 @@ public class UIManager : Singleton<UIManager>
         if(tutorial)
         {
             //Fade(2);
+            GameManager.Instance.Play();
+            TutoDialogue();
             currentState = menuStates.Tutorial;
             DialoguePanel.SetActive(true);
             tutorial = false;
@@ -114,12 +115,13 @@ public class UIManager : Singleton<UIManager>
         else
         {
             //Fade(1);
+            GameManager.Instance.Play();
             currentState = menuStates.InGame;
             
         }
         
 
-        GameManager.Instance.Play();
+        //GameManager.Instance.Play();
 
         MainMenuPanel.SetActive(false);
         InGamePanel.SetActive(true);
@@ -130,7 +132,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (fadeFlag)
         {
-            GameManager.Instance.SetTimeScale(1);
+            //GameManager.Instance.SetTimeScale(1);
             if (tutorial)
                 Fade(2);
             else
@@ -142,7 +144,9 @@ public class UIManager : Singleton<UIManager>
         //Fade(1);
         if (tutorial)
         {
-            //Fade(2);
+            //Fade(2);.
+            GameManager.Instance.PlayShort();
+            TutoDialogue();
             currentState = menuStates.Tutorial;
             DialoguePanel.SetActive(true);
             tutorial = false;
@@ -150,11 +154,12 @@ public class UIManager : Singleton<UIManager>
         else
         {
             //Fade(1);
+            GameManager.Instance.PlayShort();
             currentState = menuStates.InGame;
             
         }
 
-        GameManager.Instance.PlayShort();
+        //GameManager.Instance.PlayShort();
 
         MainMenuPanel.SetActive(false);
         InGamePanel.SetActive(true);
@@ -333,8 +338,7 @@ public class UIManager : Singleton<UIManager>
     public void TutoDialogue()
     {
         DialoguePanel.SetActive(true);
-        tmp = Tuto;
-        DialogueManager.Instance.StartDialogue(tmp);
+        DialogueManager.Instance.StartDialogue(Tuto);
         currentDialogue = Tuto;
     }
 
@@ -386,6 +390,7 @@ public class UIManager : Singleton<UIManager>
     public void ReTuto()
     {
         tutorial = true;
+        tutoFlag = true;
         GameManager.Instance.tutorial = true;
     }
 
