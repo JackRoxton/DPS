@@ -21,7 +21,7 @@ public class Minion : MonoBehaviour
     float stopTimer = 2f;
     float timer = 0;
     float stunPower = 10f;
-    float dashPower = 20f;
+    float dashPower = 35f;
 
     bool pause = false;
 

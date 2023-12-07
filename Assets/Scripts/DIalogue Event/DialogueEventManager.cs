@@ -27,6 +27,8 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
         {
             case "Start":
                 UIManager.Instance.dps.locked = true;
+                eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "SpawnMage":
                 eventLock = true;
@@ -36,12 +38,16 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 mage.GetComponent<Mage>().spellTimer = 2f;
                 mage.GetComponent<Mage>().Player = player;
                 yield return new WaitForSeconds(1);
+                eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "WaitSlash":
                 eventLock = true;
                 UIManager.Instance.dps.locked = false;
                 yield return new WaitUntil(UIManager.Instance.dps.GetS);
                 UIManager.Instance.dps.locked = true;
+                eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "WaitDodge":
                 eventLock = true;
@@ -50,6 +56,8 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 yield return new WaitUntil(UIManager.Instance.dps.GetD);
                 mage.GetComponent<Mage>().tuto = true;
                 UIManager.Instance.dps.locked = true;
+                eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "WaitParry":
                 eventLock = true;
@@ -60,12 +68,16 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 yield return new WaitUntil(UIManager.Instance.dps.GetP);
                 UIManager.Instance.dps.locked = true;
                 Destroy(minion);
+                eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "End":
                 eventLock = true;
                 UIManager.Instance.dps.locked = false;
                 TeleportEffect.Instance.Effect();
                 yield return new WaitForSeconds(1.9f);
+                eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "EndPhase":
                 if(GameManager.Instance.phase <= 0)
@@ -74,11 +86,11 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                     UIManager.Instance.EndPhase();
 
                 UIManager.Instance.DialoguePanel.SetActive(false);
-                StopCoroutine(_Event(sentence));
+                //StopCoroutine(_Event(sentence));
                 break;
         }
-        eventLock = false;
+        /*eventLock = false;
+        DialogueManager.Instance.DisplayNextSentence();*/
         //UIManager.Instance.DialoguePanel.SetActive(false);
-        DialogueManager.Instance.DisplayNextSentence();
     }
 }

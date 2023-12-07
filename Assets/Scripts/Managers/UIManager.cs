@@ -375,6 +375,7 @@ public class UIManager : Singleton<UIManager>
 
     public void NextDialogue()
     {
+        DialoguePanel.SetActive(true);
         DialogueManager.Instance.DisplayNextSentence();
     }
 

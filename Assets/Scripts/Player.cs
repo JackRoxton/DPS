@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
         body.velocity *= 0.9f;
         /*if(mouseLock)
             Mouse.current.WarpCursorPosition(mouseLastPos + new Vector2(Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).x,Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).y));*/
-        this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed * speedUpgrade);
+        this.transform.position += new Vector3(movement.x, movement.y, 0).normalized * (speed * speedUpgrade);
     }
 
     public void Pause(bool pause)
