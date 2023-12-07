@@ -4616,6 +4616,7 @@ MonoBehaviour:
   dps: {fileID: 1658510659}
   Tuto: {fileID: 2002266547}
   Win: {fileID: 1119908501}
+  End: {fileID: 845080339}
   fade: {fileID: 261781536}
   masterSlider: {fileID: 549388873}
   musicsSlider: {fileID: 1086462393}
@@ -5000,7 +5001,7 @@ GameObject:
   - component: {fileID: 845080338}
   - component: {fileID: 845080339}
   m_Layer: 5
-  m_Name: DialogueEnd
+  m_Name: DialogueEndPhase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5040,8 +5041,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   names:
   - Mage
+  - Event
+  - Mage
+  - Event
+  - Mage
+  - Event
   sentences:
-  - a
+  - You'd better try harder
+  - EndPhase
+  - You're getting better and stronger faster, keep going
+  - EndPhase
+  - Time's up. Too bad, you were getting close
+  - EndPhase
 --- !u!1 &871129992
 GameObject:
   m_ObjectHideFlags: 0

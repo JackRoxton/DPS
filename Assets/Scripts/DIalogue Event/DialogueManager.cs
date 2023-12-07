@@ -58,8 +58,8 @@ public class DialogueManager : Singleton<DialogueManager>
             EndDialogue();
             return;
         }
-        if (TutorialEventManager.Instance != null)
-            if (TutorialEventManager.Instance.eventLock == true)
+        if (DialogueEventManager.Instance != null)
+            if (DialogueEventManager.Instance.eventLock == true)
                 return;
 
         string name = names.Dequeue();
@@ -67,7 +67,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         if(name == "Event")
         {
-            TutorialEventManager.Instance.Event(sentence);
+            DialogueEventManager.Instance.Event(sentence);
             return;
         }
 

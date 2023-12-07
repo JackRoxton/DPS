@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialEventManager : Singleton<TutorialEventManager>
+public class DialogueEventManager : Singleton<DialogueEventManager>
 {
     public GameObject magePrefab;
     GameObject mage;
@@ -23,13 +23,13 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
     {
         minion = null;
         UIManager.Instance.DialoguePanel.SetActive(true);
-        eventLock = true;
         switch (sentence)
         {
             case "Start":
                 UIManager.Instance.dps.locked = true;
                 break;
             case "SpawnMage":
+                eventLock = true;
                 mage = Instantiate(magePrefab, mageSpot.position, Quaternion.identity);
                 mage.GetComponent<Mage>().tuto = true;
                 mage.GetComponent<Mage>().timer = 2f;
@@ -38,11 +38,13 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
                 yield return new WaitForSeconds(1);
                 break;
             case "WaitSlash":
+                eventLock = true;
                 UIManager.Instance.dps.locked = false;
                 yield return new WaitUntil(UIManager.Instance.dps.GetS);
                 UIManager.Instance.dps.locked = true;
                 break;
             case "WaitDodge":
+                eventLock = true;
                 mage.GetComponent<Mage>().tuto = false;
                 UIManager.Instance.dps.locked = false;
                 yield return new WaitUntil(UIManager.Instance.dps.GetD);
@@ -50,6 +52,7 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
                 UIManager.Instance.dps.locked = true;
                 break;
             case "WaitParry":
+                eventLock = true;
                 minion = Instantiate(minionPrefab, minionSpot.position, Quaternion.identity);
                 minion.GetComponent<Minion>().player = player;
                 minion.GetComponent<Minion>().invincible = true;
@@ -59,12 +62,23 @@ public class TutorialEventManager : Singleton<TutorialEventManager>
                 Destroy(minion);
                 break;
             case "End":
+                eventLock = true;
                 UIManager.Instance.dps.locked = false;
                 TeleportEffect.Instance.Effect();
                 yield return new WaitForSeconds(1.9f);
                 break;
+            case "EndPhase":
+                if(GameManager.Instance.phase <= 0)
+                    GameManager.Instance.EndGame();
+                else
+                    UIManager.Instance.EndPhase();
+
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                StopCoroutine(_Event(sentence));
+                break;
         }
         eventLock = false;
+        //UIManager.Instance.DialoguePanel.SetActive(false);
         DialogueManager.Instance.DisplayNextSentence();
     }
 }

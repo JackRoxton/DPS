@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>
     public DPSCycle dps;
 
     public Dialogue Tuto, Win;
+    public Dialogue End;
     Dialogue currentDialogue;
 
     public Fade fade;
@@ -32,6 +33,8 @@ public class UIManager : Singleton<UIManager>
 
     float fadeTime = 0.1f;
     bool fadeFlag = true;
+
+    bool dialFlag = true;
 
     public enum menuStates
     {
@@ -267,13 +270,31 @@ public class UIManager : Singleton<UIManager>
         if(GameManager.Instance.phase > 0)
         {
             SkillTree();
-            return;
         }
-        MainMenu();
+        else
+        {
+            MainMenu();
+        }
+    }
+
+    public void EndPhaseDialogue()
+    {
+        DialoguePanel.SetActive(true);
+        if (dialFlag)
+        {
+            currentDialogue = End;
+            DialogueManager.Instance.StartDialogue(End);
+            dialFlag = false;
+        }
+        else
+        {
+            NextDialogue();
+        }
     }
 
     public void EndGame()
     {
+
         InGamePanel.SetActive(false);
         EndPanel.SetActive(true);
         endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
@@ -316,6 +337,7 @@ public class UIManager : Singleton<UIManager>
 
     public void ResetVariables()
     {
+        dialFlag = true;
         dps.ResetLights();
     }
 

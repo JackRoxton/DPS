@@ -171,8 +171,8 @@ public class GameManager : Singleton<GameManager>
         score = 0;
         currentState = gameStates.MainMenu;
         ResetVariables();
-        //UIManager.Instance.Fade(0);
-        //SceneManager.LoadScene(0);
+        UIManager.Instance.Fade(0);
+        SceneManager.LoadScene(0);
     }
 
     public void ResetVariables()
@@ -247,19 +247,26 @@ public class GameManager : Singleton<GameManager>
     public void EndPhase()
     {
         endFlag = true;
-        if (shortGame) EndGame();
-        money += score;
-
         SoundManager.Instance.StopMusic(currentMusic.ToString());
-
         phase -= 1;
-        if (phase > 0)
+        UIManager.Instance.EndPhaseDialogue();
+        RoomManager.Instance.EndGame();
+
+        /*if (phase > 0)
         {
+            UIManager.Instance.EndPhaseDialogue();
             RoomManager.Instance.EndGame();
-            UIManager.Instance.EndPhase();
-            return;
+            //UIManager.Instance.EndPhase();
+            //return;
         }
-        EndGame();
+        else
+        {
+            UIManager.Instance.EndPhaseDialogue();
+        }*/
+
+        /*if (shortGame) EndGame();
+        money += score;
+        EndGame();*/
     }
 
     public void NextPhase()

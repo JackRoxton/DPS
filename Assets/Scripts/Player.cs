@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
             if(stunTimer <= 0) 
             {
                 stun = false;
-                stunTimer = 1f;
+                stunTimer = 0.25f;
             }
             else
             {
