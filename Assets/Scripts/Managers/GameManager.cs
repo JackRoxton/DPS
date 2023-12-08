@@ -292,6 +292,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SkillTree()
     {
+        money += score;
         currentState = gameStates.SkillTree;
     }
 

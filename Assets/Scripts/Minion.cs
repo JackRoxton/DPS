@@ -6,7 +6,7 @@ using UnityEngine;
 public class Minion : MonoBehaviour
 {
     protected float hp;
-    protected float speed = 0.05f;
+    protected float speed = 0.035f;
 
     public GameObject player;
 
@@ -21,7 +21,7 @@ public class Minion : MonoBehaviour
     float stopTimer = 2f;
     float timer = 0;
     float stunPower = 10f;
-    float dashPower = 35f;
+    float dashPower = 30f;
 
     bool pause = false;
 
