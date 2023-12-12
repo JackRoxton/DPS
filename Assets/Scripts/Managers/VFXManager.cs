@@ -82,7 +82,8 @@ public class VFXManager : Singleton<VFXManager>
     IEnumerator KillEffect(VisualEffect effect)
     {
         yield return new WaitForSeconds(lifeTime);
-        Destroy(effect.gameObject);
+        if(effect != null) 
+            Destroy(effect.gameObject);
     }
 
     public void HitStop()

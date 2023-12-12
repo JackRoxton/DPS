@@ -30,6 +30,7 @@ public class RoomManager : Singleton<RoomManager>
     List<Transform> MinionSpots = new List<Transform>();
 
     int lastMageSpot = 0;
+    public int phaseMult = 1;
 
     void Start()
     {
@@ -105,6 +106,7 @@ public class RoomManager : Singleton<RoomManager>
         VFXManager.Instance.PlayEffectAt("Teleport_End", MageSpots[mageWhere]);
         mage = Instantiate(magePrefab, MageSpots[mageWhere].position,Quaternion.identity);
         mage.GetComponent<Mage>().Player = player;
+        mage.GetComponent<Mage>().phaseMult = phaseMult;
 
         AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
         Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
@@ -183,6 +185,7 @@ public class RoomManager : Singleton<RoomManager>
         {
             minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
             minion.GetComponent<Minion>().player = this.player;
+            minion.GetComponent<Minion>().phaseMult = phaseMult;
         }
 
         AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
@@ -317,6 +320,7 @@ public class RoomManager : Singleton<RoomManager>
     {
         PlayerEndFlag(false);
         StartCoroutine(FirstRoomChange());
+        phaseMult += 1;
     }
 
     public void Pause(bool pause)
@@ -325,6 +329,11 @@ public class RoomManager : Singleton<RoomManager>
         if(minion != null)
             minion.GetComponent<Minion>().Pause(pause);
         mage.GetComponent<Mage>().Pause(pause);
+    }
+
+    public void Resetvar()
+    {
+        phaseMult = 1;
     }
 
     public void PlayerEndFlag(bool state)

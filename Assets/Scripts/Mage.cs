@@ -10,7 +10,7 @@ public class Mage : MonoBehaviour
     GameObject CurrentSpell;
     [NonSerialized]
     public GameObject Player;
-    public float spellTimer = 5f;
+    public float spellTimer = 6f;
     public float timer;
     public float spellSpeed;
 
@@ -18,12 +18,15 @@ public class Mage : MonoBehaviour
     public bool tuto = false;
     public bool pause = false;
 
+    public float phaseMult = 1;
+
     Animator controller;
 
     //bool faceR;
     // Start is called before the first frame update
     void Start()
-    {
+    { 
+        spellTimer -= phaseMult;
         timer = spellTimer;
         spellSpeed = 5f;
         controller = GetComponent<Animator>();
@@ -43,7 +46,7 @@ public class Mage : MonoBehaviour
 
         if (timer <= 0)
         {
-            spellCast = false;
+            //spellCast = false;
             StartCoroutine(CastSpell());
             timer = spellTimer + Random.Range(-1, 2);
         }
@@ -63,11 +66,13 @@ public class Mage : MonoBehaviour
     public IEnumerator CastSpell()
     {
         SoundManager.Instance.Play("spell");
+        VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         controller.Play("SpellCast",0);
         yield return new WaitUntil(SpellCast);
         CurrentSpell = Instantiate(SpellPrefab, this.transform.position,Quaternion.identity);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),CurrentSpell.GetComponent<Collider2D>());
         CurrentSpell.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y -this.transform.position.y).normalized)*spellSpeed;
+        spellCast = false;
         yield return null;
     }
 

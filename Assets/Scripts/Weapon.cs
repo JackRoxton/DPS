@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    Animator controller;
+    public Animator controller;
     public bool hitboxActive = false;
     public Player player;
     bool attackFlag = false;
@@ -35,7 +35,7 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator _Attack()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.35f);
         attackFlag = false;
     }
 

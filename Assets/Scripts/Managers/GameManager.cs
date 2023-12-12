@@ -11,9 +11,10 @@ public class GameManager : Singleton<GameManager>
     float timer;
     public int phase = 3;
     bool tpeffectFlag = false;
-    //public float speedMod = 1f;
+    public float speedMod = 1f;
 
     public float mageHP = 5000;
+    float threshold = 5000;
     public float score = 0, combo = 1;
     public float maxCombo = 0;
     public float money = 0;
@@ -78,7 +79,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Play()
     {
-        ResetVariables();
+        Resetvar();
         if(tutorial)
         {
             tutorial = false;
@@ -105,7 +106,7 @@ public class GameManager : Singleton<GameManager>
 
     public void PlayShort()
     {
-        ResetVariables();
+        Resetvar();
         if (tutorial)
         {
             tutorial = false;
@@ -166,16 +167,17 @@ public class GameManager : Singleton<GameManager>
     public void ToMenu()
     {
         //SetTimeScale(1);
+        RoomManager.Instance.Resetvar();
         winFlag = false;
         endFlag = false;
         score = 0;
         currentState = gameStates.MainMenu;
-        ResetVariables();
+        Resetvar();
         UIManager.Instance.Fade(0);
         SceneManager.LoadScene(0);
     }
 
-    public void ResetVariables()
+    public void Resetvar()
     {
         phase = 3;
         globalTimer = 60f;
@@ -195,7 +197,7 @@ public class GameManager : Singleton<GameManager>
         playerAttack = 10;
         playerSpeedUp = 1;
 
-        UIManager.Instance.ResetVariables();
+        UIManager.Instance.Resetvar();
     }
 
     public void AddScore()
@@ -208,6 +210,12 @@ public class GameManager : Singleton<GameManager>
         if(score >= mageHP)
         {
             WinGame();
+        }
+
+        if(mageHP < threshold - 1000)
+        {
+            threshold -= 1000;
+            speedMod *= 1.1f;
         }
     }
 
@@ -226,8 +234,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeRoom()
     {
-        //speedMod *= 1.05f;
-        timer = altTimer;
+        timer = altTimer / speedMod;
         currentMusic = (Random.Range(0, 9) + 1);
         SoundManager.Instance.PlayMusic(currentMusic.ToString());
         SoundManager.Instance.Play("change");

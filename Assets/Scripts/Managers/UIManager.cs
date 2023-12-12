@@ -335,7 +335,7 @@ public class UIManager : Singleton<UIManager>
         //EndPanel.SetActive(true);
     }
 
-    public void ResetVariables()
+    public void Resetvar()
     {
         dialFlag = true;
         dps.ResetLights();

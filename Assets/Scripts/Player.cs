@@ -24,9 +24,10 @@ public class Player : MonoBehaviour
     }
     public states currentState = states.Base;
 
+    public float attackSpeed = 1f;
     public float speed = 0.25f;
     public float speedUpgrade = 1f;
-    public float dashPower = 20f;
+    public float dashPower = 25f;
     float kbForce = 2f;
 
     bool stun = false;
@@ -120,7 +121,9 @@ public class Player : MonoBehaviour
                 Mouse.current.WarpCursorPosition(mouseLastPos);
             }
             else
+            {
                 mouseLastPos = Input.mousePosition;
+            }
         }*/
 
         if (IFrameFlag)
@@ -168,7 +171,8 @@ public class Player : MonoBehaviour
         body.velocity *= 0.9f;
         /*if(mouseLock)
             Mouse.current.WarpCursorPosition(mouseLastPos + new Vector2(Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).x,Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).y));*/
-        this.transform.position += new Vector3(movement.x, movement.y, 0).normalized * (speed * speedUpgrade);
+        //this.transform.position += new Vector3(movement.x, movement.y, 0).normalized * (speed * speedUpgrade);
+        this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed * speedUpgrade);
     }
 
     public void Pause(bool pause)
@@ -227,6 +231,13 @@ public class Player : MonoBehaviour
     public void KnockBack(Vector2 kb)
     {
         body.velocity += kb.normalized * kbForce;
+    }
+
+    public void ModAttackSpeed(float atk)
+    {
+        attackSpeed = atk;
+        controller.speed = attackSpeed;
+        weapon.controller.speed = attackSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

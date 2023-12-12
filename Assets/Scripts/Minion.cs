@@ -21,7 +21,9 @@ public class Minion : MonoBehaviour
     float stopTimer = 2f;
     float timer = 0;
     float stunPower = 10f;
-    float dashPower = 30f;
+    float dashPower = 25f;
+
+    public float phaseMult = 1;
 
     bool pause = false;
 
@@ -32,8 +34,9 @@ public class Minion : MonoBehaviour
     void Start()
     {
         controller = GetComponent<Animator>();
-        speed = 0.05f;
+        speed = 0.025f + (phaseMult / 150);
         rb = this.GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -110,6 +113,7 @@ public class Minion : MonoBehaviour
         stop = true;
         timer = stopTimer;
         rb.velocity = Vector2.zero;
+        VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         yield return new WaitUntil(HitboxActive);
         rb.velocity = new Vector2(player.transform.position.x - this.transform.position.x,player.transform.position.y - this.transform.position.y).normalized * dashPower;
     }
