@@ -16,7 +16,7 @@ Material:
   - _OUTLINEENABLED_ON
   - _OUTLINEMODE_SOLID
   - _OUTLINEPOSITION_OUTSIDE
-  - _OUTLINESHAPE_FRAME
+  - _OUTLINESHAPE_CONTOUR
   - _TILEMODE_STRETCH
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -86,13 +86,13 @@ Material:
     - _OutlineEnabled: 1
     - _OutlineMode: 0
     - _OutlinePosition: 2
-    - _OutlineShape: 1
+    - _OutlineShape: 0
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpriteOverlay: 0
     - _SrcBlend: 1
-    - _Thickness: 10.0006895
+    - _Thickness: 4.9998555
     - _TileMode: 0
     - _UVSec: 0
     - _Weight: 0.5

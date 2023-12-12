@@ -8,6 +8,7 @@ public class CameraScript : MonoBehaviour
 {
     float shakeDuration = 0.3f;
     public AnimationCurve shake;
+    public AnimationCurve strongShake;
 
     public void ScreenShake()
     {
@@ -28,5 +29,23 @@ public class CameraScript : MonoBehaviour
         transform.position = startPos;
     }
 
-    
+    public void StrongScreenShake()
+    {
+        StartCoroutine(_StrongScreenShake());
+    }
+
+    public IEnumerator _StrongScreenShake()
+    {
+        Vector3 startPos = transform.position;
+        float time = 0f;
+        while (time < shakeDuration)
+        {
+            time += Time.deltaTime;
+            float strength = strongShake.Evaluate(time / shakeDuration);
+            transform.position = startPos + Random.insideUnitSphere * strength;
+            yield return null;
+        }
+        transform.position = startPos;
+    }
+
 }

@@ -36,10 +36,13 @@ public class Warning : MonoBehaviour
 
     void Die()
     {
-        if(playerInHb)
-            player.GetComponent<Rigidbody2D>().velocity = new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), 0) * 20f;
+        if (playerInHb)
+        {
+            player.GetComponent<Rigidbody2D>().velocity = (player.transform.position - this.transform.position).normalized * 30f;
+        }
+
         if (minionInHb)
-            minion.GetComponent<Rigidbody2D>().velocity = new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), 0) * 20f;
+            minion.GetComponent<Rigidbody2D>().velocity = (minion.transform.position - this.transform.position).normalized * 30f;
 
         Destroy(this.gameObject);
     }

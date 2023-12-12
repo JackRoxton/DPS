@@ -34,10 +34,12 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 eventLock = true;
                 mage = Instantiate(magePrefab, mageSpot.position, Quaternion.identity);
                 mage.GetComponent<Mage>().tuto = true;
-                mage.GetComponent<Mage>().timer = 2f;
-                mage.GetComponent<Mage>().spellTimer = 2f;
+                mage.GetComponent<Mage>().ptimer = 2f;
+                mage.GetComponent<Mage>().projTime = 2f;
                 mage.GetComponent<Mage>().Player = player;
+                UIManager.Instance.DialoguePanel.SetActive(false);
                 yield return new WaitForSeconds(1);
+                UIManager.Instance.DialoguePanel.SetActive(true);
                 eventLock = false;
                 DialogueManager.Instance.DisplayNextSentence();
                 break;
@@ -57,6 +59,16 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 mage.GetComponent<Mage>().tuto = true;
                 UIManager.Instance.dps.locked = true;
                 eventLock = false;
+                DialogueManager.Instance.DisplayNextSentence();
+                break;
+            case "Attack":
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                eventLock = true;
+                mage.GetComponent<Animator>().Play("AtkCast",0);
+                GameObject go = Instantiate(mage.GetComponent<Mage>().AttackPrefab,mage.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(2f);
+                eventLock = false;
+                UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "WaitParry":

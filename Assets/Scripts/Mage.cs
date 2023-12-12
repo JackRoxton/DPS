@@ -6,15 +6,19 @@ using Random = UnityEngine.Random;
 
 public class Mage : MonoBehaviour
 {
-    public GameObject SpellPrefab;
-    GameObject CurrentSpell;
-    [NonSerialized]
     public GameObject Player;
-    public float spellTimer = 6f;
-    public float timer;
+    public GameObject ProjectilePrefab;
+    GameObject CurrentProjectile;
+    public GameObject AttackPrefab;
+    GameObject CurrentAttack;
+    public float projTime = 5f;
+    [NonSerialized] public float ptimer;
+    public float atkTime = 6f;
+    [NonSerialized] public float atimer;
     public float spellSpeed;
 
-    public bool spellCast = false;
+    public bool projCast = false;
+    public bool atkCast = false;
     public bool tuto = false;
     public bool pause = false;
 
@@ -26,8 +30,10 @@ public class Mage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-        spellTimer -= phaseMult;
-        timer = spellTimer;
+        projTime -= phaseMult;
+        atkTime -= phaseMult;
+        ptimer = projTime;
+        atimer = atkTime;
         spellSpeed = 5f;
         controller = GetComponent<Animator>();
     }
@@ -37,19 +43,29 @@ public class Mage : MonoBehaviour
     {
         if (tuto) return;
         if(pause) return;
-        timer -= Time.deltaTime;
+        ptimer -= Time.deltaTime;
 
-        /*f (Player.transform.position.x < this.transform.position.x)
+        /*if (Player.transform.position.x < this.transform.position.x)
             faceR = true;
         else
             faceR = false;*/
 
-        if (timer <= 0)
+        if (ptimer <= 0)
         {
-            //spellCast = false;
-            StartCoroutine(CastSpell());
-            timer = spellTimer + Random.Range(-1, 2);
+            StartCoroutine(CastProj());
+            ptimer = projTime + Random.Range(0, 2);
         }
+        
+        if (Vector3.Distance(Player.transform.position, this.transform.position) <= 4f)
+        {
+            atimer -= Time.deltaTime;
+            if (atimer <= 0)
+            {
+                StartCoroutine(CastAtk());
+                atimer = atkTime + Random.Range(0, 2);
+            }
+        }
+        
     }
 
     public void Pause(bool pause)
@@ -59,20 +75,33 @@ public class Mage : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(CurrentSpell != null)
-            Destroy(CurrentSpell.gameObject);
+        if(CurrentProjectile != null)
+            Destroy(CurrentProjectile.gameObject);
+        if(CurrentAttack != null)
+            Destroy(CurrentAttack.gameObject);
     }
 
-    public IEnumerator CastSpell()
+    public IEnumerator CastProj()
     {
         SoundManager.Instance.Play("spell");
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         controller.Play("SpellCast",0);
-        yield return new WaitUntil(SpellCast);
-        CurrentSpell = Instantiate(SpellPrefab, this.transform.position,Quaternion.identity);
-        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),CurrentSpell.GetComponent<Collider2D>());
-        CurrentSpell.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y -this.transform.position.y).normalized)*spellSpeed;
-        spellCast = false;
+        yield return new WaitUntil(ProjCast);
+        CurrentProjectile = Instantiate(ProjectilePrefab, this.transform.position,Quaternion.identity);
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),CurrentProjectile.GetComponent<Collider2D>());
+        CurrentProjectile.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y -this.transform.position.y).normalized)*spellSpeed;
+        projCast = false;
+        yield return null;
+    }
+
+    public IEnumerator CastAtk()
+    {
+        VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
+        controller.Play("AtkCast", 0);
+        yield return new WaitUntil(AtkCast);
+        CurrentAttack = Instantiate(AttackPrefab, this.transform.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), CurrentAttack.GetComponent<Collider2D>());
+        atkCast = false;
         yield return null;
     }
 
@@ -88,8 +117,12 @@ public class Mage : MonoBehaviour
         GameManager.Instance.AddScore();
     }
 
-    public bool SpellCast()
+    public bool ProjCast()
     {
-        return spellCast;
+        return projCast;
+    }
+    public bool AtkCast()
+    {
+        return atkCast;
     }
 }

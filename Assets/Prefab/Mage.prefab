@@ -101,13 +101,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7a38e7f61f1a945a6ba31af7b15987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 5717790739917788765, guid: 33ff12954a616324aac96357c7f036e7, type: 3}
-  spellTimer: 5
-  timer: 0
+  Player: {fileID: 0}
+  ProjectilePrefab: {fileID: 5717790739917788765, guid: 33ff12954a616324aac96357c7f036e7, type: 3}
+  AttackPrefab: {fileID: 571448682678014944, guid: ef69da05b7d92864692e8b1e480fb219, type: 3}
+  projTime: 5
+  ptimer: 0
+  atkTime: 6
+  atimer: 0
   spellSpeed: 0
-  spellCast: 0
+  projCast: 0
   tuto: 0
   pause: 0
+  phaseMult: 1
 --- !u!50 &-2392196849865266108
 Rigidbody2D:
   serializedVersion: 4
@@ -188,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29614656e2f2156498afe56ed94e9d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: a12396b1842db4748b1ba2aac0c1af1a, type: 2}
+  mat: {fileID: 2100000, guid: 583db57eb31993c4b992fa0f13152214, type: 2}
   fade:
     serializedVersion: 2
     m_Curve:
@@ -202,8 +207,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9988732
-      value: 10.000735
+      time: 0.99952006
+      value: 4.9998603
       inSlope: 0
       outSlope: 0
       tangentMode: 136

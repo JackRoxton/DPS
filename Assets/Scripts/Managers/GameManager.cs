@@ -14,14 +14,15 @@ public class GameManager : Singleton<GameManager>
     public float speedMod = 1f;
 
     public float mageHP = 5000;
-    float threshold = 5000;
+    float threshold = 4000;
     public float score = 0, combo = 1;
     public float maxCombo = 0;
     public float money = 0;
     public bool endFlag = false;
     public bool winFlag = false;
 
-    public float playerAttack = 10;
+    public float playerAttack = 20;
+    public float playerAttackSpeed = 1;
     public float playerSpeedUp = 1;
     public bool playerDashOnMovement = false;
 
@@ -188,14 +189,16 @@ public class GameManager : Singleton<GameManager>
         maxCombo = 0;
         endFlag = false;
         winFlag = false;
+        threshold = 4000;
 
         foreach(Skill skill in skills)
         {
             skill.Resetvar();
         }
 
-        playerAttack = 10;
+        playerAttack = 20;
         playerSpeedUp = 1;
+        playerAttackSpeed = 1;
 
         UIManager.Instance.Resetvar();
     }
@@ -212,7 +215,7 @@ public class GameManager : Singleton<GameManager>
             WinGame();
         }
 
-        if(mageHP < threshold - 1000)
+        if(mageHP < threshold)
         {
             threshold -= 1000;
             speedMod *= 1.1f;
@@ -228,7 +231,7 @@ public class GameManager : Singleton<GameManager>
 
     public void TakeDamage()
     {
-        ScreenShake();
+        StrongScreenShake();
         combo = 1;
     }
 
@@ -318,7 +321,10 @@ public class GameManager : Singleton<GameManager>
     public enum Skills
     {
         AttackUp,
-        SpeedUp
+        SpeedUp,
+        AttackSpeedUp,
+        DodgePow,
+        ParryPow
     }
 
     public void BuySkill(Skills type, int cost)
@@ -329,20 +335,38 @@ public class GameManager : Singleton<GameManager>
         switch (type)
         {
             case Skills.AttackUp:
-                playerAttack += 5;
+                playerAttack += 20;
+                RoomManager.Instance.PlayerAttack();
                 break;
 
             case Skills.SpeedUp:
-                playerSpeedUp += 0.1f;
+                playerSpeedUp *= 1.1f;
                 RoomManager.Instance.PlayerSpeed(playerSpeedUp);
                 break;
 
+            case Skills.AttackSpeedUp:
+                playerAttackSpeed *= 1.15f;
+                RoomManager.Instance.PlayerAttackSpeed(playerAttackSpeed);
+                break;
+
+            case Skills.DodgePow:
+                RoomManager.Instance.PlayerDodgePow(2);
+                break;
+
+            case Skills.ParryPow:
+                RoomManager.Instance.PlayerParryPow(2);
+                break;
         }
     }
 
     public void ScreenShake()
     {
         Camera.main.GetComponent<CameraScript>().ScreenShake();
+    }
+
+    public void StrongScreenShake()
+    {
+        Camera.main.GetComponent<CameraScript>().StrongScreenShake();
     }
 
 }

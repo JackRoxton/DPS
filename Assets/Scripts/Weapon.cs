@@ -82,7 +82,7 @@ public class Weapon : MonoBehaviour
             {
                 collision.gameObject.GetComponent<Mage>().TakeDamage();
                 UIManager.Instance.dps.Light("S",true);
-                player.KnockBack(player.transform.position - collision.gameObject.transform.position);
+                player.AtkKnockBack(player.transform.position - collision.gameObject.transform.position);
                 Transform trs = this.transform;
                 trs.position = Physics2D.ClosestPoint(this.transform.position, collision);
                 VFXManager.Instance.PlayEffectAt("Hit", trs);

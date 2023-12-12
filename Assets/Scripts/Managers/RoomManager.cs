@@ -346,6 +346,26 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().speedUpgrade = speedMod;
     }
 
+    public void PlayerAttackSpeed(float speedMod)
+    {
+        player.GetComponent<Player>().ModAttackSpeed(speedMod);
+    }
+
+    public void PlayerAttack()
+    {
+        player.GetComponentInChildren<Weapon>().gameObject.transform.localScale *= 1.05f;
+    }
+
+    public void PlayerParryPow(float pow)
+    {
+        player.GetComponent<Player>().parryPow = pow;
+    }
+
+    public void PlayerDodgePow(float pow)
+    {
+        player.GetComponent<Player>().dodgePow = pow;
+    }
+
     public void PlayerDash(bool OnMovement)
     {
         player.GetComponent<Player>().dashOnMovement = OnMovement;

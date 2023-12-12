@@ -25,15 +25,19 @@ public class Player : MonoBehaviour
     public states currentState = states.Base;
 
     public float attackSpeed = 1f;
-    public float speed = 0.25f;
+    public float attackSpeedUpgrade = 1f;
+    public float dodgePow = 1f;
+    public float parryPow = 1f;
     public float speedUpgrade = 1f;
+
+    public float speed = 0.25f;
     public float dashPower = 25f;
     float kbForce = 2f;
 
     bool stun = false;
     float stunTimer = 0.25f;
 
-    public bool dashOnMovement = false; //modif pour faire je usans soruis avec autoaim (+ mannette)
+    public bool dashOnMovement = false; //modif pour faire jeu sans souris avec autoaim (+ mannette)
 
    /*public bool mouseLock = false;
     Vector2 mouseLastPos = Vector2.zero;*/
@@ -45,7 +49,6 @@ public class Player : MonoBehaviour
     float timer;
     GameObject parriedMinion;
 
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<Animator>();
@@ -187,12 +190,14 @@ public class Player : MonoBehaviour
 
     private void Parry()
     {
+        controller.speed = parryPow;
         controller.Play("Parry", 0);
         SoundManager.Instance.Play("parry");
     }
 
     private void Dodge()
     {
+        controller.speed = dodgePow;
         controller.Play("Dodge", 0);
         SoundManager.Instance.Play("dodge");
         VFXManager.Instance.PlayEffectOn("DodgeTrail",this.gameObject);
@@ -210,14 +215,14 @@ public class Player : MonoBehaviour
         }
 
         dir.Normalize();
-        body.velocity = new Vector2(dir.x * dashPower,dir.y * dashPower);
+        body.velocity = new Vector2(dir.x * dashPower * dodgePow,dir.y * dashPower * dodgePow);
     }
 
     private void TakeDamage()
     {
+        body.velocity /= 10f;
         VFXManager.Instance.HitStop();
         stun = true;
-        body.velocity = Vector2.zero;
         controller.Play("HitStun");
         GameManager.Instance.TakeDamage();
         SoundManager.Instance.Play("phit");
@@ -228,69 +233,100 @@ public class Player : MonoBehaviour
         GameManager.Instance.AddScore();
     }
 
-    public void KnockBack(Vector2 kb)
+    public void AtkKnockBack(Vector2 kb)
     {
         body.velocity += kb.normalized * kbForce;
     }
 
     public void ModAttackSpeed(float atk)
     {
-        attackSpeed = atk;
-        controller.speed = attackSpeed;
-        weapon.controller.speed = attackSpeed;
+        attackSpeedUpgrade = atk;
+        //controller.speed = attackSpeed;
+        weapon.controller.speed = attackSpeed * attackSpeedUpgrade;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision == null) return;
 
-        if(collision.gameObject.GetComponent<MageProjectile>() != null ) {
-            if (currentState != states.Dodge)
+        if (collision.gameObject.tag == "Spell")
+        {
+            if (collision.gameObject.GetComponent<MageProjectile>() != null)
             {
-                TakeDamage();
-                collision.gameObject.GetComponent<MageProjectile>().Die();
-            }
-            else 
-            {
-                if (collision.gameObject.GetComponent<MageProjectile>().hitFlag == true)
+                MageProjectile spell = collision.gameObject.GetComponent<MageProjectile>();
+                if (currentState != states.Dodge)
                 {
-                    AddScore();
-                    VFXManager.Instance.HitStop();
-                    UIManager.Instance.dps.Light("D",true);
-                    if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
-                        VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
-                    else
-                        VFXManager.Instance.PlayEffectAt("Dodge", this.transform);
+                    TakeDamage();
+                    spell.Die();
                 }
-                collision.gameObject.GetComponent<MageProjectile>().hitFlag = false;
-                Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                else
+                {
+                    if (spell.hitFlag == true)
+                    {
+                        AddScore();
+                        VFXManager.Instance.HitStop();
+                        UIManager.Instance.dps.Light("D", true);
+                        if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
+                            VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
+                        else
+                            VFXManager.Instance.PlayEffectAt("Dodge", this.transform);
+                    }
+                    spell.hitFlag = false;
+                    Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                }
+            }
+            else if(collision.gameObject.GetComponent<MageAttack>() != null)
+            {
+                MageAttack spell = collision.gameObject.GetComponent<MageAttack>();
+                if (currentState != states.Dodge)
+                {
+                    TakeDamage();
+                    spell.Die();
+                }
+                else
+                {
+                    if(spell.hitFlag == true)
+                    {
+                        this.GetComponent<Rigidbody2D>().velocity += new Vector2(this.transform.position.x - spell.transform.position.x, this.transform.position.y - spell.transform.position.y).normalized * 10f ;
+                        AddScore();
+                        VFXManager.Instance.HitStop();
+                        UIManager.Instance.dps.Light("D", true);
+                        if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
+                            VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
+                        else
+                            VFXManager.Instance.PlayEffectAt("Dodge", this.transform);
+                    }
+                    spell.hitFlag = false;
+                    Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                }
             }
         }
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
-            if (currentState != states.Parry && !weapon.hitboxActive && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && collision.gameObject.GetComponent<Minion>().dmgFlag)
+            Minion minion = collision.gameObject.GetComponent<Minion>();
+            if (currentState != states.Parry && !weapon.hitboxActive && minion.hitboxActive && !minion.stun && minion.dmgFlag)
             {
                 if (IFrame)
                 {
-                    if(!IFrameFlag)
-                        timer = IFrameTimer;
+                    if (!IFrameFlag)
+                        timer = IFrameTimer + (parryPow / 20);
                     IFrameFlag = true;
                     parriedMinion = collision.gameObject;
                 }
                 else
                 {
                     TakeDamage();
-                    collision.gameObject.GetComponent<Minion>().dmgFlag = false;
+                    minion.dmgFlag = false;
                 }
             }
-            else if (currentState == states.Parry && collision.gameObject.GetComponent<Minion>().hitboxActive && !collision.gameObject.GetComponent<Minion>().stun && !collision.isTrigger)
+            else if (currentState == states.Parry && minion.hitboxActive && !minion.stun && !collision.isTrigger)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
-                UIManager.Instance.dps.Light("P",true);
-                collision.gameObject.GetComponent<Minion>().Stunned();
+                UIManager.Instance.dps.Light("P", true);
+                minion.Stunned();
                 AddScore();
                 VFXManager.Instance.HitStop();
-                VFXManager.Instance.PlayEffectOn("Parry",this.gameObject);
+                VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
             }
         }
     }
