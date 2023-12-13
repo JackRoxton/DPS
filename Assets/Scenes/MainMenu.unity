@@ -1785,6 +1785,14 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: light
+    clip: {fileID: 8300000, guid: a3ad236413fd6944eaf3abb8e3fd4b8b, type: 3}
+    output: {fileID: -5859900346891541820, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
+    volume: 0.8
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   musics:
   - name: 1
     clip: {fileID: 8300000, guid: aa7ff685aa57bd548a02004767b6693d, type: 3}

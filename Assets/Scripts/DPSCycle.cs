@@ -27,6 +27,7 @@ public class DPSCycle : MonoBehaviour
                     D.GetComponent<Image>().color = Color.yellow;
                     Dstate = true;
                     D.GetComponent<Animator>().Play("DBump");
+                    SoundManager.Instance.Play("light");
                 }
                 else
                 {
@@ -41,6 +42,7 @@ public class DPSCycle : MonoBehaviour
                     P.GetComponent<Image>().color = Color.yellow;
                     Pstate = true;
                     P.GetComponent<Animator>().Play("PBump");
+                    SoundManager.Instance.Play("light");
                 }
                 else
                 {
@@ -55,6 +57,7 @@ public class DPSCycle : MonoBehaviour
                     S.GetComponent<Image>().color = Color.yellow;
                     Sstate = true;
                     S.GetComponent<Animator>().Play("SBump");
+                    SoundManager.Instance.Play("light");
                 }
                 else
                 {
