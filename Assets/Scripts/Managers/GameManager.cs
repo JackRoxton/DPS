@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     public bool endFlag = false;
     public bool winFlag = false;
 
-    public float playerAttack = 20;
+    public float playerAttack = 10;
     public float playerAttackSpeed = 1;
     public float playerSpeedUp = 1;
     public bool playerDashOnMovement = false;
@@ -86,6 +86,8 @@ public class GameManager : Singleton<GameManager>
             tutorial = false;
             currentState = gameStates.Tutorial;
             //SetTimeScale(1);
+            currentMusic = 2;
+            SoundManager.Instance.PlayMusic(currentMusic.ToString());
         }
         else
         {
@@ -94,7 +96,8 @@ public class GameManager : Singleton<GameManager>
 
             shortGame = false;
 
-            currentMusic = Random.Range(0, 9) + 1;
+            SoundManager.Instance.StopMusic(currentMusic.ToString());
+            currentMusic = 1;
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
         }
 
@@ -119,7 +122,7 @@ public class GameManager : Singleton<GameManager>
             currentState = gameStates.InGame;
             //SetTimeScale(1);
 
-            currentMusic = Random.Range(0, 9) + 1;
+            currentMusic = 1;
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
         }
         globalTimer = 60f;
@@ -168,13 +171,14 @@ public class GameManager : Singleton<GameManager>
     public void ToMenu()
     {
         //SetTimeScale(1);
-        RoomManager.Instance.Resetvar();
+        SoundManager.Instance.StopMusic(currentMusic.ToString());
         winFlag = false;
         endFlag = false;
         score = 0;
         currentState = gameStates.MainMenu;
         Resetvar();
         UIManager.Instance.Fade(0);
+        RoomManager.Instance.Resetvar();
         SceneManager.LoadScene(0);
     }
 
@@ -238,8 +242,8 @@ public class GameManager : Singleton<GameManager>
     public void ChangeRoom()
     {
         timer = altTimer / speedMod;
-        currentMusic = (Random.Range(0, 9) + 1);
-        SoundManager.Instance.PlayMusic(currentMusic.ToString());
+        //currentMusic = 1;
+        //SoundManager.Instance.PlayMusic(currentMusic.ToString());
         SoundManager.Instance.Play("change");
         RoomManager.Instance.ChangeRoom();
 
@@ -286,7 +290,7 @@ public class GameManager : Singleton<GameManager>
         timer = altTimer;
         currentState = gameStates.InGame;
         RoomManager.Instance.NextPhase();
-        currentMusic = (Random.Range(0, 9) + 1);
+        currentMusic = 1;
         SoundManager.Instance.PlayMusic(currentMusic.ToString());
     }
 
@@ -335,7 +339,7 @@ public class GameManager : Singleton<GameManager>
         switch (type)
         {
             case Skills.AttackUp:
-                playerAttack += 20;
+                playerAttack += 10;
                 RoomManager.Instance.PlayerAttack();
                 break;
 

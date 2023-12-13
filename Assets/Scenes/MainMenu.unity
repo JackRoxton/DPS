@@ -1769,83 +1769,43 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: attack
+    clip: {fileID: 8300000, guid: 8a7045c7e0a39384f9c13ed8dc807f79, type: 3}
+    output: {fileID: -5859900346891541820, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
+    volume: 0.8
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: wave
+    clip: {fileID: 8300000, guid: 9664d0514ac65e9459fdb7d79e11106c, type: 3}
+    output: {fileID: -5859900346891541820, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
+    volume: 0.8
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   musics:
   - name: 1
-    clip: {fileID: 8300000, guid: 3fc78e9e24bbda4408e28ea990eeb7fa, type: 3}
+    clip: {fileID: 8300000, guid: aa7ff685aa57bd548a02004767b6693d, type: 3}
     output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
+    volume: 0.5
     pitch: 0
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
   - name: 2
-    clip: {fileID: 8300000, guid: 0db67111d03c55e44ad8e0656d5c033a, type: 3}
+    clip: {fileID: 8300000, guid: b1d78aac03cf0a447a8ac07f16fcd955, type: 3}
     output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
+    volume: 0.25
     pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 3
-    clip: {fileID: 8300000, guid: 822b2d89e8b09e4459e6516314a9619e, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 4
-    clip: {fileID: 8300000, guid: bfaade72de4b00b42854c52b71dff0f0, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 5
-    clip: {fileID: 8300000, guid: 6d03e8056ef76df419980d3ea975e81a, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 6
-    clip: {fileID: 8300000, guid: 171c253e036d5d949a7530ba4020bfa9, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 7
-    clip: {fileID: 8300000, guid: 1a2e9a331eb677c4396746a0773b1c34, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 8
-    clip: {fileID: 8300000, guid: 396ef22da64188142a7d629ce8521ad8, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
-    playOnAwake: 0
-    source: {fileID: 0}
-  - name: 9
-    clip: {fileID: 8300000, guid: a8d0ce021012e3c43b68f6c9d70a6804, type: 3}
-    output: {fileID: -2406512195886316877, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
-    volume: 1
-    pitch: 0
-    loop: 0
+    loop: 1
     playOnAwake: 0
     source: {fileID: 0}
   audioMix: {fileID: 24100000, guid: dd785de183d062d428aabb1f4348e0e7, type: 2}
   masterVolume: 1
-  musicVolume: 1
-  sfxVolume: 0.5
+  musicVolume: 0.5
+  sfxVolume: 0.6
 --- !u!1 &192311827
 GameObject:
   m_ObjectHideFlags: 0
@@ -10475,7 +10435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.046274107, y: 0.88000005}
   m_AnchorMax: {x: 0.238, y: 0.96833336}
-  m_AnchoredPosition: {x: 0.2999878, y: 1.7000122}
+  m_AnchoredPosition: {x: 0.30004883, y: 1.7000122}
   m_SizeDelta: {x: -3, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898666277

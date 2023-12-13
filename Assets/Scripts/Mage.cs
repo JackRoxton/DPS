@@ -17,6 +17,8 @@ public class Mage : MonoBehaviour
     [NonSerialized] public float atimer;
     public float spellSpeed;
 
+    public bool spell = false;
+
     public bool projCast = false;
     public bool atkCast = false;
     public bool tuto = false;
@@ -83,6 +85,8 @@ public class Mage : MonoBehaviour
 
     public IEnumerator CastProj()
     {
+        while (spell) yield return new WaitForEndOfFrame();
+        spell = true;
         SoundManager.Instance.Play("spell");
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         controller.Play("SpellCast",0);
@@ -91,17 +95,22 @@ public class Mage : MonoBehaviour
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),CurrentProjectile.GetComponent<Collider2D>());
         CurrentProjectile.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y -this.transform.position.y).normalized)*spellSpeed;
         projCast = false;
+        spell = false;
         yield return null;
     }
 
     public IEnumerator CastAtk()
     {
+        while(spell) yield return new WaitForEndOfFrame();
+        spell = true;
+        SoundManager.Instance.Play("attack");
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         controller.Play("AtkCast", 0);
         yield return new WaitUntil(AtkCast);
         CurrentAttack = Instantiate(AttackPrefab, this.transform.position, Quaternion.identity);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), CurrentAttack.GetComponent<Collider2D>());
         atkCast = false;
+        spell = false;
         yield return null;
     }
 

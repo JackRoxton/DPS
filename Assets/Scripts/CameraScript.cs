@@ -9,15 +9,23 @@ public class CameraScript : MonoBehaviour
     float shakeDuration = 0.3f;
     public AnimationCurve shake;
     public AnimationCurve strongShake;
+    bool inShake = false;
+    Vector3 startPos = Vector3.zero;
 
     public void ScreenShake()
     {
+        if (inShake)
+        {
+            StopAllCoroutines();
+            transform.position = startPos;
+        }
         StartCoroutine(_ScreenShake()); 
     }
 
     public IEnumerator _ScreenShake()
     {
-        Vector3 startPos = transform.position;
+        inShake = true;
+        startPos = transform.position;
         float time = 0f;
         while(time < shakeDuration)
         {
@@ -27,16 +35,23 @@ public class CameraScript : MonoBehaviour
             yield return null;
         }
         transform.position = startPos;
+        inShake = false;
     }
 
     public void StrongScreenShake()
     {
+        if (inShake)
+        {
+            StopAllCoroutines();
+            transform.position = startPos;
+        }
         StartCoroutine(_StrongScreenShake());
     }
 
     public IEnumerator _StrongScreenShake()
     {
-        Vector3 startPos = transform.position;
+        inShake = true;
+        startPos = transform.position;
         float time = 0f;
         while (time < shakeDuration)
         {
@@ -46,6 +61,7 @@ public class CameraScript : MonoBehaviour
             yield return null;
         }
         transform.position = startPos;
+        inShake = false;
     }
 
 }

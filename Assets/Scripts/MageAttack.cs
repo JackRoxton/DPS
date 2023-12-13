@@ -14,10 +14,13 @@ public class MageAttack : MonoBehaviour
     public IEnumerator Expand()
     {
         GameManager.Instance.ScreenShake();
+        SoundManager.Instance.Play("wave");
         yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.Play("wave");
         transform.localScale *= 1.5f;
         GameManager.Instance.ScreenShake();
         yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.Play("wave");
         transform.localScale *= 1.5f;
         GameManager.Instance.ScreenShake();
         yield return new WaitForSeconds(0.5f);

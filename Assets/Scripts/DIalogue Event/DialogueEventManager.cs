@@ -65,6 +65,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 eventLock = true;
                 mage.GetComponent<Animator>().Play("AtkCast",0);
+                SoundManager.Instance.Play("attack");
                 GameObject go = Instantiate(mage.GetComponent<Mage>().AttackPrefab,mage.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(2f);
                 eventLock = false;
