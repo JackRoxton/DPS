@@ -219,7 +219,7 @@ public class GameManager : Singleton<GameManager>
             WinGame();
         }
 
-        if(mageHP < threshold)
+        if((mageHP - score) < threshold)
         {
             threshold -= 1000;
             speedMod *= 1.1f;
