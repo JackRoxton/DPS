@@ -106,6 +106,8 @@ public class DPSCycle : MonoBehaviour
             ResetLights();
             GameManager.Instance.DPSCycle();
             SoundManager.Instance.Play("dps");
+            VFXManager.Instance.PlayEffectAt("Shockwave", this.transform);
+            VFXManager.Instance.HitStop();
             doneOnce = true;
         }
     }

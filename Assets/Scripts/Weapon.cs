@@ -35,7 +35,7 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator _Attack()
     {
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.25f);
         attackFlag = false;
     }
 

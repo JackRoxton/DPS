@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Animator controller;
     Rigidbody2D body;
     public Weapon weapon;
+    public GameObject shield;
 
     public bool endFlag = false;
     bool pause = false;
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
     public float speedUpgrade = 1f;
 
     public float speed = 0.25f;
-    public float dashPower = 25f;
+    public float dashPower = 30f;
     float kbForce = 2f;
 
     bool stun = false;
@@ -42,12 +43,18 @@ public class Player : MonoBehaviour
    /*public bool mouseLock = false;
     Vector2 mouseLastPos = Vector2.zero;*/
 
-    bool IFrame = true;
-    bool IFrameFlag = false;
-    float IFrameCD = 1f;
-    float IFrameTimer = 0.1f;
+    bool parryIFrame = true;
+    bool parryIFrameFlag = false;
+    float parryIFrameCD = 1f;
+    float parryIFrameTimer = 0.1f;
     float timer;
+
+    bool hitIFrame = false;
+    float hitIFrameTime = 0.15f;
+
     GameObject parriedMinion;
+
+    bool shielded = false;
 
     void Start()
     {
@@ -79,6 +86,16 @@ public class Player : MonoBehaviour
             }
         }
 
+        if(hitIFrame)
+        {
+            hitIFrameTime -= Time.deltaTime;
+            if(hitIFrameTime <= 0)
+            {
+                hitIFrame = false;
+                hitIFrameTime = 0.15f;
+            }
+        }
+
         if (pause) return;
 
         if (Input.GetAxis("Slash") != 0)
@@ -102,18 +119,16 @@ public class Player : MonoBehaviour
             mouseLock = true;
             Mouse.current.WarpCursorPosition(Camera.main.WorldToScreenPoint(this.transform.position));
             mouseLastPos = Camera.main.WorldToScreenPoint(this.transform.position);
-        }*/
-
-        /*if (Input.GetKeyDown(KeyCode.Q))
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             if(dashOnMovement)
                 dashOnMovement = false;
             else
                 dashOnMovement = true;
             Debug.Log(dashOnMovement);
-        }*/
-
-        /*if(mouseLock)
+        }
+        if(mouseLock)
         {
             Vector2 mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(this.transform.position).x, Camera.main.WorldToScreenPoint(this.transform.position).y, 0);
             //Vector2 dist = new Vector3(mousePos.x - this.transform.position.x, mousePos.y - this.transform.position.y, this.transform.position.z);
@@ -129,13 +144,13 @@ public class Player : MonoBehaviour
             }
         }*/
 
-        if (IFrameFlag)
+        if (parryIFrameFlag)
         {
             timer -= Time.deltaTime;
             if(currentState == states.Parry) 
             {
-                IFrameFlag = false;
-                IFrame = true;
+                parryIFrameFlag = false;
+                parryIFrame = true;
                 UIManager.Instance.dps.Light("P",true);
                 parriedMinion.GetComponent<Minion>().Stunned();
                 VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
@@ -144,18 +159,18 @@ public class Player : MonoBehaviour
             }
             if(timer <= 0)
             {
-                IFrameFlag = false;
-                IFrame = false;
-                timer = IFrameCD;
+                parryIFrameFlag = false;
+                parryIFrame = false;
+                timer = parryIFrameCD;
                 TakeDamage();
             }
         }
-        if (!IFrame)
+        if (!parryIFrame)
         {
             timer -= Time.deltaTime;
             if(timer <= 0)
             {
-                IFrame = true;
+                parryIFrame = true;
             }
         }
 
@@ -220,12 +235,30 @@ public class Player : MonoBehaviour
 
     private void TakeDamage()
     {
-        body.velocity /= 10f;
+        if (hitIFrame)
+            return;
+
+        if(shielded) 
+        {
+            shielded = false;
+            shield.SetActive(false);
+            hitIFrame = true;
+            return;
+        }
+
+        hitIFrame = true;
         VFXManager.Instance.HitStop();
-        stun = true;
-        controller.Play("HitStun");
         GameManager.Instance.TakeDamage();
         SoundManager.Instance.Play("phit");
+        body.velocity /= 10f;
+        stun = true;
+        controller.Play("HitStun");
+    }
+
+    public void Shielded()
+    {
+        shielded = true;
+        shield.SetActive(true);
     }
 
     private void AddScore()
@@ -256,8 +289,8 @@ public class Player : MonoBehaviour
                 MageProjectile spell = collision.gameObject.GetComponent<MageProjectile>();
                 if (currentState != states.Dodge)
                 {
-                    TakeDamage();
                     spell.Die();
+                    TakeDamage();
                 }
                 else
                 {
@@ -280,8 +313,8 @@ public class Player : MonoBehaviour
                 MageAttack spell = collision.gameObject.GetComponent<MageAttack>();
                 if (currentState != states.Dodge)
                 {
-                    TakeDamage();
                     spell.Die();
+                    TakeDamage();
                 }
                 else
                 {
@@ -304,22 +337,23 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.GetComponent<Minion>() != null)
         {
             Minion minion = collision.gameObject.GetComponent<Minion>();
+            if (collision.isTrigger == true) return;
             if (currentState != states.Parry && !weapon.hitboxActive && minion.hitboxActive && !minion.stun && minion.dmgFlag)
             {
-                if (IFrame)
+                if (parryIFrame)
                 {
-                    if (!IFrameFlag)
-                        timer = IFrameTimer + (parryPow / 20);
-                    IFrameFlag = true;
+                    if (!parryIFrameFlag)
+                        timer = parryIFrameTimer + (parryPow / 20);
+                    parryIFrameFlag = true;
                     parriedMinion = collision.gameObject;
                 }
                 else
                 {
-                    TakeDamage();
                     minion.dmgFlag = false;
+                    TakeDamage();
                 }
             }
-            else if (currentState == states.Parry && minion.hitboxActive && !minion.stun && !collision.isTrigger)
+            else if (currentState == states.Parry && minion.hitboxActive && !minion.stun)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
                 UIManager.Instance.dps.Light("P", true);

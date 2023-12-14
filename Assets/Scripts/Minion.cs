@@ -81,7 +81,6 @@ public class Minion : MonoBehaviour
     {
         if(invincible)
         {
-            Debug.Log("lol");
             return;
         }
         GameManager.Instance.ScreenShake();

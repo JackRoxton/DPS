@@ -51,6 +51,7 @@ public class MageProjectile : MonoBehaviour
 
     public void Die()
     {
+        hitFlag = false;
         Destroy(this.gameObject );
     }
 

@@ -15,13 +15,13 @@ public class GameManager : Singleton<GameManager>
 
     public float mageHP = 5000;
     float threshold = 4000;
-    public float score = 0, combo = 1;
+    public float score = 0, combo = 0;
     public float maxCombo = 0;
     public float money = 0;
     public bool endFlag = false;
     public bool winFlag = false;
 
-    public float playerAttack = 10;
+    public float playerAttack = 20;
     public float playerAttackSpeed = 1;
     public float playerSpeedUp = 1;
     public bool playerDashOnMovement = false;
@@ -189,7 +189,7 @@ public class GameManager : Singleton<GameManager>
         altTimer = 7.5f;
         timer = altTimer;
         score = 0;
-        combo = 1;
+        combo = 0;
         maxCombo = 0;
         endFlag = false;
         winFlag = false;
@@ -213,7 +213,7 @@ public class GameManager : Singleton<GameManager>
         //combo++;
         //if (combo > maxCombo) maxCombo = combo;
 
-        score += playerAttack * combo;
+        score += playerAttack + combo;
 
         if(score >= mageHP)
         {
@@ -229,15 +229,17 @@ public class GameManager : Singleton<GameManager>
 
     public void DPSCycle()
     {
-        combo += 2;
-        if (combo > maxCombo) maxCombo = combo;
+        combo += 5;
+        if (combo > maxCombo) maxCombo = combo; //à re
         AddScore();
+        if(currentState == gameStates.InGame)
+            RoomManager.Instance.Shockwave();
     }
 
     public void TakeDamage()
     {
         StrongScreenShake();
-        combo = 1;
+        //combo = 1;
     }
 
     public void ChangeRoom()
@@ -340,7 +342,7 @@ public class GameManager : Singleton<GameManager>
         switch (type)
         {
             case Skills.AttackUp:
-                playerAttack += 10;
+                playerAttack += 20;
                 RoomManager.Instance.PlayerAttack();
                 break;
 

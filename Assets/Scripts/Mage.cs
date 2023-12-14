@@ -11,9 +11,9 @@ public class Mage : MonoBehaviour
     GameObject CurrentProjectile;
     public GameObject AttackPrefab;
     GameObject CurrentAttack;
-    public float projTime = 5f;
+    public float projTime = 4f;
     [NonSerialized] public float ptimer;
-    public float atkTime = 6f;
+    public float atkTime = 5f;
     [NonSerialized] public float atimer;
     public float spellSpeed;
 
@@ -23,6 +23,9 @@ public class Mage : MonoBehaviour
     public bool atkCast = false;
     public bool tuto = false;
     public bool pause = false;
+
+    public bool stun = false;
+    float stunTime = 2f;
 
     public float phaseMult = 1;
 
@@ -47,6 +50,16 @@ public class Mage : MonoBehaviour
         if(pause) return;
         ptimer -= Time.deltaTime;
 
+        if (stun)
+        {
+            stunTime -= Time.deltaTime;
+            if(stunTime <= 0)
+            {
+                stun = false;
+            }
+            return;
+        }
+
         /*if (Player.transform.position.x < this.transform.position.x)
             faceR = true;
         else
@@ -68,6 +81,12 @@ public class Mage : MonoBehaviour
             }
         }
         
+    }
+
+    public void Stunned()
+    {
+        stun = true;
+        stunTime = 2f;
     }
 
     public void Pause(bool pause)

@@ -371,4 +371,11 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().dashOnMovement = OnMovement;
     }
 
+    public void Shockwave()
+    {
+        if(minion != null) minion.GetComponent<Minion>().Stunned();
+        mage.GetComponent<Mage>().Stunned();
+        player.GetComponent<Player>().Shielded();
+    }
+
 }
