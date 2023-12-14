@@ -194,6 +194,7 @@ public class GameManager : Singleton<GameManager>
         endFlag = false;
         winFlag = false;
         threshold = 4000;
+        speedMod = 1;
 
         foreach(Skill skill in skills)
         {
