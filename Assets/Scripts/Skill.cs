@@ -24,19 +24,17 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Start()
     {
-        if(locked)
-            startLocked = true;
-
         spr = this.GetComponent<Image>();
         if(locked)
         {
+            startLocked = true;
             spr.color = Color.gray;
         }
     }
 
     private void Update()
     {
-        if (skillActive) return;
+        if(skillActive) return;
         if(locked) return;
 
         if (mouseOver && Input.GetMouseButton(0))
@@ -50,6 +48,7 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 {
                     foreach (Skill skill in nextSkills)
                     {
+                        if (skill.skillActive) return;
                         skill.locked = false;
                         skill.spr.color = Color.white;
                     }

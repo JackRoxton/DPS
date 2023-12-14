@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1215607283832134488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0461, y: 1.2768, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,11 +105,11 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 5717790739917788765, guid: 33ff12954a616324aac96357c7f036e7, type: 3}
   AttackPrefab: {fileID: 571448682678014944, guid: ef69da05b7d92864692e8b1e480fb219, type: 3}
   projTime: 5
-  ptimer: 0
   atkTime: 6
-  atimer: 0
   spellSpeed: 0
+  spell: 0
   projCast: 0
+  atkCast: 0
   tuto: 0
   pause: 0
   phaseMult: 1
