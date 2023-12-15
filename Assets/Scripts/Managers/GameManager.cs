@@ -185,7 +185,8 @@ public class GameManager : Singleton<GameManager>
         currentState = gameStates.MainMenu;
         Resetvar();
         UIManager.Instance.Fade(0);
-        RoomManager.Instance.Resetvar();
+        if(RoomManager.Instance != null)
+            RoomManager.Instance.Resetvar();
         SceneManager.LoadScene(0);
     }
 
