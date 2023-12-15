@@ -52,7 +52,16 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        
+        if (PlayerPrefs.GetInt("Tuto") == 1)
+        {
+            tutorial = true;
+            tutoFlag = true;
+        }
+        else
+        {
+            tutorial = false;
+            tutoFlag = false;
+        }
     }
 
     // Update is called once per frame

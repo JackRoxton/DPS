@@ -50,6 +50,12 @@ public class GameManager : Singleton<GameManager>
         timer = altTimer;
         DontDestroyOnLoad(this.gameObject);
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
+        if (!PlayerPrefs.HasKey("Tuto")) 
+            PlayerPrefs.SetInt("Tuto", 1);
+        if (PlayerPrefs.GetInt("Tuto") == 1)
+            tutorial = true;
+        else
+            tutorial = false;
     }
 
     // Update is called once per frame
@@ -84,6 +90,7 @@ public class GameManager : Singleton<GameManager>
         if(tutorial)
         {
             tutorial = false;
+            PlayerPrefs.SetInt("Tuto",0);
             currentState = gameStates.Tutorial;
             //SetTimeScale(1);
             currentMusic = 2;
