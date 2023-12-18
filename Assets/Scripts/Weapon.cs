@@ -57,9 +57,11 @@ public class Weapon : MonoBehaviour
             if (hitboxActive && !collision.isTrigger) 
             {
                 collision.gameObject.GetComponent<Minion>().TakeDamage();
-                UIManager.Instance.dps.Light("S",true);
                 Transform trs = this.transform;
                 trs.position = Physics2D.ClosestPoint(this.transform.position,collision);
+                if (!UIManager.Instance.dps.GetState("S"))
+                    VFXManager.Instance.PlayEffectAt("Success", trs);
+                UIManager.Instance.dps.Light("S",true);
                 VFXManager.Instance.PlayEffectAt("Hit",trs);
                 SoundManager.Instance.Play("hit");
                 VFXManager.Instance.HitStop();
@@ -81,10 +83,12 @@ public class Weapon : MonoBehaviour
             if (hitboxActive && !hitflag)
             {
                 collision.gameObject.GetComponent<Mage>().TakeDamage();
-                UIManager.Instance.dps.Light("S",true);
-                player.AtkKnockBack(player.transform.position - collision.gameObject.transform.position);
                 Transform trs = this.transform;
                 trs.position = Physics2D.ClosestPoint(this.transform.position, collision);
+                if (!UIManager.Instance.dps.GetState("S"))
+                    VFXManager.Instance.PlayEffectAt("Success", trs);
+                UIManager.Instance.dps.Light("S",true);
+                player.AtkKnockBack(player.transform.position - collision.gameObject.transform.position);
                 VFXManager.Instance.PlayEffectAt("Hit", trs);
                 SoundManager.Instance.Play("hit");
                 hitflag = true;

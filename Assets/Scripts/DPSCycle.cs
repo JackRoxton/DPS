@@ -69,7 +69,7 @@ public class DPSCycle : MonoBehaviour
         CheckLights();
     }
 
-    /*public bool GetState(string name)
+    public bool GetState(string name)
     {
         switch (name)
         {
@@ -81,7 +81,7 @@ public class DPSCycle : MonoBehaviour
                 return Sstate;
         }
         return false;
-    }*/
+    }
 
     public bool GetD()
     {

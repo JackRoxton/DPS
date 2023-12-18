@@ -151,6 +151,8 @@ public class Player : MonoBehaviour
             {
                 parryIFrameFlag = false;
                 parryIFrame = true;
+                if (!UIManager.Instance.dps.GetState("P"))
+                    VFXManager.Instance.PlayEffectOn("Success", parriedMinion.gameObject);
                 UIManager.Instance.dps.Light("P",true);
                 parriedMinion.GetComponent<Minion>().Stunned();
                 VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
@@ -298,6 +300,8 @@ public class Player : MonoBehaviour
                     {
                         AddScore();
                         VFXManager.Instance.HitStop();
+                        if (!UIManager.Instance.dps.GetState("D"))
+                            VFXManager.Instance.PlayEffectAt("Success", transform);
                         UIManager.Instance.dps.Light("D", true);
                         if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                             VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
@@ -356,6 +360,8 @@ public class Player : MonoBehaviour
             else if (currentState == states.Parry && minion.hitboxActive && !minion.stun)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                if (!UIManager.Instance.dps.GetState("P"))
+                    VFXManager.Instance.PlayEffectOn("Success", minion.gameObject);
                 UIManager.Instance.dps.Light("P", true);
                 minion.Stunned();
                 AddScore();

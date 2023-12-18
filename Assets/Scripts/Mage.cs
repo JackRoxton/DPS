@@ -85,6 +85,7 @@ public class Mage : MonoBehaviour
 
     public void Stunned()
     {
+        VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
         stun = true;
         stunTime = 2f;
     }
