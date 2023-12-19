@@ -426,6 +426,7 @@ public class UIManager : Singleton<UIManager>
         tutorial = true;
         tutoFlag = true;
         GameManager.Instance.tutorial = true;
+        PlayerPrefs.SetInt("Tuto", 1);
     }
 
 }

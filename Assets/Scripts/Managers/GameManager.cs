@@ -47,6 +47,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        //PlayerPrefs.DeleteAll();
         timer = altTimer;
         DontDestroyOnLoad(this.gameObject);
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
