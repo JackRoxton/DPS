@@ -207,7 +207,7 @@ public class RoomManager : Singleton<RoomManager>
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(inWallSpots[where].position + pos), tile);
                 Transform trs = transform;
-                trs.position = inWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos;
+                trs.position = (Vector3)Vector3Int.FloorToInt(inWallSpots[where].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f);
                 VFXManager.Instance.PlayEffectAt("Teleport_End",trs);
             }
         }
@@ -220,7 +220,7 @@ public class RoomManager : Singleton<RoomManager>
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(inWallSpots[where2].position + pos), tile);
                 Transform trs = transform;
-                trs.position = inWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos;
+                trs.position = (Vector3)Vector3Int.FloorToInt(inWallSpots[where2].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f);
                 VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
@@ -237,7 +237,7 @@ public class RoomManager : Singleton<RoomManager>
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(outWallSpots[where].position + pos), tile);
                 Transform trs = transform;
-                trs.position = outWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos;
+                trs.position = (Vector3)Vector3Int.FloorToInt(outWallSpots[where].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f);
                 VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
@@ -250,7 +250,7 @@ public class RoomManager : Singleton<RoomManager>
             {
                 AddWallTilemap.SetTile(Vector3Int.FloorToInt(outWallSpots[where2].position + pos), tile);
                 Transform trs = transform;
-                trs.position = outWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos;
+                trs.position = (Vector3)Vector3Int.FloorToInt(outWallSpots[where2].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f);
                 VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
@@ -265,8 +265,10 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, inWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
-                
+                //Instantiate(warning, inWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+
+                Instantiate(warning, (Vector3)Vector3Int.FloorToInt(inWallSpots[where].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
+
             }
         }
 
@@ -276,7 +278,9 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, inWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                //Instantiate(warning, inWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+
+                Instantiate(warning, (Vector3)Vector3Int.FloorToInt(inWallSpots[where2].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 
@@ -290,7 +294,9 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, outWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                //Instantiate(warning, outWallSpots[where].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+
+                Instantiate(warning, (Vector3)Vector3Int.FloorToInt(outWallSpots[where].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
 
             }
         }
@@ -301,7 +307,9 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = tilemap2.GetTile<Tile>(pos);
             if (tile != null)
             {
-                Instantiate(warning, outWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+                //Instantiate(warning, outWallSpots[where2].position * AddWallTilemap.transform.localScale.x + pos + new Vector3(0.4f, 0.4f), Quaternion.identity);
+
+                Instantiate(warning, (Vector3)Vector3Int.FloorToInt(outWallSpots[where2].position + pos) * AddWallTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
 
