@@ -10,6 +10,9 @@ public class UIManager : Singleton<UIManager>
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject SettingsPanel, DialoguePanel;
 
+    public GameObject FloatingTextPrefab;
+    GameObject currentText;
+
     public TMP_Text timerText, scoreText, comboText;
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
@@ -427,6 +430,35 @@ public class UIManager : Singleton<UIManager>
         tutoFlag = true;
         GameManager.Instance.tutorial = true;
         PlayerPrefs.SetInt("Tuto", 1);
+    }
+
+    public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null)
+    {
+        if(text == "")
+        {
+            text = (GameManager.Instance.playerAttack+GameManager.Instance.combo).ToString();
+            if(!currentText)
+            {
+                currentText = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
+                currentText.transform.position += new Vector3(0, 1, 0);
+                currentText.GetComponent<TextMesh>().text = text;
+                currentText.GetComponent<FloatingText>().n = GameManager.Instance.playerAttack + GameManager.Instance.combo;
+                if (attached) 
+                    currentText.transform.parent = go.transform;
+            }
+            else
+            {
+                currentText.GetComponent<TextMesh>().text = (currentText.GetComponent<FloatingText>().n + GameManager.Instance.playerAttack + GameManager.Instance.combo).ToString();
+                currentText.GetComponent<FloatingText>().n += GameManager.Instance.playerAttack + GameManager.Instance.combo;
+            }
+            currentText.GetComponent<FloatingText>().ResetTimer();
+        }
+        else
+        {
+            GameObject a = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
+            a.GetComponent<TextMesh>().text = text;
+            if (attached) a.transform.parent = go.transform;
+        }
     }
 
 }

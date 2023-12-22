@@ -4939,6 +4939,7 @@ MonoBehaviour:
   CreditsPanel: {fileID: 1709305285}
   SettingsPanel: {fileID: 1639647815}
   DialoguePanel: {fileID: 192311827}
+  FloatingTextPrefab: {fileID: 2615239038070048801, guid: 93e603cd10d6ad3449d7efbc12584c39, type: 3}
   timerText: {fileID: 1369141132}
   scoreText: {fileID: 997315521}
   comboText: {fileID: 1175319485}

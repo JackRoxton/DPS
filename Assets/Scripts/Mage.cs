@@ -144,6 +144,7 @@ public class Mage : MonoBehaviour
     {
         GameManager.Instance.ScreenShake();
         GameManager.Instance.AddScore();
+        UIManager.Instance.FloatingText(this.transform.position, "", true, this.gameObject);
     }
 
     public bool ProjCast()
@@ -154,4 +155,5 @@ public class Mage : MonoBehaviour
     {
         return atkCast;
     }
+
 }
