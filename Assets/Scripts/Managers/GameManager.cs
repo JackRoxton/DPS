@@ -231,6 +231,8 @@ public class GameManager : Singleton<GameManager>
 
         if((mageHP - score) < threshold)
         {
+            UIManager.Instance.FloatingText(RoomManager.Instance.mage.transform.position, "ouch", false, null, Color.magenta);
+            UIManager.Instance.HPDown();
             threshold -= 1000;
             speedMod *= 1.1f;
         }

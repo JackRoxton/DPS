@@ -30,9 +30,11 @@ public class MageProjectile : MonoBehaviour
 
         if (GameManager.Instance.currentState == GameManager.gameStates.Pause) 
         {
-            velocity = this.body.velocity;
-            this.body.velocity = Vector2.zero;
-            flag = true;
+            if(!flag) { 
+                velocity = this.body.velocity;
+                this.body.velocity = Vector2.zero;
+                flag = true;
+            }
             return;
         }
 

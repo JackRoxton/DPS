@@ -104,14 +104,17 @@ MonoBehaviour:
   Player: {fileID: 0}
   ProjectilePrefab: {fileID: 5717790739917788765, guid: 33ff12954a616324aac96357c7f036e7, type: 3}
   AttackPrefab: {fileID: 571448682678014944, guid: ef69da05b7d92864692e8b1e480fb219, type: 3}
+  LaserPrefab: {fileID: 5569403704549426649, guid: 9548305b8ab71a8499ccf8136259351c, type: 3}
   projTime: 5
   atkTime: 6
+  lasTime: 12
   spellSpeed: 0
   spell: 0
   projCast: 0
   atkCast: 0
   tuto: 0
   pause: 0
+  stun: 0
   phaseMult: 1
 --- !u!50 &-2392196849865266108
 Rigidbody2D:

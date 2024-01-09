@@ -19,7 +19,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text dialogueText, nameText;
     public TMP_Text endDialogueText;
     public Image dialogueImageLeft, dialogueImageRight;
-    public Image lifebar;
+    public LifeBar lifebar;
     public DPSCycle dps;
 
     public Dialogue Tuto, Win;
@@ -75,7 +75,7 @@ public class UIManager : Singleton<UIManager>
             timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
             comboText.text = GameManager.Instance.combo.ToString();
-            lifebar.GetComponent<Slider>().value = ((GameManager.Instance.mageHP - GameManager.Instance.score) / GameManager.Instance.mageHP)*5;
+            //lifebar.GetComponent<Slider>().value = ((GameManager.Instance.mageHP - GameManager.Instance.score) / GameManager.Instance.mageHP)*5;
         }
 
         if(currentState == menuStates.Tutorial && tutoFlag) 
@@ -351,6 +351,7 @@ public class UIManager : Singleton<UIManager>
     {
         dialFlag = true;
         dps.ResetLights();
+        lifebar.Reset();
     }
 
     public void MasterSlider()
@@ -432,6 +433,11 @@ public class UIManager : Singleton<UIManager>
         PlayerPrefs.SetInt("Tuto", 1);
     }
 
+    public void HPDown()
+    {
+        lifebar.HPDown();
+    }
+
     public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null, Color32? c = null)
     {
         if(c == null)
@@ -445,17 +451,18 @@ public class UIManager : Singleton<UIManager>
             {
                 currentText = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
                 currentText.transform.position += new Vector3(0, 1, 0);
-                currentText.GetComponent<TextMesh>().text = text;
-                Debug.Log(c.Value);
+                currentText.GetComponent<TextMeshPro>().text = text;
+                //Debug.Log(c.Value);
                 if (c != null)
-                    currentText.GetComponent<TextMesh>().color = c.Value;
+                    currentText.GetComponent<TextMeshPro>().color = c.Value;
                 currentText.GetComponent<FloatingText>().n = GameManager.Instance.playerAttack + GameManager.Instance.combo;
                 if (attached) 
-                    currentText.transform.parent = go.transform;
+                    currentText.transform.SetParent(go.transform, true);
+
             }
             else
             {
-                currentText.GetComponent<TextMesh>().text = (currentText.GetComponent<FloatingText>().n + GameManager.Instance.playerAttack + GameManager.Instance.combo).ToString();
+                currentText.GetComponent<TextMeshPro>().text = (currentText.GetComponent<FloatingText>().n + GameManager.Instance.playerAttack + GameManager.Instance.combo).ToString();
                 currentText.GetComponent<FloatingText>().n += GameManager.Instance.playerAttack + GameManager.Instance.combo;
             }
             currentText.GetComponent<FloatingText>().ResetTimer();
@@ -463,12 +470,12 @@ public class UIManager : Singleton<UIManager>
         else
         {
             GameObject a = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
-            a.GetComponent<TextMesh>().text = text;
+            a.GetComponent<TextMeshPro>().text = text;
             a.transform.position += new Vector3(0, 1, 0);
-            Debug.Log(c.Value);
+            //Debug.Log(c.Value);
             if (c != null)
-                a.GetComponent<TextMesh>().color = c.Value;
-            if (attached) a.transform.parent = go.transform;
+                a.GetComponent<TextMeshPro>().color = c.Value;
+            if (attached) a.transform.SetParent(go.transform,true);
         }
     }
 

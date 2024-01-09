@@ -8,13 +8,15 @@ public class Mage : MonoBehaviour
 {
     public GameObject Player;
     public GameObject ProjectilePrefab;
-    GameObject CurrentProjectile;
     public GameObject AttackPrefab;
-    GameObject CurrentAttack;
+    public GameObject LaserPrefab;
+    List<GameObject> CurrentSpells;
     public float projTime = 4f;
     [NonSerialized] public float ptimer;
     public float atkTime = 5f;
     [NonSerialized] public float atimer;
+    public float lasTime = 12f;
+    [NonSerialized] public float ltimer;
     public float spellSpeed;
 
     public bool spell = false;
@@ -27,7 +29,7 @@ public class Mage : MonoBehaviour
     public bool stun = false;
     float stunTime = 2f;
 
-    public float phaseMult = 1;
+    public int phaseMult = 1;
 
     Animator controller;
 
@@ -35,10 +37,13 @@ public class Mage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
+        CurrentSpells = new List<GameObject>();
         projTime -= phaseMult;
         atkTime -= phaseMult;
+        lasTime -= phaseMult;
         ptimer = projTime;
         atimer = atkTime;
+        ltimer = lasTime;
         spellSpeed = 5f;
         controller = GetComponent<Animator>();
     }
@@ -48,7 +53,6 @@ public class Mage : MonoBehaviour
     {
         if (tuto) return;
         if(pause) return;
-        ptimer -= Time.deltaTime;
 
         if (stun)
         {
@@ -65,6 +69,7 @@ public class Mage : MonoBehaviour
         else
             faceR = false;*/
 
+        ptimer -= Time.deltaTime;
         if (ptimer <= 0)
         {
             StartCoroutine(CastProj());
@@ -78,6 +83,16 @@ public class Mage : MonoBehaviour
             {
                 StartCoroutine(CastAtk());
                 atimer = atkTime + Random.Range(0, 2);
+            }
+        }
+
+        if(phaseMult > 0)
+        {
+            ltimer -= Time.deltaTime;
+            if(ltimer <= 0)
+            {
+                StartCoroutine(CastLas());
+                ltimer = lasTime + Random.Range(0, 2);
             }
         }
         
@@ -98,10 +113,13 @@ public class Mage : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(CurrentProjectile != null)
-            Destroy(CurrentProjectile.gameObject);
-        if(CurrentAttack != null)
-            Destroy(CurrentAttack.gameObject);
+        foreach(GameObject go in CurrentSpells)
+        {
+            if (go != null)
+            {
+                Destroy(go);
+            }
+        }
     }
 
     public IEnumerator CastProj()
@@ -110,11 +128,24 @@ public class Mage : MonoBehaviour
         spell = true;
         SoundManager.Instance.Play("spell");
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
-        controller.Play("SpellCast",0);
+        controller.Play("SpellCast", 0);
+
         yield return new WaitUntil(ProjCast);
-        CurrentProjectile = Instantiate(ProjectilePrefab, this.transform.position,Quaternion.identity);
-        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(),CurrentProjectile.GetComponent<Collider2D>());
-        CurrentProjectile.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y -this.transform.position.y).normalized)*spellSpeed;
+
+        GameObject tmp = Instantiate(ProjectilePrefab, this.transform.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>());
+        tmp.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y - this.transform.position.y).normalized) * spellSpeed;
+        CurrentSpells.Add(tmp);
+
+        if(phaseMult == 2)
+        {
+            yield return new WaitForSeconds(0.15f);
+            GameObject bis = Instantiate(ProjectilePrefab, this.transform.position, Quaternion.identity);
+            Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), bis.GetComponent<Collider2D>());
+            bis.GetComponent<MageProjectile>().body.velocity = tmp.GetComponent<MageProjectile>().body.velocity;
+            CurrentSpells.Add(bis);
+        }
+
         projCast = false;
         spell = false;
         yield return null;
@@ -128,12 +159,34 @@ public class Mage : MonoBehaviour
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         controller.Play("AtkCast", 0);
         yield return new WaitUntil(AtkCast);
-        CurrentAttack = Instantiate(AttackPrefab, this.transform.position, Quaternion.identity);
-        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), CurrentAttack.GetComponent<Collider2D>());
+        GameObject tmp = Instantiate(AttackPrefab, this.transform.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>());
+        CurrentSpells.Add(tmp);
+
         atkCast = false;
         spell = false;
         yield return null;
     }
+
+    public IEnumerator CastLas()
+    {
+        while (spell) yield return new WaitForEndOfFrame();
+        //spell = true;
+        //son
+        //vfx
+        //anim
+        //yield until
+        yield return null;
+        GameObject tmp = Instantiate(LaserPrefab,this.transform.position, Quaternion.identity);
+        tmp.transform.right = new Vector2(Player.transform.position.x - tmp.transform.position.x,Player.transform.position.y-tmp.transform.position.y);
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponentInChildren<Collider2D>());
+        CurrentSpells.Add(tmp);
+
+        spell = false;
+        yield return null;
+    }
+
+    //laser ?
 
     public void Teleport(Transform spot)
     {

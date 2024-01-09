@@ -249,8 +249,11 @@ public class Player : MonoBehaviour
             shielded = false;
             shield.SetActive(false);
             hitIFrame = true;
+            UIManager.Instance.FloatingText(this.transform.position, "blocked", false, null, Color.magenta);
             return;
         }
+
+        UIManager.Instance.FloatingText(this.transform.position, "hit", false, null, Color.magenta);
 
         hitIFrame = true;
         VFXManager.Instance.HitStop();
@@ -335,6 +338,34 @@ public class Player : MonoBehaviour
                         AddScore();
                         VFXManager.Instance.HitStop();
                         UIManager.Instance.dps.Light("D", true);
+                        UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, Color.blue);
+                        if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
+                            VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
+                        else
+                            VFXManager.Instance.PlayEffectAt("Dodge", this.transform);
+                    }
+                    spell.hitFlag = false;
+                    Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
+                }
+            }
+            else if(collision.gameObject.GetComponent<MageLaser>() != null)
+            {
+                MageLaser spell = collision.gameObject.GetComponent<MageLaser>();
+                if(currentState != states.Dodge)
+                {
+                    spell.Die();
+                    spell.hitFlag = false;
+                    TakeDamage();
+                }
+                else
+                {
+                    if(spell.hitFlag == true)
+                    {
+                        this.GetComponent<Rigidbody2D>().velocity += new Vector2(this.transform.position.x - spell.transform.position.x, this.transform.position.y - spell.transform.position.y).normalized * 10f;
+                        AddScore();
+                        VFXManager.Instance.HitStop();
+                        UIManager.Instance.dps.Light("D", true);
+                        UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, Color.blue);
                         if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                             VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
                         else

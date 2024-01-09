@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class RoomManager : Singleton<RoomManager>
 {
     public GameObject magePrefab;
-    GameObject mage;
+    public GameObject mage;
     public GameObject minionPrefab;
     GameObject minion;
 
