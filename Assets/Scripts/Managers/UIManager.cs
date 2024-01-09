@@ -432,8 +432,12 @@ public class UIManager : Singleton<UIManager>
         PlayerPrefs.SetInt("Tuto", 1);
     }
 
-    public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null)
+    public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null, Color32? c = null)
     {
+        if(c == null)
+        {
+            c = Color.white;
+        }
         if(text == "")
         {
             text = (GameManager.Instance.playerAttack+GameManager.Instance.combo).ToString();
@@ -442,6 +446,9 @@ public class UIManager : Singleton<UIManager>
                 currentText = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
                 currentText.transform.position += new Vector3(0, 1, 0);
                 currentText.GetComponent<TextMesh>().text = text;
+                Debug.Log(c.Value);
+                if (c != null)
+                    currentText.GetComponent<TextMesh>().color = c.Value;
                 currentText.GetComponent<FloatingText>().n = GameManager.Instance.playerAttack + GameManager.Instance.combo;
                 if (attached) 
                     currentText.transform.parent = go.transform;
@@ -457,6 +464,10 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject a = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
             a.GetComponent<TextMesh>().text = text;
+            a.transform.position += new Vector3(0, 1, 0);
+            Debug.Log(c.Value);
+            if (c != null)
+                a.GetComponent<TextMesh>().color = c.Value;
             if (attached) a.transform.parent = go.transform;
         }
     }

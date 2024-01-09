@@ -6,7 +6,7 @@ public class FloatingText : MonoBehaviour
 {
     public Animator controller;
     public AnimationCurve curve;
-    float timer = 2f;
+    public float lifeTime = 2f;
     public float n;
 
     private void Start()
@@ -17,14 +17,16 @@ public class FloatingText : MonoBehaviour
     public IEnumerator Play()
     {
         float time = 0;
-        Color a = GetComponent<TextMesh>().color;
-        while (time < timer)
+        //Color32 a = GetComponent<TextMesh>().color;
+        while (time < lifeTime)
         {
             while (GameManager.Instance.currentState == GameManager.gameStates.Pause) yield return null;
             time += Time.deltaTime;
-            float strength = curve.Evaluate(time / timer);
-            a.a = strength;
-            GetComponent<TextMesh>().color = a;
+            float strength = curve.Evaluate(time / lifeTime);
+            this.transform.localScale = new Vector3(strength, strength, strength);
+            /*Debug.Log(strength);
+            a.a = ((byte)strength);
+            GetComponent<TextMesh>().color = a;*/
             yield return null;
         }
         Die();
@@ -33,8 +35,9 @@ public class FloatingText : MonoBehaviour
     public void ResetTimer()
     {
         StopAllCoroutines();
-        /*Color a = GetComponent<TextMesh>().color;
-        a.a = 1;
+        this.transform.localScale = Vector3.one;
+        /*Color32 a = GetComponent<TextMesh>().color;
+        a.a = ((byte)0);
         GetComponent<TextMesh>().color = a;*/
         controller.Play("FloatingText");
         StartCoroutine(Play());

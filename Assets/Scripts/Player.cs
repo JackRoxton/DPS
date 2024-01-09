@@ -147,17 +147,21 @@ public class Player : MonoBehaviour
         if (parryIFrameFlag)
         {
             timer -= Time.deltaTime;
-            if(currentState == states.Parry) 
+            if (currentState == states.Parry)
             {
                 parryIFrameFlag = false;
                 parryIFrame = true;
                 if (!UIManager.Instance.dps.GetState("P"))
+                { 
                     VFXManager.Instance.PlayEffectOn("Success", parriedMinion.gameObject);
+                    UIManager.Instance.FloatingText(this.transform.position, "parry", false, null, Color.blue);
+                }
                 UIManager.Instance.dps.Light("P",true);
                 parriedMinion.GetComponent<Minion>().Stunned();
                 VFXManager.Instance.PlayEffectOn("Parry", this.gameObject);
                 VFXManager.Instance.HitStop();
                 AddScore();
+                
             }
             if(timer <= 0)
             {
@@ -301,7 +305,10 @@ public class Player : MonoBehaviour
                         AddScore();
                         VFXManager.Instance.HitStop();
                         if (!UIManager.Instance.dps.GetState("D"))
+                        {
                             VFXManager.Instance.PlayEffectAt("Success", transform);
+                            UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, Color.blue);
+                        }
                         UIManager.Instance.dps.Light("D", true);
                         if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                             VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
@@ -361,7 +368,10 @@ public class Player : MonoBehaviour
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
                 if (!UIManager.Instance.dps.GetState("P"))
+                {
                     VFXManager.Instance.PlayEffectOn("Success", minion.gameObject);
+                    UIManager.Instance.FloatingText(this.transform.position, "parry", false, null, Color.blue);
+                }
                 UIManager.Instance.dps.Light("P", true);
                 minion.Stunned();
                 AddScore();

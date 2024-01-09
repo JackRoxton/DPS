@@ -98,7 +98,7 @@ TextMesh:
   m_Font: {fileID: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294835709
+    rgba: 1694498815
 --- !u!95 &2615239038070048829
 Animator:
   serializedVersion: 5
@@ -137,8 +137,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1.002193
+      time: 0.007225672
+      value: 0.99995494
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -146,10 +146,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0007234
-      value: 1.0011563
-      inSlope: -0.0020768153
-      outSlope: -0.0020768153
+      time: 0.992385
+      value: 0.010067701
+      inSlope: -0.01542434
+      outSlope: -0.01542434
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
@@ -166,4 +166,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  lifeTime: 2
   n: 0

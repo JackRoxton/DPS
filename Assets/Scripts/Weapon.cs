@@ -60,7 +60,10 @@ public class Weapon : MonoBehaviour
                 Transform trs = this.transform;
                 trs.position = Physics2D.ClosestPoint(this.transform.position,collision);
                 if (!UIManager.Instance.dps.GetState("S"))
+                {
                     VFXManager.Instance.PlayEffectAt("Success", trs);
+                    UIManager.Instance.FloatingText(this.transform.position, "slash", false, null, Color.blue);
+                }
                 UIManager.Instance.dps.Light("S",true);
                 VFXManager.Instance.PlayEffectAt("Hit",trs);
                 SoundManager.Instance.Play("hit");

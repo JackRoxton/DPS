@@ -91,6 +91,7 @@ public class Minion : MonoBehaviour
     public void Stunned()
     {
         VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
+        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow);
         rb.velocity = new Vector2(this.transform.position.x - player.transform.position.x,this.transform.position.y - player.transform.position.y)*stunPower;
         stun = true;
         stop = false;
