@@ -115,7 +115,7 @@ MonoBehaviour:
   tuto: 0
   pause: 0
   stun: 0
-  phaseMult: 1
+  phaseMult: 0
 --- !u!50 &-2392196849865266108
 Rigidbody2D:
   serializedVersion: 4

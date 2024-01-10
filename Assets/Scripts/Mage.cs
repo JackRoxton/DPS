@@ -171,12 +171,12 @@ public class Mage : MonoBehaviour
     public IEnumerator CastLas()
     {
         while (spell) yield return new WaitForEndOfFrame();
-        //spell = true;
+        spell = true;
         //son
         //vfx
         //anim
         //yield until
-        yield return null;
+        yield return new WaitForSeconds(0.1f);
         GameObject tmp = Instantiate(LaserPrefab,this.transform.position, Quaternion.identity);
         tmp.transform.right = new Vector2(Player.transform.position.x - tmp.transform.position.x,Player.transform.position.y-tmp.transform.position.y);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponentInChildren<Collider2D>());
