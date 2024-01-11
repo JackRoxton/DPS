@@ -1767,6 +1767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magePrefab: {fileID: 1215607283832134488, guid: f5ecb7b6e4b67024a82bb3ddd8241c88, type: 3}
+  mage: {fileID: 0}
   minionPrefab: {fileID: 7014656980860405107, guid: d309cacdf31903641a0c7d8a878a257c, type: 3}
   warning: {fileID: 6891843197255496856, guid: d6f57662a2b353b4fb4db9613a098835, type: 3}
   player: {fileID: 5097674866877607321}
@@ -1788,7 +1789,7 @@ MonoBehaviour:
   outWalls: {fileID: 1523676855}
   mages: {fileID: 777840119}
   minions: {fileID: 629826601}
-  phaseMult: 1
+  phaseMult: 0
 --- !u!4 &92777368
 Transform:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class Mage : MonoBehaviour
 
     public bool projCast = false;
     public bool atkCast = false;
+    public bool lasCast = false;
     public bool tuto = false;
     public bool pause = false;
 
@@ -173,7 +174,7 @@ public class Mage : MonoBehaviour
         while (spell) yield return new WaitForEndOfFrame();
         spell = true;
         //son
-        //vfx
+        VFXManager.Instance.PlayEffectAt("Charge",this.transform);
         //anim
         //yield until
         yield return new WaitForSeconds(0.1f);
@@ -185,8 +186,6 @@ public class Mage : MonoBehaviour
         spell = false;
         yield return null;
     }
-
-    //laser ?
 
     public void Teleport(Transform spot)
     {
@@ -205,9 +204,14 @@ public class Mage : MonoBehaviour
     {
         return projCast;
     }
+
     public bool AtkCast()
     {
         return atkCast;
     }
 
+    public bool LasCast()
+    {
+        return lasCast;
+    }
 }

@@ -30,7 +30,7 @@ public class RoomManager : Singleton<RoomManager>
     List<Transform> MinionSpots = new List<Transform>();
 
     int lastMageSpot = 0;
-    public int phaseMult = 1;
+    public int phaseMult = 0;
 
     void Start()
     {
@@ -327,8 +327,9 @@ public class RoomManager : Singleton<RoomManager>
     public void NextPhase()
     {
         PlayerEndFlag(false);
-        StartCoroutine(FirstRoomChange());
         phaseMult += 1;
+        StartCoroutine(FirstRoomChange());
+        Debug.Log(phaseMult);
     }
 
     public void Pause(bool pause)
@@ -341,7 +342,7 @@ public class RoomManager : Singleton<RoomManager>
 
     public void Resetvar()
     {
-        phaseMult = 1;
+        phaseMult = 0;
     }
 
     public void PlayerEndFlag(bool state)
