@@ -348,12 +348,12 @@ public class Player : MonoBehaviour
                     Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision, true);
                 }
             }
-            else if(collision.gameObject.GetComponent<MageLaser>() != null)
+            else if(collision.gameObject.GetComponentInParent<MageLaser>() != null)
             {
-                MageLaser spell = collision.gameObject.GetComponent<MageLaser>();
+                MageLaser spell = collision.gameObject.GetComponentInParent<MageLaser>();
                 if(currentState != states.Dodge)
                 {
-                    spell.Die();
+                    //spell.Die();
                     spell.hitFlag = false;
                     TakeDamage();
                 }

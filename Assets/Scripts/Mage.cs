@@ -175,9 +175,8 @@ public class Mage : MonoBehaviour
         spell = true;
         //son
         VFXManager.Instance.PlayEffectAt("Charge",this.transform);
-        //anim
-        //yield until
-        yield return new WaitForSeconds(0.1f);
+        controller.Play("SpellCast", 0); // à chg?
+        yield return new WaitUntil(ProjCast); //idm
         GameObject tmp = Instantiate(LaserPrefab,this.transform.position, Quaternion.identity);
         tmp.transform.right = new Vector2(Player.transform.position.x - tmp.transform.position.x,Player.transform.position.y-tmp.transform.position.y);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponentInChildren<Collider2D>());

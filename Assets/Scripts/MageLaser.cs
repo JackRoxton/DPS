@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class MageLaser : MonoBehaviour
 {
-    float lifeTime = 0.35f;
+    float lifeTime = 0.5f;
     float expandSpeed = 0.05f;
     float shrinkSpeed = 0.005f;
     float maxSize = 10;
-    float minShrink = 0.1f;
-    float laserSize = 0.4f;
+    float minShrink = 0.25f;
+    float laserSize = 0.3f;
     public GameObject Zone;
-    public bool hitFlag = false;
+    public bool hitFlag = true;
 
     void Start()
     {
@@ -37,7 +37,7 @@ public class MageLaser : MonoBehaviour
 
         Zone.transform.localScale = new Vector2(Zone.transform.localScale.x, laserSize);
         hitFlag = true;
-        Zone.GetComponent<BoxCollider2D>().enabled = false;
+        Zone.GetComponent<BoxCollider2D>().enabled = true;
         Zone.GetComponent<SpriteRenderer>().color = Color.blue;
 
         yield return new WaitForSeconds(lifeTime);
