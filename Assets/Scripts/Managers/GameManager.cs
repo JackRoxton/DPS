@@ -233,6 +233,7 @@ public class GameManager : Singleton<GameManager>
         {
             UIManager.Instance.FloatingText(RoomManager.Instance.mage.transform.position, "ouch", false, null, Color.magenta);
             UIManager.Instance.HPDown();
+            SoundManager.Instance.Play("magehpdown");
             threshold -= 1000;
             speedMod *= 1.1f;
         }

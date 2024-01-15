@@ -351,7 +351,7 @@ public class UIManager : Singleton<UIManager>
     {
         dialFlag = true;
         dps.ResetLights();
-        lifebar.Reset();
+        lifebar.Resetvar();
     }
 
     public void MasterSlider()
