@@ -8,12 +8,13 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject MainMenuPanel, SkillTreePanel;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
+    public GameObject CreditsButton;
     public GameObject SettingsPanel, DialoguePanel;
 
     public GameObject FloatingTextPrefab;
     GameObject currentText;
 
-    public TMP_Text timerText, scoreText, comboText;
+    public TMP_Text timerText, scoreText;
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
@@ -74,8 +75,6 @@ public class UIManager : Singleton<UIManager>
         {
             timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
-            comboText.text = GameManager.Instance.combo.ToString();
-            //lifebar.GetComponent<Slider>().value = ((GameManager.Instance.mageHP - GameManager.Instance.score) / GameManager.Instance.mageHP)*5;
         }
 
         if(currentState == menuStates.Tutorial && tutoFlag) 
@@ -84,6 +83,10 @@ public class UIManager : Singleton<UIManager>
             tutoFlag = false;
         }
 
+        /*(Input.GetKeyDown(KeyCode.G))
+        {
+            GameManager.Instance.Cutscene();
+        }*/
 
     }
 
@@ -97,10 +100,12 @@ public class UIManager : Singleton<UIManager>
                 Play();
                 break;
             case 1:
-                PlayShort();
+                //PlayShort();
                 break;
             case 2:
                 MainMenu();
+                break;
+            case 3:
                 break;
         }
         fade.gameObject.SetActive(false);
@@ -112,9 +117,9 @@ public class UIManager : Singleton<UIManager>
         {
             //GameManager.Instance.SetTimeScale(1);
             if (tutorial)
-                Fade(2);
+                FadeScene(2);
             else
-                Fade(1);
+                FadeScene(1);
 
             StartCoroutine(FadeTime(0));
             return;
@@ -145,15 +150,15 @@ public class UIManager : Singleton<UIManager>
         fadeFlag = true;
     }
 
-    public void PlayShort()
+    /*public void PlayShort()
     {
         if (fadeFlag)
         {
             //GameManager.Instance.SetTimeScale(1);
             if (tutorial)
-                Fade(2);
+                FadeScene(2);
             else
-                Fade(1);
+                FadeScene(1);
 
             StartCoroutine(FadeTime(1));
             return;
@@ -181,7 +186,7 @@ public class UIManager : Singleton<UIManager>
         MainMenuPanel.SetActive(false);
         InGamePanel.SetActive(true);
         fadeFlag = true;
-    }
+    }*/
 
     public void Resume()
     {
@@ -198,10 +203,20 @@ public class UIManager : Singleton<UIManager>
 
     public void MainMenu()
     {
+        if (GameManager.Instance.winFlag)
+        {
+            EndPanel.SetActive(false);
+            InGamePanel.SetActive(false);
+            FadeScene(3);
+            FadeTime(3);
+            //GameManager.Instance.Cutscene();
+            return;
+        }
+
         if (fadeFlag)
         {
             GameManager.Instance.SetTimeScale(1);
-            Fade(0);
+            FadeScene(0);
 
             StartCoroutine(FadeTime(2));
             return;
@@ -231,10 +246,18 @@ public class UIManager : Singleton<UIManager>
         InGamePanel.SetActive(false);
     }
 
-    public void Credits()
+    public void Credits(bool cutscene = false, bool onoff = true)
     {
-        MainMenuPanel.SetActive(false);
-        CreditsPanel.SetActive(true);
+        if(cutscene)
+        {
+            CreditsPanel.SetActive(onoff);
+            CreditsButton.SetActive(!onoff);
+        }
+        else
+        {
+            MainMenuPanel.SetActive(!onoff);
+            CreditsButton.SetActive(onoff);
+        }
     }
 
     public void Settings()
@@ -309,16 +332,16 @@ public class UIManager : Singleton<UIManager>
 
         InGamePanel.SetActive(false);
         EndPanel.SetActive(true);
-        endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
+        endComboText.text = "Combo : " + GameManager.Instance.combo.ToString();
         endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
         if(GameManager.Instance.winFlag)
             endDialogueText.text = "Game Over. Congratulations !";
         else
             endDialogueText.text = "Game Over. Try again !";
-        if (GameManager.Instance.shortGame)
+        /*if (GameManager.Instance.shortGame)
             endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
-        else
-            endDpsText.text = "Total DPS : " + (GameManager.Instance.score / 180).ToString();
+        else*/
+        endDpsText.text = "Total DPS : " + (GameManager.Instance.score / 180).ToString();
     }
 
 
@@ -326,7 +349,7 @@ public class UIManager : Singleton<UIManager>
     {
         InGamePanel.SetActive(false);
         EndPanel.SetActive(true);
-        endComboText.text = "Max Combo : " + GameManager.Instance.maxCombo.ToString();
+        endComboText.text = "Combo : " + GameManager.Instance.combo.ToString();
         endScoreText.text = "Score : " + GameManager.Instance.score.ToString();
         endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
         endDialogueText.text = "Remaining Phases : "+ (GameManager.Instance.phase);
@@ -397,10 +420,7 @@ public class UIManager : Singleton<UIManager>
         DialoguePanel.SetActive(false);
         if(currentDialogue == Tuto)
         {
-            if(GameManager.Instance.shortGame)
-                PlayShort();
-            else
-                Play();
+            Play();
         }
         else if(currentDialogue == Win)
         {
@@ -408,10 +428,17 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    public void Fade(int i)
+    public void FadeScene(int i = -1)
     {
         fade.gameObject.SetActive(true);
-        fade.FadeOut(i);
+        fade.FadeInOut(i);
+    }
+
+    public void FadeIn(bool a = true)
+    {
+        fade.gameObject.SetActive(true);
+        if (a) fade.FadeIn();
+        else fade.FadeOut();
     }
 
     public void Quit()

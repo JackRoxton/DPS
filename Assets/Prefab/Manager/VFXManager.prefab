@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 3869468152165079996, guid: 7c6ed53768abdfa4dabc2b0e994d627a, type: 3}
   - {fileID: 3188105732562803901, guid: 2afb09b7999a1944c831ed123c293e6e, type: 3}
   - {fileID: 6419325381140188918, guid: 35b2126b120c6034e918cb19e99ebd4d, type: 3}
+  - {fileID: 4138770260253552492, guid: d2af2879be7450f4a8533c5d82fc93b6, type: 3}
   hitStop:
     serializedVersion: 2
     m_Curve:

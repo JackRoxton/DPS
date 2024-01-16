@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class MageLaser : MonoBehaviour
 {
-    float lifeTime = 0.5f;
-    float expandSpeed = 0.05f;
-    float shrinkSpeed = 0.005f;
+    float lifeTime = 0.75f;
+    float expandSpeed = 0.025f;
+    float shrinkSpeed = 0.0025f;
     float maxSize = 10;
-    float minShrink = 0.25f;
-    float laserSize = 0.3f;
+    float minShrink = 0.2f;
+    float laserSize = 0.2f;
     public GameObject Zone;
     public bool hitFlag = true;
 

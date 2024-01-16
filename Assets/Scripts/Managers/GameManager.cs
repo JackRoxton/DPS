@@ -16,7 +16,7 @@ public class GameManager : Singleton<GameManager>
     public float mageHP = 5000;
     float threshold = 4000;
     public float score = 0, combo = 0;
-    public float maxCombo = 0;
+    //public float maxCombo = 0;
     public float money = 0;
     public bool endFlag = false;
     public bool winFlag = false;
@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     public float playerSpeedUp = 1;
     public bool playerDashOnMovement = false;
 
-    public bool shortGame = false;
+    //public bool shortGame = false;
     public bool tutorial = true;
 
     public Skill[] skills;
@@ -82,7 +82,8 @@ public class GameManager : Singleton<GameManager>
             tpeffectFlag = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 1f;
+        if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 0f;
+        if (Input.GetKeyDown(KeyCode.Return)) for (int i = 0; i < 10; i++) AddScore() ;
     }
 
     public void Play()
@@ -102,7 +103,7 @@ public class GameManager : Singleton<GameManager>
             currentState = gameStates.InGame;
             //SetTimeScale(1);
 
-            shortGame = false;
+            //shortGame = false;
 
             SoundManager.Instance.StopMusic(currentMusic.ToString());
             currentMusic = 1;
@@ -116,7 +117,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(i);
     }
 
-    public void PlayShort()
+    /*public void PlayShort()
     {
         Resetvar();
         if (tutorial)
@@ -139,7 +140,7 @@ public class GameManager : Singleton<GameManager>
 
         shortGame = true;
 
-    }
+    }*/
 
     public void SetTimeScale(int i)
     {
@@ -185,7 +186,7 @@ public class GameManager : Singleton<GameManager>
         score = 0;
         currentState = gameStates.MainMenu;
         Resetvar();
-        UIManager.Instance.Fade(0);
+        UIManager.Instance.FadeScene(0);
         if(RoomManager.Instance != null)
             RoomManager.Instance.Resetvar();
         SceneManager.LoadScene(0);
@@ -199,7 +200,7 @@ public class GameManager : Singleton<GameManager>
         timer = altTimer;
         score = 0;
         combo = 0;
-        maxCombo = 0;
+        //maxCombo = 0;
         endFlag = false;
         winFlag = false;
         threshold = 4000;
@@ -242,7 +243,7 @@ public class GameManager : Singleton<GameManager>
     public void DPSCycle()
     {
         combo += 5;
-        if (combo > maxCombo) maxCombo = combo; //à re
+        //if (combo > maxCombo) maxCombo = combo;
         AddScore();
         if(currentState == gameStates.InGame)
             RoomManager.Instance.Shockwave();
@@ -311,13 +312,18 @@ public class GameManager : Singleton<GameManager>
 
     public void WinGame()
     {
-        Debug.Log("Game Won");
+        //Debug.Log("Game Won");
         //Time.timeScale = 0;
         endFlag = true;
         winFlag = true;
         UIManager.Instance.WinGame();
         RoomManager.Instance.EndGame();
     }
+
+    /*public void Cutscene()
+    {
+        SceneManager.LoadScene(3);
+    }*/
 
     public void SkillTree()
     {

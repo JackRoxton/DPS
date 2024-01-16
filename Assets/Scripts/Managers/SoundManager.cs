@@ -66,7 +66,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("sound name not find : " + name);
+            Debug.Log("sound name not found : " + name);
             return;
         }
         s.source.Play();
@@ -77,7 +77,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("sound name not find : " + name);
+            Debug.Log("sound name not found : " + name);
             return;
         }
         s.source.playOnAwake = playOnAwake;
@@ -87,7 +87,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.Pause();
@@ -97,7 +97,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.UnPause();
@@ -107,7 +107,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.Stop();
@@ -118,7 +118,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("sound name not find : " + name);
+            Debug.Log("sound name not found : " + name);
             return;
         }
         s.source.volume = volume;
@@ -147,7 +147,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("sound name not find : " + name);
+            Debug.Log("sound name not found : " + name);
             return;
         }
         s.source.pitch = pitch;
@@ -157,7 +157,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("sound name not find : " + name);
+            Debug.Log("sound name not found : " + name);
             return 0;
         }
         s.source.Play();
@@ -169,7 +169,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(musics, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.Play();
@@ -179,7 +179,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(musics, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.Pause();
@@ -189,7 +189,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(musics, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.UnPause();
@@ -199,7 +199,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(musics, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("musics name not find : " + name);
+            Debug.Log("musics name not found : " + name);
             return;
         }
         s.source.Stop();
@@ -210,7 +210,7 @@ public class SoundManager : Singleton<SoundManager>
         Sound s = Array.Find(musics, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log("sound name not find : " + name);
+            Debug.Log("sound name not found : " + name);
             return;
         }
         s.source.volume = volume;

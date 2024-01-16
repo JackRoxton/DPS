@@ -329,7 +329,7 @@ public class RoomManager : Singleton<RoomManager>
         PlayerEndFlag(false);
         phaseMult += 1;
         StartCoroutine(FirstRoomChange());
-        Debug.Log(phaseMult);
+        //Debug.Log(phaseMult);
     }
 
     public void Pause(bool pause)
@@ -385,6 +385,7 @@ public class RoomManager : Singleton<RoomManager>
         if(minion != null) minion.GetComponent<Minion>().Stunned();
         mage.GetComponent<Mage>().Stunned();
         player.GetComponent<Player>().Shielded();
+        VFXManager.Instance.PlayEffectOn("Strength",player.GetComponentInChildren<WeaponParent>().gameObject);
     }
 
 }

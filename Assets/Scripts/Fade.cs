@@ -9,12 +9,22 @@ public class Fade : MonoBehaviour
     public AnimationCurve fade;
     public Image spr;
 
-    public void FadeOut(int i)
+    public void FadeInOut(int i)
     {
         StartCoroutine(_Fade(i));
     }
 
-    public IEnumerator _Fade(int i,bool change = true)
+    public void FadeIn()
+    {
+        StartCoroutine(_FadeIn());
+    }
+
+    public void FadeOut()
+    {
+        StartCoroutine(_FadeOut());
+    }
+
+    public IEnumerator _Fade(int i = -1)
     {
         float time = fadeDuration;
         while (time > 0)
@@ -26,9 +36,37 @@ public class Fade : MonoBehaviour
             spr.color = a;
             yield return null;
         }
-        if(change)
+        if(i != -1)
             GameManager.Instance.ChangeScene(i);
         time = 0f;
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            float strength = fade.Evaluate(time / fadeDuration);
+            Color a = spr.color;
+            a.a = strength;
+            spr.color = a;
+            yield return null;
+        }
+    }
+
+    public IEnumerator _FadeIn()
+    {
+        float time = fadeDuration;
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            float strength = fade.Evaluate(time / fadeDuration);
+            Color a = spr.color;
+            a.a = strength;
+            spr.color = a;
+            yield return null;
+        }
+    }
+
+    public IEnumerator _FadeOut()
+    {
+        float time = 0f;
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
