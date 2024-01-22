@@ -192,6 +192,10 @@ public class Player : MonoBehaviour
 
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
+        if(movement.x > 0 ||movement.y > 0)
+            controller.SetBool("IsMoving", true);
+        else
+            controller.SetBool("IsMoving", false);
         body.velocity *= 0.9f;
         /*if(mouseLock)
             Mouse.current.WarpCursorPosition(mouseLastPos + new Vector2(Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).x,Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).y));*/
