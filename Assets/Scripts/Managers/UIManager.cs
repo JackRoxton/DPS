@@ -8,7 +8,7 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject MainMenuPanel, SkillTreePanel;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
-    public GameObject CreditsButton;
+    public GameObject CreditsMenuButton, CreditsButton, creditsText;
     public GameObject SettingsPanel, DialoguePanel;
 
     public GameObject FloatingTextPrefab;
@@ -66,6 +66,8 @@ public class UIManager : Singleton<UIManager>
             tutorial = false;
             tutoFlag = false;
         }
+
+        CreditsMenuButton.GetComponent<Button>().onClick.AddListener(_Credits);
     }
 
     // Update is called once per frame
@@ -207,8 +209,15 @@ public class UIManager : Singleton<UIManager>
         {
             EndPanel.SetActive(false);
             InGamePanel.SetActive(false);
+            SkillTreePanel.SetActive(false);
+            GameManager.Instance.Cutscene();
+
             FadeScene(3);
-            FadeTime(3);
+            StartCoroutine(FadeTime(3));
+
+            EndPanel.SetActive(false);
+            InGamePanel.SetActive(false);
+            SkillTreePanel.SetActive(false);
             //GameManager.Instance.Cutscene();
             return;
         }
@@ -246,17 +255,25 @@ public class UIManager : Singleton<UIManager>
         InGamePanel.SetActive(false);
     }
 
+    void _Credits()
+    {
+        Credits();
+    }
+
     public void Credits(bool cutscene = false, bool onoff = true)
     {
         if(cutscene)
         {
             CreditsPanel.SetActive(onoff);
             CreditsButton.SetActive(!onoff);
+            creditsText.SetActive(onoff);
         }
         else
         {
             MainMenuPanel.SetActive(!onoff);
+            CreditsPanel.SetActive(onoff);
             CreditsButton.SetActive(onoff);
+            creditsText.SetActive(!onoff);
         }
     }
 

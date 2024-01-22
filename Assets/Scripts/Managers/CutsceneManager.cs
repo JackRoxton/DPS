@@ -15,6 +15,7 @@ public class CutsceneManager : Singleton<CutsceneManager>
         //mettre fade avant
         //enlever ui avant//
         //rework credits
+        UIManager.Instance.SkillTreePanel.SetActive(false);
         yield return new WaitForSeconds(1);
         UIManager.Instance.Credits(true);
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0)); //se souvenir de ça et changer
@@ -24,6 +25,8 @@ public class CutsceneManager : Singleton<CutsceneManager>
         Tower.SetActive(false);
         yield return new WaitForSeconds(1);
         UIManager.Instance.FadeScene(0);
+        UIManager.Instance.MainMenuPanel.SetActive(true);
+        GameManager.Instance.ToMenu();
         //remettre ui
     }
 

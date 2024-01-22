@@ -177,6 +177,13 @@ public class GameManager : Singleton<GameManager>
         currentState = gameStates.MainMenu;
     }
 
+    public void Cutscene()
+    {
+        SoundManager.Instance.StopMusic(currentMusic.ToString());
+        winFlag = false;
+        endFlag = false;
+    }
+
     public void ToMenu()
     {
         //SetTimeScale(1);
