@@ -11484,6 +11484,7 @@ MonoBehaviour:
   - Mage
   - Event
   - Mage
+  - Mage
   - Event
   - Mage
   - Player
@@ -11512,7 +11513,8 @@ MonoBehaviour:
   - So you really did forget. Should be used to it by now.
   - Use Space to Dodge my spell
   - WaitDodge
-  - Good. I also have other spells you can dodge but i don't recommend it
+  - Good. If you dislike the way the Dodge works, check the settings
+  - I also have other spells you can dodge but i don't recommend it
   - Attack
   - Now Parry my minion and we're good to go
   - ...

@@ -192,6 +192,19 @@ public class RoomManager : Singleton<RoomManager>
         AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
     }
 
+    public IEnumerator MidMinionSpawn()
+    {
+        int minionWhere = Random.Range(0, MinionSpots.Count);
+        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
+        yield return new WaitForSeconds(2);
+        if (minion == null)
+        {
+            minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+            minion.GetComponent<Minion>().player = this.player;
+            minion.GetComponent<Minion>().phaseMult = phaseMult;
+        }
+    }
+
     void ClearTiles()
     {
         AddWallTilemap.ClearAllTiles();

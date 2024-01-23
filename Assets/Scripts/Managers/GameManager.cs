@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
     public float money = 0;
     public bool endFlag = false;
     public bool winFlag = false;
+    bool midMinionFlag = true;
 
     public float playerAttack = 20;
     public float playerAttackSpeed = 1;
@@ -69,6 +70,15 @@ public class GameManager : Singleton<GameManager>
             timer -= Time.deltaTime;
         }
 
+        if(timer < ((altTimer / speedMod)/2))
+        {
+            if(midMinionFlag)
+            {
+                midMinionFlag = false;
+                StartCoroutine(RoomManager.Instance.MidMinionSpawn());
+            }
+        }
+
         if (globalTimer <= 0) EndPhase();
 
         if(timer <= 2 && !tpeffectFlag)
@@ -80,6 +90,7 @@ public class GameManager : Singleton<GameManager>
         {
             ChangeRoom();
             tpeffectFlag = false;
+            midMinionFlag = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 0f;
