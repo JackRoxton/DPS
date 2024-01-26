@@ -87,11 +87,6 @@ public class UIManager : Singleton<UIManager>
             tutoFlag = false;
         }
 
-        /*(Input.GetKeyDown(KeyCode.G))
-        {
-            GameManager.Instance.Cutscene();
-        }*/
-
     }
 
     IEnumerator FadeTime(int i)
@@ -153,44 +148,6 @@ public class UIManager : Singleton<UIManager>
         InGamePanel.SetActive(true);
         fadeFlag = true;
     }
-
-    /*public void PlayShort()
-    {
-        if (fadeFlag)
-        {
-            //GameManager.Instance.SetTimeScale(1);
-            if (tutorial)
-                FadeScene(2);
-            else
-                FadeScene(1);
-
-            StartCoroutine(FadeTime(1));
-            return;
-        }
-        //Fade(1);
-        if (tutorial)
-        {
-            //Fade(2);.
-            GameManager.Instance.PlayShort();
-            TutoDialogue();
-            currentState = menuStates.Tutorial;
-            DialoguePanel.SetActive(true);
-            tutorial = false;
-        }
-        else
-        {
-            //Fade(1);
-            GameManager.Instance.PlayShort();
-            currentState = menuStates.InGame;
-            
-        }
-
-        //GameManager.Instance.PlayShort();
-
-        MainMenuPanel.SetActive(false);
-        InGamePanel.SetActive(true);
-        fadeFlag = true;
-    }*/
 
     public void Resume()
     {
@@ -365,9 +322,7 @@ public class UIManager : Singleton<UIManager>
             endDialogueText.text = "Game Over. Congratulations !";
         else
             endDialogueText.text = "Game Over. Try again !";
-        /*if (GameManager.Instance.shortGame)
-            endDpsText.text = "DPS : " + (GameManager.Instance.score / 60).ToString();
-        else*/
+
         endDpsText.text = "Total DPS : " + (GameManager.Instance.score / 180).ToString();
     }
 

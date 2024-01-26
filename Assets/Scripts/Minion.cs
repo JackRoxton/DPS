@@ -36,7 +36,6 @@ public class Minion : MonoBehaviour
         controller = GetComponent<Animator>();
         speed = 0.025f + (phaseMult / 150);
         rb = this.GetComponent<Rigidbody2D>();
-
     }
 
     // Update is called once per frame

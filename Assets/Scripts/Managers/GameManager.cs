@@ -27,7 +27,6 @@ public class GameManager : Singleton<GameManager>
     public float playerSpeedUp = 1;
     public bool playerDashOnMovement = false;
 
-    //public bool shortGame = false;
     public bool tutorial = true;
 
     public Skill[] skills;
@@ -128,31 +127,6 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(i);
     }
 
-    /*public void PlayShort()
-    {
-        Resetvar();
-        if (tutorial)
-        {
-            tutorial = false;
-            currentState = gameStates.Tutorial;
-            //SetTimeScale(1);
-        }
-        else
-        {
-            currentState = gameStates.InGame;
-            //SetTimeScale(1);
-
-            currentMusic = 1;
-            SoundManager.Instance.PlayMusic(currentMusic.ToString());
-        }
-        globalTimer = 60f;
-        phase = 1;
-        //Time.timeScale = 1;
-
-        shortGame = true;
-
-    }*/
-
     public void SetTimeScale(int i)
     {
         Time.timeScale = i;
@@ -218,7 +192,6 @@ public class GameManager : Singleton<GameManager>
         timer = altTimer;
         score = 0;
         combo = 0;
-        //maxCombo = 0;
         endFlag = false;
         winFlag = false;
         threshold = 4000;
@@ -238,8 +211,6 @@ public class GameManager : Singleton<GameManager>
 
     public void AddScore()
     {
-        //combo++;
-        //if (combo > maxCombo) maxCombo = combo;
 
         score += playerAttack + combo;
 
@@ -261,7 +232,6 @@ public class GameManager : Singleton<GameManager>
     public void DPSCycle()
     {
         combo += 5;
-        //if (combo > maxCombo) maxCombo = combo;
         AddScore();
         if(currentState == gameStates.InGame)
             RoomManager.Instance.Shockwave();
@@ -270,7 +240,6 @@ public class GameManager : Singleton<GameManager>
     public void TakeDamage()
     {
         StrongScreenShake();
-        //combo = 1;
     }
 
     public void ChangeRoom()
@@ -300,17 +269,6 @@ public class GameManager : Singleton<GameManager>
 
         UIManager.Instance.EndPhaseDialogue();
         RoomManager.Instance.EndGame();
-        /*if (phase > 0)
-        {
-            UIManager.Instance.EndPhaseDialogue();
-            RoomManager.Instance.EndGame();
-            //UIManager.Instance.EndPhase();
-            //return;
-        }
-        else
-        {
-            UIManager.Instance.EndPhaseDialogue();
-        }*/
 
         /*if (shortGame) EndGame();
         money += score;
@@ -338,11 +296,6 @@ public class GameManager : Singleton<GameManager>
         RoomManager.Instance.EndGame();
     }
 
-    /*public void Cutscene()
-    {
-        SceneManager.LoadScene(3);
-    }*/
-
     public void SkillTree()
     {
         money += score;
@@ -358,7 +311,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Quit()
     {
-        Application.Quit(); // ajouter sauvegarde
+        Application.Quit(); 
     }
 
     public enum Skills
