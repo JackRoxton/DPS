@@ -17,7 +17,7 @@ public class WeaponParent : MonoBehaviour
         {
             mousePos = Input.mousePosition - new Vector3(Camera.main.WorldToScreenPoint(player.transform.position).x, Camera.main.WorldToScreenPoint(player.transform.position).y, 0);
             Vector3 dir = new Vector3(mousePos.x - player.transform.position.x,mousePos.y - player.transform.position.y, player.transform.position.z).normalized;
-
+            
             transform.right = dir;
 
             if (mousePos.x < player.transform.position.x && faceR)

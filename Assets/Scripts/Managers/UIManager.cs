@@ -273,8 +273,10 @@ public class UIManager : Singleton<UIManager>
         if(GameManager.Instance.phase == 1 && GameManager.Instance.score < 3000)
         {
             BonusText.gameObject.SetActive(true);
+            float x = (3000 - GameManager.Instance.score) / 2 + 500;
+            BonusText.text = "You got "+x+" bonus money !";
             BonusText.GetComponent<Animator>().Play("BlinkText", 0);
-            GameManager.Instance.money += (3000 - GameManager.Instance.score)/2 + 500;
+            GameManager.Instance.money += x;
         }
 
         EndPanel.SetActive(false);
