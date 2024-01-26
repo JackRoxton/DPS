@@ -19,6 +19,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
     public TMP_Text endDialogueText;
+    public TMP_Text BonusText;
     public Image dialogueImageLeft, dialogueImageRight;
     public LifeBar lifebar;
     public DPSCycle dps;
@@ -67,6 +68,7 @@ public class UIManager : Singleton<UIManager>
             tutoFlag = false;
         }
 
+        BonusText.gameObject.SetActive(false);
         CreditsMenuButton.GetComponent<Button>().onClick.AddListener(_Credits);
     }
 
@@ -310,6 +312,14 @@ public class UIManager : Singleton<UIManager>
     {
         currentState = menuStates.SkillTree;
         //MainMenuPanel.SetActive(false);
+
+        if(GameManager.Instance.phase == 1 && GameManager.Instance.score < 3000)
+        {
+            BonusText.gameObject.SetActive(true);
+            BonusText.GetComponent<Animator>().Play("BlinkText", 0);
+            GameManager.Instance.money += (3000 - GameManager.Instance.score)/2 + 500;
+        }
+
         EndPanel.SetActive(false);
         SkillTreePanel.SetActive(true);
         GameManager.Instance.SkillTree();

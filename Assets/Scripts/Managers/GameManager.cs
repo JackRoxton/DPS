@@ -297,9 +297,9 @@ public class GameManager : Singleton<GameManager>
         endFlag = true;
         SoundManager.Instance.StopMusic(currentMusic.ToString());
         phase -= 1;
+
         UIManager.Instance.EndPhaseDialogue();
         RoomManager.Instance.EndGame();
-
         /*if (phase > 0)
         {
             UIManager.Instance.EndPhaseDialogue();
@@ -378,17 +378,17 @@ public class GameManager : Singleton<GameManager>
         switch (type)
         {
             case Skills.AttackUp:
-                playerAttack += 20;
+                playerAttack += 30;
                 RoomManager.Instance.PlayerAttack();
                 break;
 
             case Skills.SpeedUp:
-                playerSpeedUp *= 1.1f;
+                playerSpeedUp *= 1.15f;
                 RoomManager.Instance.PlayerSpeed(playerSpeedUp);
                 break;
 
             case Skills.AttackSpeedUp:
-                playerAttackSpeed *= 1.15f;
+                playerAttackSpeed *= 1.2f;
                 RoomManager.Instance.PlayerAttackSpeed(playerAttackSpeed);
                 break;
 
