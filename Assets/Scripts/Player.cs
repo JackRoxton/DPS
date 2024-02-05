@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     public bool endFlag = false;
     bool pause = false;
+    bool mouseLock = false;
 
     public enum states
     {
@@ -30,7 +31,6 @@ public class Player : MonoBehaviour
     public float dodgePow = 1f;
     public float parryPow = 1f;
     public float speedUpgrade = 1f;
-
     public float speed = 0.25f;
     public float dashPower = 30f;
     float kbForce = 2f;
@@ -215,8 +215,15 @@ public class Player : MonoBehaviour
         else
             controller.SetBool("IsMoving", false);
         body.velocity *= 0.9f;
-        /*if(mouseLock)
-            Mouse.current.WarpCursorPosition(mouseLastPos + new Vector2(Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).x,Camera.main.WorldToScreenPoint(movement * (speed * speedUpgrade)).y));*/
+        if(mouseLock)
+        {
+            Vector2 mousePos = Input.mousePosition;
+            //mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            mousePos.x = Mathf.Clamp(mousePos.x, this.transform.position.x - 10 + Camera.main.pixelWidth/2, this.transform.position.x + 10 + Camera.main.pixelWidth / 2);
+            mousePos.y = Mathf.Clamp(mousePos.y, this.transform.position.y - 10 + Camera.main.pixelHeight/2, this.transform.position.y + 10 + Camera.main.pixelHeight / 2);
+            
+        }
+
         //this.transform.position += new Vector3(movement.x, movement.y, 0).normalized * (speed * speedUpgrade);
         this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed * speedUpgrade);
     }
