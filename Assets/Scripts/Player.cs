@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
 
     bool shielded = false;
 
+    bool faceR = true;
+
     void Start()
     {
         controller = GetComponent<Animator>();
@@ -192,7 +194,23 @@ public class Player : MonoBehaviour
 
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
-        if(movement.x > 0 ||movement.y > 0)
+
+        if(faceR != this.GetComponentInChildren<WeaponParent>().faceR)
+        {
+            if (faceR)
+            {
+                this.GetComponent<SpriteRenderer>().flipX = true;
+                faceR = false;
+            }
+            else
+            {
+                this.GetComponent<SpriteRenderer>().flipX = false;
+                faceR = true;
+            }
+        }
+
+
+        if(movement.magnitude > 0.1f)
             controller.SetBool("IsMoving", true);
         else
             controller.SetBool("IsMoving", false);
