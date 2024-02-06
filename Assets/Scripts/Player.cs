@@ -215,13 +215,23 @@ public class Player : MonoBehaviour
         else
             controller.SetBool("IsMoving", false);
         body.velocity *= 0.9f;
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            mouseLock = true;
+            Debug.Log("mouse locked");
+        }
         if(mouseLock)
         {
-            Vector2 mousePos = Input.mousePosition;
-            //mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            mousePos.x = Mathf.Clamp(mousePos.x, this.transform.position.x - 10 + Camera.main.pixelWidth/2, this.transform.position.x + 10 + Camera.main.pixelWidth / 2);
-            mousePos.y = Mathf.Clamp(mousePos.y, this.transform.position.y - 10 + Camera.main.pixelHeight/2, this.transform.position.y + 10 + Camera.main.pixelHeight / 2);
             
+            Vector2 mousePos = Input.mousePosition;
+            Debug.Log(mousePos);
+            //mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            
+            mousePos.x = Mathf.Clamp(mousePos.x, this.transform.position.x - 40 + Camera.main.pixelWidth/2, this.transform.position.x + 40 + Camera.main.pixelWidth / 2);
+            mousePos.y = Mathf.Clamp(mousePos.y, this.transform.position.y - 40 + Camera.main.pixelHeight/2, this.transform.position.y + 40 + Camera.main.pixelHeight / 2);
+
+            //Mouse.current.WarpCursorPosition(Camera.main.WorldToScreenPoint(mousePos));
         }
 
         //this.transform.position += new Vector3(movement.x, movement.y, 0).normalized * (speed * speedUpgrade);
