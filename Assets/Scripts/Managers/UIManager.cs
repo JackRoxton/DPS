@@ -31,7 +31,7 @@ public class UIManager : Singleton<UIManager>
     public Fade fade;
 
     public Slider masterSlider, musicsSlider, effectsSlider;
-    public Toggle dodgeToggle;
+    public Toggle dodgeToggle, mouseToggle;
 
     public bool tutorial = true;
     bool tutoFlag = true;
@@ -70,6 +70,45 @@ public class UIManager : Singleton<UIManager>
 
         BonusText.gameObject.SetActive(false);
         CreditsMenuButton.GetComponent<Button>().onClick.AddListener(_Credits);
+
+
+        if (!PlayerPrefs.HasKey("Master"))
+            PlayerPrefs.SetFloat("Master", 1);
+        else
+            SoundManager.Instance.masterVolume = PlayerPrefs.GetInt("Master");
+
+        if (!PlayerPrefs.HasKey("SFX"))
+            PlayerPrefs.SetFloat("SFX", 1);
+        else
+            SoundManager.Instance.sfxVolume = PlayerPrefs.GetInt("SFX");
+
+        if (!PlayerPrefs.HasKey("Music"))
+            PlayerPrefs.SetFloat("Music", 1);
+        else
+            SoundManager.Instance.musicVolume = PlayerPrefs.GetInt("Music");
+
+        if (!PlayerPrefs.HasKey("DodgeOnM"))
+            PlayerPrefs.SetInt("DodgeOnM", 0);
+        else
+        {
+            if (PlayerPrefs.GetInt("DodgeOnM") == 1)
+                dodgeToggle.isOn = true;
+            else
+                dodgeToggle.isOn = false;
+            DodgeControlCheck();
+        }
+
+        if(!PlayerPrefs.HasKey("Controller"))
+            PlayerPrefs.SetInt("Controller", 0);
+        else
+        {
+            if (PlayerPrefs.GetInt("Controller") == 1)
+                mouseToggle.isOn = false;
+            else
+                mouseToggle.isOn = true;
+            DodgeControlCheck();
+        }
+
     }
 
     // Update is called once per frame
@@ -364,14 +403,17 @@ public class UIManager : Singleton<UIManager>
     public void MasterSlider()
     {
         SoundManager.Instance.ModifyAllVolume(masterSlider.value);
+        PlayerPrefs.SetFloat("Master",masterSlider.value);
     }
     public void MusicsSlider()
     {
         SoundManager.Instance.ModifyMusicVolume(musicsSlider.value);
+        PlayerPrefs.SetFloat("Music", masterSlider.value);
     }
     public void EffectsSlider()
     {
         SoundManager.Instance.ModifySFXVolume(effectsSlider.value);
+        PlayerPrefs.SetFloat("SFX", masterSlider.value);
     }
 
     public bool DialogueIsActive()
@@ -412,6 +454,16 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    public void SetControls()
+    {
+        GameManager.Instance.SetControls(!mouseToggle.isOn);
+
+        if (mouseToggle.isOn)
+            PlayerPrefs.SetInt("Controller", 0);
+        else
+            PlayerPrefs.SetInt("Controller", 1);
+    }
+
     public void FadeScene(int i = -1)
     {
         fade.gameObject.SetActive(true);
@@ -434,6 +486,11 @@ public class UIManager : Singleton<UIManager>
     public void DodgeControlCheck()
     {
         GameManager.Instance.playerDashOnMovement = dodgeToggle.isOn;
+
+        if(dodgeToggle.isOn)
+            PlayerPrefs.SetInt("DodgeOnM", 1);
+        else
+            PlayerPrefs.SetInt("DodgeOnM", 0);
     }
 
     public void ReTuto()

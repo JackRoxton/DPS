@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public bool endFlag = false;
     bool pause = false;
-    bool mouseLock = false;
+    //bool mouseLock = false;
 
     public enum states
     {
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     float stunTimer = 0.25f;
 
     public bool dashOnMovement = false; //modif pour faire jeu sans souris avec autoaim (+ mannette)
+    public bool mouseControls = false;
 
    /*public bool mouseLock = false;
     Vector2 mouseLastPos = Vector2.zero;*/
@@ -216,7 +217,7 @@ public class Player : MonoBehaviour
             controller.SetBool("IsMoving", false);
         body.velocity *= 0.9f;
 
-        if (Input.GetKeyDown(KeyCode.O))
+        /*if (Input.GetKeyDown(KeyCode.O))
         {
             mouseLock = true;
             Debug.Log("mouse locked");
@@ -225,14 +226,17 @@ public class Player : MonoBehaviour
         {
             
             Vector2 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
             Debug.Log(mousePos);
-            //mousePos = Camera.main.ScreenToWorldPoint(mousePos);
             
-            mousePos.x = Mathf.Clamp(mousePos.x, this.transform.position.x - 40 + Camera.main.pixelWidth/2, this.transform.position.x + 40 + Camera.main.pixelWidth / 2);
-            mousePos.y = Mathf.Clamp(mousePos.y, this.transform.position.y - 40 + Camera.main.pixelHeight/2, this.transform.position.y + 40 + Camera.main.pixelHeight / 2);
+            mousePos.x = Mathf.Clamp(mousePos.x, this.transform.position.x - 2, this.transform.position.x + 2);
+            mousePos.y = Mathf.Clamp(mousePos.y, this.transform.position.y - 2, this.transform.position.y + 2);
 
-            //Mouse.current.WarpCursorPosition(Camera.main.WorldToScreenPoint(mousePos));
-        }
+            Debug.Log(this.transform.position);
+
+            Mouse.current.WarpCursorPosition(Camera.main.WorldToScreenPoint(mousePos));
+            //Mouse.current.WarpCursorPosition(mousePos);
+        }*/
 
         //this.transform.position += new Vector3(movement.x, movement.y, 0).normalized * (speed * speedUpgrade);
         this.transform.position += new Vector3(movement.x, movement.y, 0) * (speed * speedUpgrade);
@@ -264,7 +268,7 @@ public class Player : MonoBehaviour
 
         Vector3 dir = Vector3.zero;
 
-        if (dashOnMovement)
+        if (dashOnMovement || !mouseControls)
         {
             dir = movement;
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -32,6 +33,8 @@ public class GameManager : Singleton<GameManager>
     public Skill[] skills;
 
     int currentMusic = 0;
+
+    [NonSerialized] public bool mouseControls = true;
 
     public enum gameStates // peut-être certains à enlever
     {
@@ -125,6 +128,20 @@ public class GameManager : Singleton<GameManager>
     public void ChangeScene(int i)
     {
         SceneManager.LoadScene(i);
+    }
+
+    public void SetControls(bool mouse)
+    {
+        if(mouse)
+        {
+            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
+            RoomManager.Instance.player.GetComponent<Player>().mouseControls = true;
+        }
+        else
+        {
+            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = true;
+            RoomManager.Instance.player.GetComponent<Player>().mouseControls = false;
+        }
     }
 
     public void SetTimeScale(int i)
