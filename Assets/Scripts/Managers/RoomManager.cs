@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -60,6 +61,13 @@ public class RoomManager : Singleton<RoomManager>
         MinionSpots.Remove(minions.GetComponent<Transform>());
 
 
+        PlayerDash(GameManager.Instance.playerDashOnMovement);
+        
+        if(PlayerPrefs.GetInt("Controller") == 1)
+            player.GetComponentInChildren<WeaponParent>().controller = true;
+        else
+            player.GetComponentInChildren<WeaponParent>().controller = false;
+
 
         StartCoroutine(FirstRoomChange());
         PlayerSpeed(GameManager.Instance.playerSpeedUp);
@@ -73,6 +81,8 @@ public class RoomManager : Singleton<RoomManager>
             ClearTiles();
             StopAllCoroutines();
         }
+
+
     }
 
     public void ChangeRoom()

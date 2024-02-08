@@ -103,9 +103,9 @@ public class UIManager : Singleton<UIManager>
         else
         {
             if (PlayerPrefs.GetInt("Controller") == 1)
-                mouseToggle.isOn = false;
-            else
                 mouseToggle.isOn = true;
+            else
+                mouseToggle.isOn = false;
             DodgeControlCheck();
         }
 
@@ -456,12 +456,12 @@ public class UIManager : Singleton<UIManager>
 
     public void SetControls()
     {
-        GameManager.Instance.SetControls(!mouseToggle.isOn);
+        GameManager.Instance.SetControls(mouseToggle.isOn);
 
         if (mouseToggle.isOn)
-            PlayerPrefs.SetInt("Controller", 0);
-        else
             PlayerPrefs.SetInt("Controller", 1);
+        else
+            PlayerPrefs.SetInt("Controller", 0);
     }
 
     public void FadeScene(int i = -1)

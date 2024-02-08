@@ -30,6 +30,8 @@ public class GameManager : Singleton<GameManager>
 
     public bool tutorial = true;
 
+    bool memoryControl;
+
     public Skill[] skills;
 
     int currentMusic = 0;
@@ -121,6 +123,8 @@ public class GameManager : Singleton<GameManager>
             SoundManager.Instance.StopMusic(currentMusic.ToString());
             currentMusic = 1;
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
+
+            SetControls(memoryControl);
         }
 
     }
@@ -132,15 +136,20 @@ public class GameManager : Singleton<GameManager>
 
     public void SetControls(bool mouse)
     {
-        if(mouse)
-        {
-            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
-            RoomManager.Instance.player.GetComponent<Player>().mouseControls = true;
+        if (RoomManager.Instance == null) 
+        { 
+            memoryControl = mouse; 
+            return;
         }
-        else
+        if(mouse)
         {
             RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = true;
             RoomManager.Instance.player.GetComponent<Player>().mouseControls = false;
+        }
+        else
+        {
+            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
+            RoomManager.Instance.player.GetComponent<Player>().mouseControls = true;
         }
     }
 

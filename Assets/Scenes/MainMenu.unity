@@ -5248,7 +5248,7 @@ MonoBehaviour:
   musicsSlider: {fileID: 1086462393}
   effectsSlider: {fileID: 1089515846}
   dodgeToggle: {fileID: 689291644}
-  mouseToggle: {fileID: 0}
+  mouseToggle: {fileID: 1266219307}
   tutorial: 1
   currentState: 0
 --- !u!4 &695633536
@@ -11656,8 +11656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9, y: -0.5}
-  m_SizeDelta: {x: -28, y: -3}
+  m_AnchoredPosition: {x: 40.83081, y: -0.5}
+  m_SizeDelta: {x: 35.6616, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1901486938
 MonoBehaviour:
@@ -11692,7 +11692,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Controller (beta)
+  m_Text: Controller mode (WIP)
 --- !u!222 &1901486939
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11978,7 +11978,6 @@ MonoBehaviour:
   - Event
   - Mage
   - Mage
-  - Event
   - Mage
   - Player
   - Mage
@@ -12007,8 +12006,7 @@ MonoBehaviour:
   - Use Space to Dodge my spell
   - WaitDodge
   - Good. If you dislike the way the Dodge works, check the settings
-  - I also have other spells you can dodge but i don't recommend it
-  - Attack
+  - I also have other spells you can dodge I'm keeping them a surprise
   - Now Parry my minion and we're good to go
   - ...
   - '... Parry with Right Click '

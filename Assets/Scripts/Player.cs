@@ -32,14 +32,14 @@ public class Player : MonoBehaviour
     public float parryPow = 1f;
     public float speedUpgrade = 1f;
     public float speed = 0.25f;
-    public float dashPower = 30f;
+    public float dashPower = 100f;
     float kbForce = 2f;
 
     bool stun = false;
     float stunTimer = 0.25f;
 
-    public bool dashOnMovement = false; //modif pour faire jeu sans souris avec autoaim (+ mannette)
-    public bool mouseControls = false;
+    [NonSerialized] public bool dashOnMovement = false; //modif pour faire jeu sans souris avec autoaim (+ mannette)
+    [NonSerialized] public bool mouseControls = false;
 
    /*public bool mouseLock = false;
     Vector2 mouseLastPos = Vector2.zero;*/
@@ -261,6 +261,7 @@ public class Player : MonoBehaviour
 
     private void Dodge()
     {
+        body.velocity = Vector2.zero;
         controller.speed = dodgePow;
         controller.Play("Dodge", 0);
         SoundManager.Instance.Play("dodge");

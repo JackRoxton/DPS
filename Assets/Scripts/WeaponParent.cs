@@ -13,6 +13,14 @@ public class WeaponParent : MonoBehaviour
 
     [NonSerialized]public bool controller = false;
 
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("Controller") == 1)
+            controller = true;
+        else
+            controller = false;
+    }
+
     private void Update()
     {
         if(GameManager.Instance.currentState == GameManager.gameStates.InGame 
