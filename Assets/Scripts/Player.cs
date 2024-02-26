@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     Vector2 movement;
     Animator controller;
     Rigidbody2D body;
+    public WeaponParent weaponparent;
     public Weapon weapon;
     public GameObject shield;
 
@@ -200,12 +201,14 @@ public class Player : MonoBehaviour
         {
             if (faceR)
             {
-                this.GetComponent<SpriteRenderer>().flipX = true;
+                //this.GetComponent<SpriteRenderer>().flipX = true;
+                controller.SetBool("FaceR", false);
                 faceR = false;
             }
             else
             {
-                this.GetComponent<SpriteRenderer>().flipX = false;
+                //this.GetComponent<SpriteRenderer>().flipX = false;
+                controller.SetBool("FaceR", true);
                 faceR = true;
             }
         }
