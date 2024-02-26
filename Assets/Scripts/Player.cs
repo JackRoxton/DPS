@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     public bool endFlag = false;
     bool pause = false;
-    //bool mouseLock = false;
+    bool mouseLock = false;
 
     public enum states
     {
@@ -64,6 +64,21 @@ public class Player : MonoBehaviour
     {
         controller = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
+        if (faceR != this.GetComponentInChildren<WeaponParent>().faceR)
+        {
+            if (faceR)
+            {
+                //this.GetComponent<SpriteRenderer>().flipX = true;
+                controller.SetBool("FaceR", false);
+                faceR = false;
+            }
+            else
+            {
+                //this.GetComponent<SpriteRenderer>().flipX = false;
+                controller.SetBool("FaceR", true);
+                faceR = true;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -220,7 +235,7 @@ public class Player : MonoBehaviour
             controller.SetBool("IsMoving", false);
         body.velocity *= 0.9f;
 
-        /*if (Input.GetKeyDown(KeyCode.O))
+       /*if (Input.GetKeyDown(KeyCode.O))
         {
             mouseLock = true;
             Debug.Log("mouse locked");
@@ -258,7 +273,12 @@ public class Player : MonoBehaviour
     private void Parry()
     {
         controller.speed = parryPow;
-        controller.Play("Parry", 0);
+
+        if(faceR)
+            controller.Play("Parry", 0);
+        else
+            controller.Play("Parry 1", 0);
+
         SoundManager.Instance.Play("parry");
     }
 
@@ -266,7 +286,12 @@ public class Player : MonoBehaviour
     {
         body.velocity = Vector2.zero;
         controller.speed = dodgePow;
-        controller.Play("Dodge", 0);
+
+        if(faceR)
+            controller.Play("Dodge", 0);
+        else
+            controller.Play("Dodge 1", 0);
+
         SoundManager.Instance.Play("dodge");
         VFXManager.Instance.PlayEffectOn("DodgeTrail",this.gameObject);
 

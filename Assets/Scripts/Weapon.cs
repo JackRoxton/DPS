@@ -19,6 +19,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        this.transform.localPosition = Vector3.zero;
         /*if(attackFlag)
             if(!hitboxActive)
                 attackFlag = false;*/
