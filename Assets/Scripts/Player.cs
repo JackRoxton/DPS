@@ -126,7 +126,7 @@ public class Player : MonoBehaviour
         
         if (Input.GetAxis("Slash") != 0)
         {
-            if(currentState == states.Base)
+            if (currentState == states.Base)
                 Attack();
         }
         if (Input.GetAxis("Parry") != 0)
