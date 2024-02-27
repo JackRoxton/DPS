@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInputs : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public PlayerInput inputs;
+    public Player player;
+
+    private void Awake()
     {
-        
+        inputs = GetComponent<PlayerInput>();
+
+        DPSInputs inputActions = new DPSInputs();
+        inputActions.Player.Enable();
+        inputActions.Player.Dodge.performed += Dodge;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Dodge(InputAction.CallbackContext context)
     {
-        
+        if(context.performed)
+        {
+            player.Dodge();
+        }
     }
 }

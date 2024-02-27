@@ -28,13 +28,13 @@ public class Player : MonoBehaviour
     }
     public states currentState = states.Base;
 
-    public float attackSpeed = 1f;
-    public float attackSpeedUpgrade = 1f;
-    public float dodgePow = 1f;
-    public float parryPow = 1f;
-    public float speedUpgrade = 1f;
-    public float speed = 0.25f;
-    public float dashPower = 100f;
+    [NonSerialized] public float attackSpeed = 1f;
+    [NonSerialized] public float attackSpeedUpgrade = 1f;
+    [NonSerialized] public float dodgePow = 1f;
+    [NonSerialized] public float parryPow = 1f;
+    [NonSerialized] public float speedUpgrade = 1f;
+    [NonSerialized] public float speed = 0.1f;
+    [NonSerialized] public float dashPower = 30f;
     float kbForce = 2f;
 
     bool stun = false;
@@ -272,13 +272,15 @@ public class Player : MonoBehaviour
         this.pause = pause;
     }
 
-    private void Attack()
+    public void Attack()
     {
+        if (currentState != states.Base) return;
         weapon.Attack();
     }
 
-    private void Parry()
+    public void Parry()
     {
+        if (currentState != states.Base) return;
         controller.speed = parryPow;
 
         if(faceR)
@@ -289,8 +291,9 @@ public class Player : MonoBehaviour
         SoundManager.Instance.Play("parry");
     }
 
-    private void Dodge()
+    public void Dodge()
     {
+        if (currentState != states.Base) return;
         body.velocity = Vector2.zero;
         controller.speed = dodgePow;
 

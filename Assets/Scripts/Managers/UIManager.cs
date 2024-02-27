@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
+    public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst, SkillTreeFirst;//...
+
     public GameObject MainMenuPanel, SkillTreePanel;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject CreditsMenuButton, CreditsButton, creditsText;
@@ -190,6 +193,8 @@ public class UIManager : Singleton<UIManager>
 
     public void Resume()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         RoomManager.Instance.Pause(false);
         InGamePanel.SetActive(true);
         currentState = menuStates.InGame;
@@ -240,6 +245,8 @@ public class UIManager : Singleton<UIManager>
         EndPanel.SetActive(false);
         SkillTreePanel.SetActive(false);
 
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+
         GameManager.Instance.ToMenu();
 
         fadeFlag = true;
@@ -247,6 +254,7 @@ public class UIManager : Singleton<UIManager>
 
     public void Pause()
     {
+        EventSystem.current.SetSelectedGameObject(PauseFirst);
         RoomManager.Instance.Pause(true);
         currentState = menuStates.Pause;
         PausePanel.SetActive(true);
@@ -268,6 +276,10 @@ public class UIManager : Singleton<UIManager>
         }
         else
         {
+            if(onoff)
+                EventSystem.current.SetSelectedGameObject(CreditsFirst);
+            else
+                EventSystem.current.SetSelectedGameObject(MainMenuFirst);
             MainMenuPanel.SetActive(!onoff);
             CreditsPanel.SetActive(onoff);
             CreditsButton.SetActive(onoff);
@@ -277,6 +289,7 @@ public class UIManager : Singleton<UIManager>
 
     public void Settings()
     {
+        EventSystem.current.SetSelectedGameObject(SettingsFirst);
         previousMenu = currentState;
         currentState = menuStates.Settings;
         SettingsPanel.SetActive(true);
@@ -288,6 +301,7 @@ public class UIManager : Singleton<UIManager>
     {
         if(previousMenu == menuStates.MainMenu)
         {
+            EventSystem.current.SetSelectedGameObject(MainMenuFirst);
             currentState = menuStates.MainMenu;
             MainMenuPanel.SetActive(true);
             SkillTreePanel.SetActive(false);
@@ -297,6 +311,7 @@ public class UIManager : Singleton<UIManager>
         }
         if(previousMenu == menuStates.Pause)
         {
+            EventSystem.current.SetSelectedGameObject(PauseFirst);
             currentState = menuStates.Pause;
             SettingsPanel.SetActive(false);
             PausePanel.SetActive(true);
@@ -306,6 +321,7 @@ public class UIManager : Singleton<UIManager>
 
     public void SkillTree()
     {
+        EventSystem.current.SetSelectedGameObject(SkillTreeFirst);
         currentState = menuStates.SkillTree;
         //MainMenuPanel.SetActive(false);
 
@@ -354,7 +370,7 @@ public class UIManager : Singleton<UIManager>
 
     public void EndGame()
     {
-
+        EventSystem.current.SetSelectedGameObject(EndFirst);
         InGamePanel.SetActive(false);
         EndPanel.SetActive(true);
         endComboText.text = "Combo : " + GameManager.Instance.combo.ToString();
@@ -370,6 +386,7 @@ public class UIManager : Singleton<UIManager>
 
     public void EndPhase()
     {
+        EventSystem.current.SetSelectedGameObject(EndFirst);
         InGamePanel.SetActive(false);
         EndPanel.SetActive(true);
         endComboText.text = "Combo : " + GameManager.Instance.combo.ToString();

@@ -8,7 +8,7 @@ public class DialogueClick : MonoBehaviour
     void Update()
     {
         if (UIManager.Instance.DialogueIsActive()){
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetAxis("Submit") != 0)
                 UIManager.Instance.NextDialogue();
         }
     }
