@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
 
 public class WeaponParent : MonoBehaviour

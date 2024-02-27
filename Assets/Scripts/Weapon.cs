@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Weapon : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Weapon : MonoBehaviour
     public Player player;
     bool attackFlag = false;
     bool hitflag = false;
+    public GameObject slash;
+    GameObject go;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,9 @@ public class Weapon : MonoBehaviour
     public void Attack()
     {
         if(attackFlag) return; 
+        go = Instantiate(slash, transform.position, Quaternion.identity);
+        go.transform.rotation = this.transform.rotation;
+        go.GetComponentInChildren<VisualEffect>().Play();
         controller.Play("Attack", 0);
         hitflag = false;
         attackFlag = true;
@@ -38,6 +44,7 @@ public class Weapon : MonoBehaviour
     {
         yield return new WaitForSeconds(0.18f/controller.speed);
         attackFlag = false;
+        Destroy(go);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

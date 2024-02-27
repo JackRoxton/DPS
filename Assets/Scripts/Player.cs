@@ -13,10 +13,11 @@ public class Player : MonoBehaviour
     public WeaponParent weaponparent;
     public Weapon weapon;
     public GameObject shield;
+    PlayerInput input;
 
     public bool endFlag = false;
     bool pause = false;
-    bool mouseLock = false;
+    //bool mouseLock = false;
 
     public enum states
     {
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     bool stun = false;
     float stunTimer = 0.25f;
 
-    [NonSerialized] public bool dashOnMovement = false; //modif pour faire jeu sans souris avec autoaim (+ mannette)
+    [NonSerialized] public bool dashOnMovement = false;
     [NonSerialized] public bool mouseControls = false;
 
    /*public bool mouseLock = false;
@@ -58,7 +59,12 @@ public class Player : MonoBehaviour
 
     bool shielded = false;
 
-    bool faceR = true;
+    bool faceR = false;
+
+    private void Awake()
+    {
+        
+    }
 
     void Start()
     {
@@ -117,6 +123,7 @@ public class Player : MonoBehaviour
 
         if (pause) return;
 
+        
         if (Input.GetAxis("Slash") != 0)
         {
             if(currentState == states.Base)
