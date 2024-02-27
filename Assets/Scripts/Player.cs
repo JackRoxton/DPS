@@ -343,7 +343,10 @@ public class Player : MonoBehaviour
         SoundManager.Instance.Play("phit");
         body.velocity /= 10f;
         stun = true;
-        controller.Play("HitStun");
+        if (faceR)
+            controller.Play("HitStun");  
+        else
+            controller.Play("HitStun 1");
     }
 
     public void Shielded()
