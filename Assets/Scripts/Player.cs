@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentState != states.Base) controller.speed = 0;
+        if (GameManager.Instance.currentState != GameManager.gameStates.InGame) controller.speed = 0;
         else controller.speed = 1;
         if (endFlag) return;
 
