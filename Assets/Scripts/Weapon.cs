@@ -30,7 +30,8 @@ public class Weapon : MonoBehaviour
 
     public void Attack()
     {
-        if(attackFlag) return; 
+        if(attackFlag) return;
+        SoundManager.Instance.Play("slash");
         go = Instantiate(slash, transform.position, Quaternion.identity);
         go.transform.rotation = this.transform.rotation;
         go.GetComponentInChildren<VisualEffect>().Play();

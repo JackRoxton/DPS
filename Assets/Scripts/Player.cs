@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
 public class Player : MonoBehaviour
@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public WeaponParent weaponparent;
     public Weapon weapon;
     public GameObject shield;
-    PlayerInput input;
+    //PlayerInput input;
 
     public bool endFlag = false;
     bool pause = false;
@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
 
     bool faceR = false;
 
+    bool pauseFlag = false;
+
     private void Awake()
     {
         
@@ -94,9 +96,14 @@ public class Player : MonoBehaviour
         else controller.speed = 1;
         if (endFlag) return;
 
-        if (Input.GetAxis("Pause") != 0)
+        if (Input.GetAxis("Pause") != 0 && !pauseFlag)
         {
             GameManager.Instance.Pause();
+            pauseFlag = true;
+        }
+        else
+        {
+            pauseFlag = false;
         }
 
         if(stun)
