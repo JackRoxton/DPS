@@ -12,6 +12,7 @@ public class DPSCycle : MonoBehaviour
     bool doneOnce = false;
     public bool locked = false;
 
+
     public void Light(string name, bool state)
     {
         if (locked)

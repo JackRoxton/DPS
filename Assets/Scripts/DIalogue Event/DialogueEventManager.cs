@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class DialogueEventManager : Singleton<DialogueEventManager>
 {
-    public GameObject magePrefab;
+    /*public GameObject magePrefab;
     GameObject mage;
     public GameObject minionPrefab;
     GameObject minion;
     public GameObject player;
     public Transform mageSpot;
     public Transform minionSpot;
-    public bool eventLock = false;
+    public bool eventLock = false;*/
 
     public void Event(string sentence)
     {
@@ -21,11 +21,11 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
 
     public IEnumerator _Event(string sentence)
     {
-        minion = null;
+        //minion = null;
         UIManager.Instance.DialoguePanel.SetActive(true);
         switch (sentence)
         {
-            case "Start":
+            /*case "Start":
                 UIManager.Instance.dps.locked = true;
                 eventLock = false;
                 DialogueManager.Instance.DisplayNextSentence();
@@ -91,7 +91,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 yield return new WaitForSeconds(1.9f);
                 eventLock = false;
                 DialogueManager.Instance.DisplayNextSentence();
-                break;
+                break;*/
             case "EndPhase":
                 if(GameManager.Instance.phase <= 0)
                     GameManager.Instance.EndGame();
@@ -101,9 +101,55 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 //StopCoroutine(_Event(sentence));
                 break;
+            case "TutoStart":
+                UIManager.Instance.dps.D.SetActive(false);
+                UIManager.Instance.dps.P.SetActive(false);
+                UIManager.Instance.dps.S.SetActive(false);
+                UIManager.Instance.timer.gameObject.SetActive(false);
+                DialogueManager.Instance.DisplayNextSentence();
+                RoomManager.Instance.tuto = true;
+                //RoomManager.Instance.mage.GetComponent<Mage>().tuto = true;
+                break;
+            case "TutoSlash":
+                RoomManager.Instance.FirstRoom();
+                GameManager.Instance.firstRoom = false;
+                UIManager.Instance.dps.S.SetActive(true);
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                yield return new WaitForSeconds(15);
+                RoomManager.Instance.Pause(true);
+                UIManager.Instance.DialoguePanel.SetActive(true);
+                DialogueManager.Instance.DisplayNextSentence();
+                break;
+            case "TutoDodge":
+                RoomManager.Instance.Pause(false);
+                RoomManager.Instance.mage.GetComponent<Mage>().tuto = false;
+                UIManager.Instance.dps.D.SetActive(true);
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                yield return new WaitForSeconds(15);
+                RoomManager.Instance.Pause(true);
+                UIManager.Instance.DialoguePanel.SetActive(true);
+                DialogueManager.Instance.DisplayNextSentence();
+                break;
+            case "TutoParry":
+                RoomManager.Instance.Pause(false);
+                RoomManager.Instance.tuto = false;
+                UIManager.Instance.dps.P.SetActive(true);
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                yield return new WaitForSeconds(15);
+                RoomManager.Instance.Pause(true);
+                UIManager.Instance.DialoguePanel.SetActive(true);
+                DialogueManager.Instance.DisplayNextSentence();
+                break;
+            case "TutoEnd":
+                TeleportEffect.Instance.Effect();
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                yield return new WaitForSeconds(1.9f);
+                UIManager.Instance.timer.gameObject.SetActive(true);
+                DialogueManager.Instance.DisplayNextSentence();
+                break;
         }
         /*eventLock = false;
-        DialogueManager.Instance.DisplayNextSentence();*/
-        //UIManager.Instance.DialoguePanel.SetActive(false);
+        DialogueManager.Instance.DisplayNextSentence();
+        UIManager.Instance.DialoguePanel.SetActive(false);*/
     }
 }

@@ -505,7 +505,7 @@ public class UIManager : Singleton<UIManager>
     public void DodgeControlCheck()
     {
         GameManager.Instance.playerDashOnMovement = dodgeToggle.isOn;
-
+        
         if(dodgeToggle.isOn)
             PlayerPrefs.SetInt("DodgeOnM", 1);
         else

@@ -58,9 +58,9 @@ public class DialogueManager : Singleton<DialogueManager>
             EndDialogue();
             return;
         }
-        if (DialogueEventManager.Instance != null)
+        /*if (DialogueEventManager.Instance != null)
             if (DialogueEventManager.Instance.eventLock == true)
-                return;
+                return;*/
 
         string name = names.Dequeue();
         string sentence = sentences.Dequeue();

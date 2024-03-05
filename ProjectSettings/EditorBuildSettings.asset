@@ -12,10 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: b3bf5a3633672914495f0569be732a06
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
-    guid: 1bc7b82c64552d149b9c323e19889bec
+    path: Assets/Scenes/Tuto.unity
+    guid: 739372b15d177044087038adea4e6b75
   - enabled: 1
     path: Assets/Scenes/Cutscene.unity
     guid: 7c8ace80e43257b47a665a7232d96448
+  - enabled: 0
+    path: Assets/Scenes/Tutorial.unity
+    guid: 1bc7b82c64552d149b9c323e19889bec
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 63005d29aa85bc94d833a5757ca84869, type: 2}

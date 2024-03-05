@@ -2093,6 +2093,7 @@ RectTransform:
   - {fileID: 845080338}
   - {fileID: 1119908500}
   - {fileID: 2002266546}
+  - {fileID: 554806787}
   m_Father: {fileID: 1439613228}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3306,7 +3307,7 @@ MonoBehaviour:
   m_text: Settings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 3165725531121751647, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3779,7 +3780,7 @@ MonoBehaviour:
   m_text: Resume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 3165725531121751647, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4371,6 +4372,93 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &554806786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554806787}
+  - component: {fileID: 554806788}
+  m_Layer: 5
+  m_Name: 'DialogueTuto '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &554806787
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554806786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 192311828}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &554806788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554806786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b4b94577c57184b9b4d37dc28ee45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  names:
+  - Event
+  - Player
+  - Player
+  - Mage
+  - Mage
+  - Player
+  - Mage
+  - Mage
+  - Mage
+  - Mage
+  - Mage
+  - Event
+  - Mage
+  - Event
+  - Mage
+  - Event
+  - Mage
+  - Event
+  sentences:
+  - TutoStart
+  - I'm here to duel you, wizard !
+  - ... He's late.
+  - You again ? when will you stop bothering me ?
+  - I was about to get some groceries so i will not give you much time
+  - Today is the day I vanquish you !
+  - Yeah, sure let's go over how to fight quickly
+  - Dodge my spells
+  - Parry my minions
+  - Slash me
+  - Now, in practice. Let's start with the Slash
+  - TutoSlash
+  - Now, the Dodge. Dodge my spells
+  - TutoDodge
+  - Finally, the Parry. Parry my minions
+  - TutoParry
+  - Okay, Let's get to the real one now
+  - TutoEnd
 --- !u!1 &562090941
 GameObject:
   m_ObjectHideFlags: 0
@@ -5369,7 +5457,7 @@ MonoBehaviour:
   dialogueImageRight: {fileID: 1719626931}
   lifebar: {fileID: 1629953311}
   dps: {fileID: 1658510659}
-  Tuto: {fileID: 2002266547}
+  Tuto: {fileID: 554806788}
   Win: {fileID: 1119908501}
   End: {fileID: 845080339}
   fade: {fileID: 261781536}
@@ -8454,8 +8542,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1.8005981, y: 0}
+  m_SizeDelta: {x: 3.6012, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1136191136
 MonoBehaviour:
@@ -8477,10 +8565,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BackToMenu
+  m_text: To Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 3165725531121751647, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8543,7 +8631,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1136191137
@@ -12109,12 +12197,12 @@ GameObject:
   - component: {fileID: 2002266546}
   - component: {fileID: 2002266547}
   m_Layer: 5
-  m_Name: DialogueTuto
+  m_Name: DialogueTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2002266546
 RectTransform:
   m_ObjectHideFlags: 0

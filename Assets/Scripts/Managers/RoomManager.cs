@@ -13,6 +13,8 @@ public class RoomManager : Singleton<RoomManager>
     public GameObject minionPrefab;
     GameObject minion;
 
+    public bool tuto = false;
+
     public GameObject warning;
 
     public GameObject player;
@@ -61,15 +63,14 @@ public class RoomManager : Singleton<RoomManager>
         MinionSpots.Remove(minions.GetComponent<Transform>());
 
 
-        PlayerDash(GameManager.Instance.playerDashOnMovement);
+        //PlayerDash(GameManager.Instance.playerDashOnMovement);
         
         if(PlayerPrefs.GetInt("Controller") == 1)
             player.GetComponentInChildren<WeaponParent>().controller = true;
         else
             player.GetComponentInChildren<WeaponParent>().controller = false;
 
-
-        StartCoroutine(FirstRoomChange());
+        //StartCoroutine(FirstRoomChange());
         PlayerSpeed(GameManager.Instance.playerSpeedUp);
         PlayerDash(GameManager.Instance.playerDashOnMovement);
     }
@@ -82,7 +83,11 @@ public class RoomManager : Singleton<RoomManager>
             StopAllCoroutines();
         }
 
+    }
 
+    public void FirstRoom()
+    {
+        StartCoroutine(FirstRoomChange());
     }
 
     public void ChangeRoom()
@@ -117,9 +122,12 @@ public class RoomManager : Singleton<RoomManager>
         mage = Instantiate(magePrefab, MageSpots[mageWhere].position,Quaternion.identity);
         mage.GetComponent<Mage>().Player = player;
         mage.GetComponent<Mage>().phaseMult = phaseMult;
+        if(tuto)
+            mage.GetComponent<Mage>().tuto = true;
 
         AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
-        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
+        if(!tuto)
+            Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
         AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
         while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
@@ -134,7 +142,7 @@ public class RoomManager : Singleton<RoomManager>
 
         SoundManager.Instance.Play("spawn");
 
-        if (minion == null)
+        if (minion == null && !tuto)
         {
             minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
             minion.GetComponent<Minion>().player = this.player;
@@ -176,7 +184,8 @@ public class RoomManager : Singleton<RoomManager>
         mage.GetComponent<Mage>().Teleport(MageSpots[mageWhere]);
 
         AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
-        Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
+        if(!tuto)
+            Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
         AddOutWarnings(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
 
         while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
@@ -191,7 +200,7 @@ public class RoomManager : Singleton<RoomManager>
 
         SoundManager.Instance.Play("spawn");
 
-        if (minion == null)
+        if (minion == null && !tuto)
         {
             minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
             minion.GetComponent<Minion>().player = this.player;
@@ -202,8 +211,16 @@ public class RoomManager : Singleton<RoomManager>
         AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
     }
 
-    public IEnumerator MidMinionSpawn()
+    public void MidMinionSpawn()
     {
+        if (tuto) return;
+        StartCoroutine(_MidMinionSpawn());
+    }
+
+    public IEnumerator _MidMinionSpawn()
+    {
+        if (tuto) StopCoroutine(_MidMinionSpawn());
+
         int minionWhere = Random.Range(0, MinionSpots.Count);
         Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
         yield return new WaitForSeconds(2);

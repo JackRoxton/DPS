@@ -29,6 +29,7 @@ public class GameManager : Singleton<GameManager>
     public bool playerDashOnMovement = false;
 
     public bool tutorial = true;
+    public bool firstRoom = true;
 
     bool memoryControl;
 
@@ -74,16 +75,27 @@ public class GameManager : Singleton<GameManager>
             timer -= Time.deltaTime;
         }
 
+        if (currentState == gameStates.InGame && firstRoom)
+        {
+            RoomManager.Instance.FirstRoom();
+            firstRoom = false;
+        }
+
+        if (currentState == gameStates.Tutorial && !firstRoom)
+        {
+            timer -= Time.deltaTime;
+        }
+
         if(timer < ((altTimer / speedMod)/2))
         {
             if(midMinionFlag)
             {
                 midMinionFlag = false;
-                StartCoroutine(RoomManager.Instance.MidMinionSpawn());
+                RoomManager.Instance.MidMinionSpawn();
             }
         }
 
-        if (globalTimer <= 0) EndPhase();
+        if(globalTimer <= 0) EndPhase();
 
         if(timer <= 2 && !tpeffectFlag)
         {
@@ -98,7 +110,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 0f;
-        if (Input.GetKeyDown(KeyCode.Return)) for (int i = 0; i < 10; i++) AddScore() ;
+        if (Input.GetKeyDown(KeyCode.Return)) for (int i = 0; i < 100; i++) AddScore() ;
     }
 
     public void Play()
@@ -116,9 +128,8 @@ public class GameManager : Singleton<GameManager>
         else
         {
             currentState = gameStates.InGame;
-            //SetTimeScale(1);
-
-            //shortGame = false;
+            /*SetTimeScale(1);
+            shortGame = false;*/
 
             SoundManager.Instance.StopMusic(currentMusic.ToString());
             currentMusic = 1;
@@ -222,6 +233,7 @@ public class GameManager : Singleton<GameManager>
         winFlag = false;
         threshold = 4000;
         speedMod = 1;
+        firstRoom = true;
 
         foreach(Skill skill in skills)
         {
@@ -273,8 +285,8 @@ public class GameManager : Singleton<GameManager>
     public void ChangeRoom()
     {
         timer = altTimer / speedMod;
-        //currentMusic = 1;
-        //SoundManager.Instance.PlayMusic(currentMusic.ToString());
+        /*currentMusic = 1;
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());*/
         SoundManager.Instance.Play("change");
         RoomManager.Instance.ChangeRoom();
 
@@ -316,8 +328,8 @@ public class GameManager : Singleton<GameManager>
 
     public void WinGame()
     {
-        //Debug.Log("Game Won");
-        //Time.timeScale = 0;
+        /*Debug.Log("Game Won");
+        Time.timeScale = 0;*/
         endFlag = true;
         winFlag = true;
         UIManager.Instance.WinGame();

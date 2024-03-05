@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     float stunTimer = 0.25f;
 
     [NonSerialized] public bool dashOnMovement = false;
-    [NonSerialized] public bool mouseControls = false;
+    [NonSerialized] public bool mouseControls = true;
 
    /*public bool mouseLock = false;
     Vector2 mouseLastPos = Vector2.zero;*/
@@ -87,6 +87,15 @@ public class Player : MonoBehaviour
                 faceR = true;
             }
         }
+        if (PlayerPrefs.GetInt("DodgeOnM") == 1)
+            dashOnMovement = true;
+        else
+            dashOnMovement = false;
+
+        if (PlayerPrefs.GetInt("Controller") == 0)
+            mouseControls = true;
+        else
+            mouseControls = false;
     }
 
     // Update is called once per frame
@@ -314,7 +323,7 @@ public class Player : MonoBehaviour
         VFXManager.Instance.PlayEffectOn("DodgeTrail",this.gameObject);
 
         Vector3 dir = Vector3.zero;
-
+        
         if (dashOnMovement || !mouseControls)
         {
             dir = movement;
