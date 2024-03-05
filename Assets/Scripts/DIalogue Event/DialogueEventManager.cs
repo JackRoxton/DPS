@@ -115,7 +115,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 GameManager.Instance.firstRoom = false;
                 UIManager.Instance.dps.S.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
-                yield return new WaitForSeconds(15);
+                yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
@@ -125,7 +125,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.mage.GetComponent<Mage>().tuto = false;
                 UIManager.Instance.dps.D.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
-                yield return new WaitForSeconds(15);
+                yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
@@ -135,7 +135,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.tuto = false;
                 UIManager.Instance.dps.P.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
-                yield return new WaitForSeconds(15);
+                yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();

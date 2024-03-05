@@ -102,7 +102,7 @@ public class GameManager : Singleton<GameManager>
             tpeffectFlag = true;
             TeleportEffect.Instance.Effect();
         }
-        if (timer <= 0 )
+        if (timer <= 0)
         {
             ChangeRoom();
             tpeffectFlag = false;
