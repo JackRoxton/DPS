@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     public bool winFlag = false;
     bool midMinionFlag = true;
 
-    public float playerAttack = 20;
+    public float playerAttack = 5;
     public float playerAttackSpeed = 1;
     public float playerSpeedUp = 1;
     public bool playerDashOnMovement = false;
@@ -228,7 +228,7 @@ public class GameManager : Singleton<GameManager>
             skill.Resetvar();
         }
 
-        playerAttack = 20;
+        playerAttack = 5;
         playerSpeedUp = 1;
         playerAttackSpeed = 1;
 
@@ -239,6 +239,7 @@ public class GameManager : Singleton<GameManager>
     {
 
         score += playerAttack + combo;
+        UIManager.Instance.ScoreBump();
 
         if(score >= mageHP)
         {
@@ -261,6 +262,7 @@ public class GameManager : Singleton<GameManager>
         AddScore();
         if(currentState == gameStates.InGame)
             RoomManager.Instance.Shockwave();
+        UIManager.Instance.DpsScoreBump();
     }
 
     public void TakeDamage()

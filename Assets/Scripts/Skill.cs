@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Skill : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
 {
     public bool skillActive = false;
     bool startLocked = false;
@@ -14,7 +14,7 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int Cost;
     Image spr;
 
-    bool mouseOver = false;
+    //bool mouseOver = false;
     
     public GameManager.Skills skill;
 
@@ -34,31 +34,39 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Update()
     {
-        if(skillActive) return;
+        /*if(skillActive) return;
         if(locked) return;
 
         if (mouseOver && Input.GetMouseButton(0))
         {
-            if (GameManager.Instance.Affordable(Cost))
-            {
-                skillActive = true;
-                spr.color = Color.yellow;
-                GameManager.Instance.BuySkill(skill, Cost);
-                if (nextSkills != null)
-                {
-                    foreach (Skill skill in nextSkills)
-                    {
-                        if (skill.skillActive) return;
-                        skill.locked = false;
-                        skill.spr.color = Color.white;
-                    }
-                }
-            }
-        }
+            Buy();
+        }*/
 
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void Buy()
+    {
+        if (skillActive) return;
+        if (locked) return;
+
+        if (GameManager.Instance.Affordable(Cost))
+        {
+            skillActive = true;
+            spr.color = Color.yellow;
+            GameManager.Instance.BuySkill(skill, Cost);
+            if (nextSkills != null)
+            {
+                foreach (Skill skill in nextSkills)
+                {
+                    if (skill.skillActive) return;
+                    skill.locked = false;
+                    skill.spr.color = Color.white;
+                }
+            }
+        }
+    }
+
+    /*public void OnPointerEnter(PointerEventData eventData)
     {
         if (locked) return;
         if (!skillActive ) 
@@ -78,7 +86,7 @@ public class Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             costText.text = "Cost";
         }
         mouseOver = false;
-    }
+    }*/
 
     public void Resetvar()
     {

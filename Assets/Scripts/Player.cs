@@ -92,19 +92,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.currentState != GameManager.gameStates.InGame) controller.speed = 0;
-        else controller.speed = 1;
+        if (GameManager.Instance.currentState == GameManager.gameStates.InGame || GameManager.Instance.currentState == GameManager.gameStates.Tutorial) controller.speed = 1;
+        else controller.speed = 0;
         if (endFlag) return;
 
         if (Input.GetAxis("Pause") != 0 && !pauseFlag)
         {
-            GameManager.Instance.Pause();
             pauseFlag = true;
+            pause = true;
+            GameManager.Instance.Pause();
         }
-        else
-        {
-            pauseFlag = false;
-        }
+
+        if (pause) return;
+
+        pauseFlag = false;
 
         if(stun)
         {
@@ -129,8 +130,6 @@ public class Player : MonoBehaviour
                 hitIFrameTime = 0.15f;
             }
         }
-
-        if (pause) return;
 
         
         if (Input.GetAxis("Slash") != 0)

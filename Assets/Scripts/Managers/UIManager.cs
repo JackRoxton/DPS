@@ -18,6 +18,7 @@ public class UIManager : Singleton<UIManager>
     GameObject currentText;
 
     public TMP_Text timerText, scoreText;
+    public Image timer;
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
@@ -119,6 +120,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (currentState == menuStates.InGame || currentState == menuStates.Tutorial)
         {
+            timer.fillAmount = GameManager.Instance.globalTimer / 60;
             timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
         }
@@ -562,6 +564,16 @@ public class UIManager : Singleton<UIManager>
                 a.GetComponent<TextMeshPro>().color = c.Value;
             if (attached) a.transform.SetParent(go.transform,true);
         }
+    }
+
+    public void ScoreBump()
+    {
+        scoreText.GetComponent<Animator>().Play("ScoreVibe");
+    }
+
+    public void DpsScoreBump()
+    {
+        scoreText.GetComponent<Animator>().Play("ScoreBump");
     }
 
 }

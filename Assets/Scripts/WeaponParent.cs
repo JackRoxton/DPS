@@ -11,6 +11,7 @@ public class WeaponParent : MonoBehaviour
     public Vector3 mousePos;
     public bool faceR = true;
     public GameObject player;
+    Vector3 memPos;
 
     [NonSerialized]public bool controller = false;
 
@@ -32,6 +33,10 @@ public class WeaponParent : MonoBehaviour
                 Vector3 dir = new Vector3();
                 dir.x = Input.GetAxis("LookH");
                 dir.y = Input.GetAxis("LookV");
+                if (dir.x == 0 || dir.y == 0)
+                    dir = memPos;
+                else
+                    memPos = dir;
 
                 transform.right = dir;
                 if (dir.x < 0 && faceR)

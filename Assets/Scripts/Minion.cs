@@ -41,6 +41,8 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(GameManager.Instance.currentState == GameManager.gameStates.SkillTree || GameManager.Instance.endFlag == true) Destroy(this.gameObject);
+
         if (GameManager.Instance.currentState == GameManager.gameStates.Pause) return;
         if (pause) return;
 
