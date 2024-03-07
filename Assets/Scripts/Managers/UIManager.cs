@@ -7,38 +7,48 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
-    public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst, SkillTreeFirst;//...
+    //sélection event system
+    public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst, SkillTreeFirst;
 
+    //panels
     public GameObject MainMenuPanel, SkillTreePanel;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject CreditsMenuButton, CreditsButton, creditsText;
     public GameObject SettingsPanel, DialoguePanel;
 
+    //texte flottant
     public GameObject FloatingTextPrefab;
     GameObject currentText;
 
+    //en jeu
     public TMP_Text timerText, scoreText;
     public Image timer;
     public TMP_Text endComboText, endScoreText, endDpsText;
     public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
     public TMP_Text endDialogueText;
-    public TMP_Text BonusText;
+    public TMP_Text bonusText;
     public Image dialogueImageLeft, dialogueImageRight;
     public LifeBar lifebar;
     public DPSCycle dps;
 
+    //dialogues
     public Dialogue Tuto, Win;
     public Dialogue End;
     Dialogue currentDialogue;
 
     public Fade fade;
 
+    //Son
     public Slider masterSlider, musicsSlider, effectsSlider;
     public Toggle dodgeToggle, mouseToggle;
 
+    //Tuto
     public bool tutorial = true;
     bool tutoFlag = true;
+    public TMP_Text controlsText;
+    public Image controlsImage;
+    string controlCheck = "";
 
     float fadeTime = 0.1f;
     bool fadeFlag = true;
@@ -72,7 +82,7 @@ public class UIManager : Singleton<UIManager>
             tutoFlag = false;
         }
 
-        BonusText.gameObject.SetActive(false);
+        bonusText.gameObject.SetActive(false);
         CreditsMenuButton.GetComponent<Button>().onClick.AddListener(_Credits);
 
 
@@ -129,6 +139,11 @@ public class UIManager : Singleton<UIManager>
         {
             TutoDialogue();
             tutoFlag = false;
+        }
+
+        if(currentState == menuStates.Tutorial && controlCheck != "")
+        {
+            TutoControlCheck();
         }
 
     }
@@ -329,10 +344,10 @@ public class UIManager : Singleton<UIManager>
 
         if(GameManager.Instance.phase == 1 && GameManager.Instance.score < 3000)
         {
-            BonusText.gameObject.SetActive(true);
+            bonusText.gameObject.SetActive(true);
             float x = (3000 - GameManager.Instance.score) / 2 + 500;
-            BonusText.text = "You got "+x+" bonus money !";
-            BonusText.GetComponent<Animator>().Play("BlinkText", 0);
+            bonusText.text = "You got "+x+" bonus money !";
+            bonusText.GetComponent<Animator>().Play("BlinkText", 0);
             GameManager.Instance.money += x;
         }
 
@@ -534,7 +549,7 @@ public class UIManager : Singleton<UIManager>
         if(text == "")
         {
             text = (GameManager.Instance.playerAttack+GameManager.Instance.combo).ToString();
-            if(!currentText)
+            if (!currentText)
             {
                 currentText = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
                 currentText.transform.position += new Vector3(0, 1, 0);
@@ -543,8 +558,12 @@ public class UIManager : Singleton<UIManager>
                 if (c != null)
                     currentText.GetComponent<TextMeshPro>().color = c.Value;
                 currentText.GetComponent<FloatingText>().n = GameManager.Instance.playerAttack + GameManager.Instance.combo;
-                if (attached) 
+                currentText.GetComponent<TextMeshPro>().fontSize = 6;
+                if (attached)
+                {
                     currentText.transform.SetParent(go.transform, true);
+                    currentText.GetComponent<TextMeshPro>().fontSize = 12;
+                }
 
             }
             else
@@ -574,6 +593,42 @@ public class UIManager : Singleton<UIManager>
     public void DpsScoreBump()
     {
         scoreText.GetComponent<Animator>().Play("ScoreBump");
+    }
+
+    public void SetControlText(string text, Image image)
+    {
+        controlsText.gameObject.SetActive(true);
+        controlsText.text = "Press      To " + text;
+        controlsImage = image;
+        controlCheck = text;
+    }
+
+    void TutoControlCheck()
+    {
+        switch(controlCheck)
+        {
+            case "Slash":
+                if (Input.GetAxis("Slash") != 0)
+                {
+                    controlsText.gameObject.SetActive(false);
+                    controlCheck = "";
+                }
+                break;
+            case "Dodge":
+                if (Input.GetAxis("Dodge") != 0)
+                {
+                    controlsText.gameObject.SetActive(false);
+                    controlCheck = "";
+                }
+                break;
+            case "Parry":
+                if (Input.GetAxis("Parry") != 0)
+                {
+                    controlsText.gameObject.SetActive(false);
+                    controlCheck = "";
+                }
+                break;
+        }
     }
 
 }

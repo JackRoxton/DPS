@@ -103,6 +103,10 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance.currentState == GameManager.gameStates.InGame || GameManager.Instance.currentState == GameManager.gameStates.Tutorial) controller.speed = 1;
         else controller.speed = 0;
+
+        if(GameManager.Instance.endFlag)
+            controller.speed = 0;
+
         if (endFlag) return;
 
         if (Input.GetAxis("Pause") != 0 && !pauseFlag)
@@ -229,6 +233,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        body.velocity *= 0.9f;
         if (endFlag) return;
         if (pause) return;
         if (stun) return;

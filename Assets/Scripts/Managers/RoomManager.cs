@@ -400,10 +400,10 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().ModAttackSpeed(speedMod);
     }
 
-    public void PlayerAttack()
+    /*public void PlayerAttack()
     {
         player.GetComponentInChildren<Weapon>().gameObject.transform.localScale *= 1.05f;
-    }
+    }*/
 
     public void PlayerParryPow(float pow)
     {

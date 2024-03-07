@@ -81,7 +81,7 @@ public class GameManager : Singleton<GameManager>
             firstRoom = false;
         }
 
-        if (currentState == gameStates.Tutorial && !firstRoom)
+        if (currentState == gameStates.Tutorial && !firstRoom && !UIManager.Instance.DialogueIsActive())
         {
             timer -= Time.deltaTime;
         }
@@ -372,7 +372,7 @@ public class GameManager : Singleton<GameManager>
         {
             case Skills.AttackUp:
                 playerAttack += 30;
-                RoomManager.Instance.PlayerAttack();
+                //RoomManager.Instance.PlayerAttack();
                 break;
 
             case Skills.SpeedUp:

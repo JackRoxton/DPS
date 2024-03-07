@@ -111,10 +111,13 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 //RoomManager.Instance.mage.GetComponent<Mage>().tuto = true;
                 break;
             case "TutoSlash":
+                TeleportEffect.Instance.Effect();
+                UIManager.Instance.DialoguePanel.SetActive(false);
+                yield return new WaitForSeconds(1.9f);
                 RoomManager.Instance.FirstRoom();
                 GameManager.Instance.firstRoom = false;
                 UIManager.Instance.dps.S.SetActive(true);
-                UIManager.Instance.DialoguePanel.SetActive(false);
+                UIManager.Instance.SetControlText("Slash",null);
                 yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
@@ -125,6 +128,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.mage.GetComponent<Mage>().tuto = false;
                 UIManager.Instance.dps.D.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
+                UIManager.Instance.SetControlText("Dodge", null);
                 yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
@@ -135,6 +139,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.tuto = false;
                 UIManager.Instance.dps.P.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
+                UIManager.Instance.SetControlText("Parry", null);
                 yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);

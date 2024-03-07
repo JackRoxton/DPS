@@ -1815,6 +1815,7 @@ MonoBehaviour:
   magePrefab: {fileID: 1215607283832134488, guid: f5ecb7b6e4b67024a82bb3ddd8241c88, type: 3}
   mage: {fileID: 0}
   minionPrefab: {fileID: 7014656980860405107, guid: d309cacdf31903641a0c7d8a878a257c, type: 3}
+  tuto: 0
   warning: {fileID: 6891843197255496856, guid: d6f57662a2b353b4fb4db9613a098835, type: 3}
   player: {fileID: 5097674866877607321}
   AddWallTilemap: {fileID: 2066760552}
@@ -9534,12 +9535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e150ae192842dd4f868787cc09554cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magePrefab: {fileID: 0}
-  minionPrefab: {fileID: 0}
-  player: {fileID: 0}
-  mageSpot: {fileID: 0}
-  minionSpot: {fileID: 0}
-  eventLock: 0
 --- !u!4 &1794211901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 810722009992161889, guid: 526c3ce9541912c41b6a811dd8782173, type: 3}
