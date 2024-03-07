@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.VFX;
 
 public class RoomManager : Singleton<RoomManager>
 {
@@ -12,6 +14,8 @@ public class RoomManager : Singleton<RoomManager>
     public GameObject mage;
     public GameObject minionPrefab;
     GameObject minion;
+
+    //public VisualEffect vfx;
 
     public bool tuto = false;
 
@@ -427,5 +431,10 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().Shielded();
         VFXManager.Instance.PlayEffectOn("Strength",player.GetComponentInChildren<WeaponParent>().gameObject);
     }
+
+    /*public void PlayConfettis()
+    {
+        vfx.Play();
+    }*/
 
 }
