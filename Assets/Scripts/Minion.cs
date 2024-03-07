@@ -41,7 +41,7 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(GameManager.Instance.currentState == GameManager.gameStates.SkillTree || GameManager.Instance.endFlag == true) Destroy(this.gameObject);
+        if(/*GameManager.Instance.currentState == GameManager.gameStates.SkillTree || */GameManager.Instance.endFlag == true) Destroy(this.gameObject);
 
         if (GameManager.Instance.currentState == GameManager.gameStates.Pause) return;
         if (pause) return;
@@ -92,7 +92,7 @@ public class Minion : MonoBehaviour
     public void Stunned()
     {
         VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
-        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow);
+        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow,18);
         rb.velocity = new Vector2(this.transform.position.x - player.transform.position.x,this.transform.position.y - player.transform.position.y)*stunPower;
         stun = true;
         stop = false;

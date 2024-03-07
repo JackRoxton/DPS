@@ -1791,12 +1791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 1
-  Cost: 750
-  skill: 1
-  costText: {fileID: 1081070598}
-  nextSkills: []
 --- !u!114 &154089154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2770,7 +2764,6 @@ MonoBehaviour:
   mageHP: 5000
   score: 0
   combo: 0
-  money: 0
   endFlag: 0
   winFlag: 1
   playerAttack: 20
@@ -2779,13 +2772,6 @@ MonoBehaviour:
   playerDashOnMovement: 0
   tutorial: 1
   firstRoom: 1
-  skills:
-  - {fileID: 911725739}
-  - {fileID: 841458766}
-  - {fileID: 871129994}
-  - {fileID: 2046001723}
-  - {fileID: 1116479674}
-  - {fileID: 154089153}
   currentState: 0
 --- !u!4 &313329225
 Transform:
@@ -3087,13 +3073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 0
-  Cost: 250
-  skill: 2
-  costText: {fileID: 1081070598}
-  nextSkills:
-  - {fileID: 2094869561}
 --- !u!114 &346974202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5515,9 +5494,7 @@ MonoBehaviour:
   PauseFirst: {fileID: 97721327}
   CreditsFirst: {fileID: 630313488}
   EndFirst: {fileID: 60585467}
-  SkillTreeFirst: {fileID: 496490313}
   MainMenuPanel: {fileID: 562090941}
-  SkillTreePanel: {fileID: 497218382}
   InGamePanel: {fileID: 608192354}
   PausePanel: {fileID: 1098164724}
   EndPanel: {fileID: 1431051748}
@@ -5534,11 +5511,9 @@ MonoBehaviour:
   endComboText: {fileID: 228755533}
   endScoreText: {fileID: 1789450090}
   endDpsText: {fileID: 1135827602}
-  moneyText: {fileID: 1898666277}
   dialogueText: {fileID: 408901034}
   nameText: {fileID: 118012860}
   endDialogueText: {fileID: 915225088}
-  bonusText: {fileID: 880919438}
   dialogueImageLeft: {fileID: 1906642595}
   dialogueImageRight: {fileID: 1719626931}
   lifebar: {fileID: 1629953311}
@@ -5878,13 +5853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 0
-  Cost: 250
-  skill: 1
-  costText: {fileID: 1081070598}
-  nextSkills:
-  - {fileID: 2046001723}
 --- !u!114 &841458767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6095,13 +6063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 1
-  Cost: 500
-  skill: 0
-  costText: {fileID: 1081070598}
-  nextSkills:
-  - {fileID: 1116479674}
 --- !u!114 &871129995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6655,13 +6616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 0
-  Cost: 250
-  skill: 0
-  costText: {fileID: 1081070598}
-  nextSkills:
-  - {fileID: 871129994}
 --- !u!114 &911725740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8427,12 +8381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 1
-  Cost: 750
-  skill: 3
-  costText: {fileID: 1081070598}
-  nextSkills: []
 --- !u!114 &1116479675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12287,7 +12235,7 @@ GameObject:
   - component: {fileID: 1911115073}
   - component: {fileID: 1911115072}
   m_Layer: 5
-  m_Name: NameTExt (1)
+  m_Name: ContinueTExt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12333,7 +12281,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Slash to continue
+  m_text: Press any key
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
   m_sharedMaterial: {fileID: 3165725531121751647, guid: 87c09a7b01cc08a428ef43527779f2b7, type: 2}
@@ -12367,7 +12315,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -12954,14 +12902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 1
-  Cost: 500
-  skill: 1
-  costText: {fileID: 1081070598}
-  nextSkills:
-  - {fileID: 154089153}
-  - {fileID: 1116479674}
 --- !u!114 &2046001724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13222,13 +13162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ebd1cc6b795c4d84a5bc8d93cd3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 0
-  locked: 1
-  Cost: 500
-  skill: 2
-  costText: {fileID: 1081070598}
-  nextSkills:
-  - {fileID: 154089153}
 --- !u!114 &2094869562
 MonoBehaviour:
   m_ObjectHideFlags: 0

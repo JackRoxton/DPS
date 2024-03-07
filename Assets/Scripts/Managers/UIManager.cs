@@ -8,10 +8,10 @@ using TMPro;
 public class UIManager : Singleton<UIManager>
 {
     //sélection event system
-    public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst, SkillTreeFirst;
+    public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst/*, SkillTreeFirst*/;
 
     //panels
-    public GameObject MainMenuPanel, SkillTreePanel;
+    public GameObject MainMenuPanel/*, SkillTreePanel*/;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject CreditsMenuButton, CreditsButton, creditsText;
     public GameObject SettingsPanel, DialoguePanel;
@@ -24,10 +24,10 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text timerText, scoreText;
     public Image timer;
     public TMP_Text endComboText, endScoreText, endDpsText;
-    public TMP_Text moneyText;
+    //public TMP_Text moneyText;
     public TMP_Text dialogueText, nameText;
     public TMP_Text endDialogueText;
-    public TMP_Text bonusText;
+    //public TMP_Text bonusText;
     public Image dialogueImageLeft, dialogueImageRight;
     public LifeBar lifebar;
     public DPSCycle dps;
@@ -58,7 +58,7 @@ public class UIManager : Singleton<UIManager>
     public enum menuStates
     {
         MainMenu,
-        SkillTree,
+        //SkillTree,
         Pause,
         Settings,//
         InGame,
@@ -82,7 +82,7 @@ public class UIManager : Singleton<UIManager>
             tutoFlag = false;
         }
 
-        bonusText.gameObject.SetActive(false);
+        //bonusText.gameObject.SetActive(false);
         CreditsMenuButton.GetComponent<Button>().onClick.AddListener(_Credits);
 
 
@@ -229,7 +229,7 @@ public class UIManager : Singleton<UIManager>
         {
             EndPanel.SetActive(false);
             InGamePanel.SetActive(false);
-            SkillTreePanel.SetActive(false);
+            //SkillTreePanel.SetActive(false);
             GameManager.Instance.Cutscene();
 
             FadeScene(3);
@@ -237,7 +237,7 @@ public class UIManager : Singleton<UIManager>
 
             EndPanel.SetActive(false);
             InGamePanel.SetActive(false);
-            SkillTreePanel.SetActive(false);
+            //SkillTreePanel.SetActive(false);
             //GameManager.Instance.Cutscene();
             return;
         }
@@ -260,7 +260,7 @@ public class UIManager : Singleton<UIManager>
         InGamePanel.SetActive(false);
         PausePanel.SetActive(false);
         EndPanel.SetActive(false);
-        SkillTreePanel.SetActive(false);
+        //SkillTreePanel.SetActive(false);
 
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
 
@@ -282,7 +282,6 @@ public class UIManager : Singleton<UIManager>
     {
         Credits();
     }
-
     public void Credits(bool cutscene = false, bool onoff = true)
     {
         if(cutscene)
@@ -321,7 +320,7 @@ public class UIManager : Singleton<UIManager>
             EventSystem.current.SetSelectedGameObject(MainMenuFirst);
             currentState = menuStates.MainMenu;
             MainMenuPanel.SetActive(true);
-            SkillTreePanel.SetActive(false);
+            //SkillTreePanel.SetActive(false);
             SettingsPanel.SetActive(false);
             CreditsPanel.SetActive(false);
             GameManager.Instance.MainMenuBack();
@@ -336,7 +335,7 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    public void SkillTree()
+    /*public void SkillTree()
     {
         EventSystem.current.SetSelectedGameObject(SkillTreeFirst);
         currentState = menuStates.SkillTree;
@@ -355,14 +354,16 @@ public class UIManager : Singleton<UIManager>
         SkillTreePanel.SetActive(true);
         GameManager.Instance.SkillTree();
         moneyText.text = "Money : " + GameManager.Instance.money.ToString();
-    }
+    }*/
 
     public void EndButton()
     {
         if (GameManager.Instance.winFlag) MainMenu();
         if(GameManager.Instance.phase > 0)
         {
-            SkillTree();
+            EndPanel.SetActive(false);
+            GameManager.Instance.NextPhase();
+            //SkillTree();
         }
         else
         {
@@ -414,7 +415,7 @@ public class UIManager : Singleton<UIManager>
 
     public void NextPhase()
     {
-        SkillTreePanel.SetActive(false);
+        //SkillTreePanel.SetActive(false);
         InGamePanel.SetActive(true);
         currentState = menuStates.InGame;
         GameManager.Instance.NextPhase();
@@ -540,7 +541,7 @@ public class UIManager : Singleton<UIManager>
         lifebar.HPDown();
     }
 
-    public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null, Color32? c = null)
+    public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null, Color32? c = null, float size = 6)
     {
         if(c == null)
         {
@@ -552,17 +553,16 @@ public class UIManager : Singleton<UIManager>
             if (!currentText)
             {
                 currentText = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
+                currentText.GetComponent<TextMeshPro>().fontSize = size;
                 currentText.transform.position += new Vector3(0, 1, 0);
                 currentText.GetComponent<TextMeshPro>().text = text;
                 //Debug.Log(c.Value);
                 if (c != null)
                     currentText.GetComponent<TextMeshPro>().color = c.Value;
                 currentText.GetComponent<FloatingText>().n = GameManager.Instance.playerAttack + GameManager.Instance.combo;
-                currentText.GetComponent<TextMeshPro>().fontSize = 6;
                 if (attached)
                 {
                     currentText.transform.SetParent(go.transform, true);
-                    currentText.GetComponent<TextMeshPro>().fontSize = 12;
                 }
 
             }
@@ -576,6 +576,7 @@ public class UIManager : Singleton<UIManager>
         else
         {
             GameObject a = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
+            a.GetComponent<TextMeshPro>().fontSize = size;
             a.GetComponent<TextMeshPro>().text = text;
             a.transform.position += new Vector3(0, 1, 0);
             //Debug.Log(c.Value);
@@ -589,7 +590,6 @@ public class UIManager : Singleton<UIManager>
     {
         scoreText.GetComponent<Animator>().Play("ScoreVibe");
     }
-
     public void DpsScoreBump()
     {
         scoreText.GetComponent<Animator>().Play("ScoreBump");

@@ -12,10 +12,7 @@ public class CutsceneManager : Singleton<CutsceneManager>
 
     IEnumerator Cutscene()
     {
-        //mettre fade avant
-        //enlever ui avant//
-        //rework credits
-        UIManager.Instance.SkillTreePanel.SetActive(false);
+        //UIManager.Instance.SkillTreePanel.SetActive(false);
         yield return new WaitForSeconds(1);
         UIManager.Instance.Credits(true);
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0)); //se souvenir de ça et changer
@@ -27,7 +24,6 @@ public class CutsceneManager : Singleton<CutsceneManager>
         UIManager.Instance.FadeScene(0);
         UIManager.Instance.MainMenuPanel.SetActive(true);
         GameManager.Instance.ToMenu();
-        //remettre ui
     }
 
     /*bool GetMouseButton()

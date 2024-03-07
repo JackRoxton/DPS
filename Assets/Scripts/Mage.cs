@@ -102,7 +102,7 @@ public class Mage : MonoBehaviour
     public void Stunned()
     {
         VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
-        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow);
+        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow,12);
         stun = true;
         stunTime = 2f;
     }
@@ -203,12 +203,10 @@ public class Mage : MonoBehaviour
     {
         return projCast;
     }
-
     public bool AtkCast()
     {
         return atkCast;
     }
-
     public bool LasCast()
     {
         return lasCast;

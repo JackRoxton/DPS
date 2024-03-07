@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
     float threshold = 4000;
     public float score = 0, combo = 0;
     //public float maxCombo = 0;
-    public float money = 0;
+    //public float money = 0;
     public bool endFlag = false;
     public bool winFlag = false;
     bool midMinionFlag = true;
@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     bool memoryControl;
 
-    public Skill[] skills;
+    //public Skill[] skills;
 
     int currentMusic = 0;
 
@@ -42,7 +42,7 @@ public class GameManager : Singleton<GameManager>
     public enum gameStates // peut-être certains à enlever
     {
         MainMenu,
-        SkillTree,
+        //SkillTree,
         Pause,
         Settings,
         InGame,
@@ -235,10 +235,10 @@ public class GameManager : Singleton<GameManager>
         speedMod = 1;
         firstRoom = true;
 
-        foreach(Skill skill in skills)
+        /*foreach(Skill skill in skills)
         {
             skill.Resetvar();
-        }
+        }*/
 
         playerAttack = 5;
         playerSpeedUp = 1;
@@ -253,7 +253,7 @@ public class GameManager : Singleton<GameManager>
         score += playerAttack + combo;
         UIManager.Instance.ScoreBump();
 
-        if(score >= mageHP)
+        if(score >= mageHP && currentState != gameStates.Tutorial)
         {
             WinGame();
         }
@@ -336,25 +336,25 @@ public class GameManager : Singleton<GameManager>
         RoomManager.Instance.EndGame();
     }
 
-    public void SkillTree()
+    /*public void SkillTree()
     {
         money += score;
         currentState = gameStates.SkillTree;
-    }
+    }*/
 
-    public bool Affordable(int cost)
+    /*public bool Affordable(int cost)
     {
         UIManager.Instance.moneyText.text = "Money : " + money.ToString();
         if (money - cost >= 0) return true;
         else return false;
-    }
+    }*/
 
     public void Quit()
     {
         Application.Quit(); 
     }
 
-    public enum Skills
+    /*public enum Skills
     {
         AttackUp,
         SpeedUp,
@@ -393,7 +393,7 @@ public class GameManager : Singleton<GameManager>
                 RoomManager.Instance.PlayerParryPow(2);
                 break;
         }
-    }
+    }*/
 
     public void ScreenShake()
     {

@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Skill : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
-{
-    public bool skillActive = false;
+{ }
+    /*public bool skillActive = false;
     bool startLocked = false;
     public bool locked = false;
     public int Cost;
@@ -41,6 +41,7 @@ public class Skill : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
         {
             Buy();
         }*/
+/*
 
     }
 
@@ -86,7 +87,7 @@ public class Skill : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
             costText.text = "Cost";
         }
         mouseOver = false;
-    }*/
+    }*//*
 
     public void Resetvar()
     {
@@ -104,4 +105,4 @@ public class Skill : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
 
         
     }
-}
+}*/
