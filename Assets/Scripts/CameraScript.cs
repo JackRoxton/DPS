@@ -11,6 +11,9 @@ public class CameraScript : MonoBehaviour
     public AnimationCurve strongShake;
     bool inShake = false;
     Vector3 startPos = Vector3.zero;
+    public GameObject Player;
+
+    public Vector2 minClamp, maxClamp;
 
     public void ScreenShake()
     {
@@ -62,6 +65,13 @@ public class CameraScript : MonoBehaviour
         }
         transform.position = startPos;
         inShake = false;
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 a = Player.transform.position;
+        a = new Vector3(Mathf.Clamp(a.x,minClamp.x,maxClamp.x), Mathf.Clamp(a.y, minClamp.y,maxClamp.y),-10);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, a, 0.10f);
     }
 
 }

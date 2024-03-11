@@ -387,11 +387,16 @@ public class Player : MonoBehaviour
         body.velocity += kb.normalized * kbForce;
     }
 
+    public void ModSpeed(float spd)
+    {
+        speed += spd;
+    }
+
     public void ModAttackSpeed(float atk)
     {
-        attackSpeedUpgrade = atk;
+        attackSpeedUpgrade += atk;
         //controller.speed = attackSpeed;
-        weapon.controller.speed = attackSpeed * attackSpeedUpgrade;
+        weapon.controller.speed = attackSpeed + attackSpeedUpgrade;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

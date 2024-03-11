@@ -13,7 +13,6 @@ Material:
   m_InvalidKeywords:
   - ETC1_EXTERNAL_ALPHA
   - _FRAMEMODE_GENERAL
-  - _OUTLINEENABLED_ON
   - _OUTLINEMODE_SOLID
   - _OUTLINEPOSITION_OUTSIDE
   - _OUTLINESHAPE_CONTOUR
@@ -83,7 +82,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineEnabled: 1
+    - _OutlineEnabled: 0
     - _OutlineMode: 0
     - _OutlinePosition: 2
     - _OutlineShape: 0
@@ -92,7 +91,7 @@ Material:
     - _SpecularHighlights: 1
     - _SpriteOverlay: 0
     - _SrcBlend: 1
-    - _Thickness: 4.999832
+    - _Thickness: 0.89586294
     - _TileMode: 0
     - _UVSec: 0
     - _Weight: 0.5

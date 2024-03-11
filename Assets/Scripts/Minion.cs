@@ -27,6 +27,8 @@ public class Minion : MonoBehaviour
 
     bool pause = false;
 
+    bool faceR = false;
+
     Rigidbody2D rb;
     Animator controller;
 
@@ -92,7 +94,7 @@ public class Minion : MonoBehaviour
     public void Stunned()
     {
         VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
-        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow,18);
+        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow,12);
         rb.velocity = new Vector2(this.transform.position.x - player.transform.position.x,this.transform.position.y - player.transform.position.y)*stunPower;
         stun = true;
         stop = false;
@@ -105,6 +107,16 @@ public class Minion : MonoBehaviour
         {
             Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, 0);
             transform.position = Vector3.MoveTowards(transform.position, newPos, speed);
+            if(transform.position.x < player.transform.position.x || faceR)
+            {
+                faceR = false;
+                this.GetComponent<SpriteRenderer>().flipX = false;
+            }
+            else if(transform.position.x > player.transform.position.x || !faceR)
+            {
+                faceR = true;
+                this.GetComponent<SpriteRenderer>().flipX = true;
+            }
         }
     }
 
