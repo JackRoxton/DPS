@@ -253,6 +253,7 @@ public class GameManager : Singleton<GameManager>
 
         score += playerAttack + combo;
         UIManager.Instance.ScoreBump();
+        UIManager.Instance.HPBump();
 
         if(score >= mageHP && currentState != gameStates.Tutorial)
         {

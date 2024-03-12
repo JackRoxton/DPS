@@ -24,6 +24,11 @@ public class LifeBar : MonoBehaviour
         i--;
     }
 
+    public void HPBump()
+    {
+        boxes[i - 1].GetComponent<Animator>().Play("lifebump", 0);
+    }
+
     public void Resetvar()
     {
         i = 5;

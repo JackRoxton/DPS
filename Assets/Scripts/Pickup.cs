@@ -32,6 +32,8 @@ public class Pickup : MonoBehaviour
     {
         locked = false;
         Lock.SetActive(false);
+        VFXManager.Instance.PlayEffectAt("Success",this.transform);
+        //SoundManager.Instance.Play("");
     }
 
     void Take(Player player)
@@ -40,12 +42,15 @@ public class Pickup : MonoBehaviour
         {
             case Powerup.Attack:
                 GameManager.Instance.PickupStrength();
+                UIManager.Instance.FloatingText(player.transform.position, "Strength", false, null, Color.cyan, 8);
             break;
             case Powerup.Speed:
                 RoomManager.Instance.PickupSpeed();
-            break;
+                UIManager.Instance.FloatingText(player.transform.position, "Speed", false, null, Color.cyan, 8);
+                break;
             case Powerup.AttackSpeed:
                 RoomManager.Instance.PickupAttackSpeed();
+                UIManager.Instance.FloatingText(player.transform.position, "AttackSpeed", false, null, Color.cyan, 8);
                 break;
         }
 

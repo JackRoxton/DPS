@@ -540,6 +540,10 @@ public class UIManager : Singleton<UIManager>
     {
         lifebar.HPDown();
     }
+    public void HPBump()
+    {
+        lifebar.HPBump();
+    }
 
     public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null, Color32? c = null, float size = 6)
     {

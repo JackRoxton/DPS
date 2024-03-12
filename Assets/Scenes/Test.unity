@@ -533,11 +533,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1737076673091573968, guid: 55b23ec22c0a90945aa281b9daebf48b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.728565
+      value: -9.26
       objectReference: {fileID: 0}
     - target: {fileID: 1737076673091573968, guid: 55b23ec22c0a90945aa281b9daebf48b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.344299
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 1737076673091573968, guid: 55b23ec22c0a90945aa281b9daebf48b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -573,7 +573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1737076673091573973, guid: 55b23ec22c0a90945aa281b9daebf48b, type: 3}
       propertyPath: m_Name
-      value: Confetti
+      value: Confettis
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55b23ec22c0a90945aa281b9daebf48b, type: 3}
