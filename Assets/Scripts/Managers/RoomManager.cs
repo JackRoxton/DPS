@@ -3,32 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.VFX;
 
 public class RoomManager : Singleton<RoomManager>
 {
+    [Header("Prefabs")]
     public GameObject magePrefab;
     public GameObject mage;
     public GameObject minionPrefab;
-    GameObject minion;
+    List<GameObject> minion = new List<GameObject>();
     GameObject pickup;
+    public GameObject warning;
+    public GameObject player;
 
     //public VisualEffect vfx;
 
-    public bool tuto = false;
-
-    public GameObject warning;
-
-    public GameObject player;
-
+    [Header("Tilemaps")]
     public Tilemap AddWallTilemap;
     public List<Tilemap> inWallPaterns;
     public List<Tilemap> outWallPaterns;
-    public List<GameObject> pickupsTypes;
 
+    [Header("Spots")]
     public GameObject walls;
     public GameObject outWalls;
     public GameObject mages;
@@ -42,7 +39,9 @@ public class RoomManager : Singleton<RoomManager>
 
     int pickupCount = 0;
     int lastMageSpot = 0;
+    public List<GameObject> pickupsTypes;
     public int phaseMult = 0;
+    public bool tuto = false;
 
     void Start()
     {
@@ -77,20 +76,17 @@ public class RoomManager : Singleton<RoomManager>
         }
         PickupsSpots.Remove(pickups.GetComponent<Transform>());
 
-
-        //PlayerDash(GameManager.Instance.playerDashOnMovement);
-
         if (PlayerPrefs.GetInt("Controller") == 1)
             player.GetComponentInChildren<WeaponParent>().controller = true;
         else
             player.GetComponentInChildren<WeaponParent>().controller = false;
 
-        //StartCoroutine(FirstRoomChange());
-        //PlayerSpeed(GameManager.Instance.playerSpeedUp);
-        //PlayerDash(GameManager.Instance.playerDashOnMovement);
+        /*StartCoroutine(FirstRoomChange());
+        PlayerSpeed(GameManager.Instance.playerSpeedUp);
+        PlayerDash(GameManager.Instance.playerDashOnMovement);*/
     }
 
-    void Update()
+    /*void Update()
     {
         if(GameManager.Instance.endFlag)
         {
@@ -98,7 +94,7 @@ public class RoomManager : Singleton<RoomManager>
             StopAllCoroutines();
         }
 
-    }
+    }*/
 
     public void FirstRoom()
     {
@@ -157,10 +153,12 @@ public class RoomManager : Singleton<RoomManager>
 
         SoundManager.Instance.Play("spawn");
 
-        if (!tuto)
+        if (!tuto && minion.Count < 3)
         {
-            minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
-            minion.GetComponent<Minion>().player = this.player;
+            GameObject m = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+            m.GetComponent<Minion>().player = this.player;
+            m.GetComponent<Minion>().phaseMult = phaseMult;
+            minion.Add(m);
         }
 
         AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
@@ -223,18 +221,23 @@ public class RoomManager : Singleton<RoomManager>
 
         SoundManager.Instance.Play("spawn");
 
-        if (minion == null && !tuto)
+        if (!tuto && minion.Count < 3)
         {
-            minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
-            minion.GetComponent<Minion>().player = this.player;
-            minion.GetComponent<Minion>().phaseMult = phaseMult;
+            GameObject m = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+            m.GetComponent<Minion>().player = this.player;
+            m.GetComponent<Minion>().phaseMult = phaseMult;
+            minion.Add(m);
         }
 
         if(pickup == null && pickupCount <= 0)
         {
             pickup = Instantiate(pickupsTypes[pickupWhat], (PickupsSpots[pickupWhere].position), Quaternion.identity);
+            pickupCount = 3;
         }
-        pickupCount--;
+        if(pickup == null) 
+        { 
+            pickupCount--;
+        }
 
         AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
         AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
@@ -242,26 +245,25 @@ public class RoomManager : Singleton<RoomManager>
 
     public void MidMinionSpawn()
     {
-        if (tuto) return;
+        if (tuto || minion.Count >= 3) return;
         StartCoroutine(_MidMinionSpawn());
     }
 
     public IEnumerator _MidMinionSpawn()
     {
-        if (tuto) StopCoroutine(_MidMinionSpawn());
+        //if (tuto) StopCoroutine(_MidMinionSpawn());
 
         int minionWhere = Random.Range(0, MinionSpots.Count);
         Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
         yield return new WaitForSeconds(2);
-        if (minion == null)
-        {
-            minion = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
-            minion.GetComponent<Minion>().player = this.player;
-            minion.GetComponent<Minion>().phaseMult = phaseMult;
-        }
+
+        GameObject m = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+        m.GetComponent<Minion>().player = this.player;
+        m.GetComponent<Minion>().phaseMult = phaseMult;
+        minion.Add(m);
     }
 
-    void ClearTiles()
+    public void ClearTiles()
     {
         AddWallTilemap.ClearAllTiles();
     }
@@ -387,10 +389,20 @@ public class RoomManager : Singleton<RoomManager>
     public void EndGame()
     {
         ClearTiles();
+        StopAllCoroutines();
         Destroy(mage);
-        Destroy(minion);
+        foreach(GameObject m in minion)
+        {
+            minion.Remove(m);
+            Destroy(m);
+        }
         PlayerEndFlag(true);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
+    public void RemoveMinion(GameObject m)
+    {
+        minion.Remove(m);
     }
 
     public void NextPhase()
@@ -404,8 +416,10 @@ public class RoomManager : Singleton<RoomManager>
     public void Pause(bool pause)
     {
         player.GetComponent<Player>().Pause(pause);
-        if(minion != null)
-            minion.GetComponent<Minion>().Pause(pause);
+        foreach (GameObject m in minion)
+        {
+            m.GetComponent<Minion>().Pause(pause);
+        }
         mage.GetComponent<Mage>().Pause(pause);
     }
 
@@ -465,7 +479,15 @@ public class RoomManager : Singleton<RoomManager>
 
     public void Shockwave()
     {
-        if(minion != null) minion.GetComponent<Minion>().Stunned();
+        foreach (GameObject m in minion)
+        {
+            if(m == null)
+            {
+                minion.Remove(m);
+                return;
+            }
+            m.GetComponent<Minion>().Stunned();
+        }
         mage.GetComponent<Mage>().Stunned();
         player.GetComponent<Player>().Shielded();
         VFXManager.Instance.PlayEffectOn("Strength",player.GetComponentInChildren<WeaponParent>().gameObject);

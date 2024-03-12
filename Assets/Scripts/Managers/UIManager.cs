@@ -7,20 +7,16 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
-    //sélection event system
+    [Header("Event System First")]
     public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst/*, SkillTreeFirst*/;
 
-    //panels
+    [Header("Panels")]
     public GameObject MainMenuPanel/*, SkillTreePanel*/;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject CreditsMenuButton, CreditsButton, creditsText;
     public GameObject SettingsPanel, DialoguePanel;
 
-    //texte flottant
-    public GameObject FloatingTextPrefab;
-    GameObject currentText;
-
-    //en jeu
+    [Header("In Game")]
     public TMP_Text timerText, scoreText;
     public Image timer;
     public TMP_Text endComboText, endScoreText, endDpsText;
@@ -32,24 +28,27 @@ public class UIManager : Singleton<UIManager>
     public LifeBar lifebar;
     public DPSCycle dps;
 
-    //dialogues
+    [Header("Dialogues")]
     public Dialogue Tuto, Win;
     public Dialogue End;
     Dialogue currentDialogue;
 
-    public Fade fade;
-
-    //Son
+    [Header("Sound")]
     public Slider masterSlider, musicsSlider, effectsSlider;
     public Toggle dodgeToggle, mouseToggle;
 
-    //Tuto
+    [Header("Tutorial")]
     public bool tutorial = true;
     bool tutoFlag = true;
     public TMP_Text controlsText;
+    public TMP_Text shownText;
     public Image controlsImage;
+    public Sprite key, mouse1, mouse2, button, bumper;
     string controlCheck = "";
 
+    public GameObject FloatingTextPrefab;
+    GameObject currentText;
+    public Fade fade;
     float fadeTime = 0.1f;
     bool fadeFlag = true;
 
@@ -362,7 +361,7 @@ public class UIManager : Singleton<UIManager>
         if(GameManager.Instance.phase > 0)
         {
             EndPanel.SetActive(false);
-            GameManager.Instance.NextPhase();
+            NextPhase();
             //SkillTree();
         }
         else
@@ -599,12 +598,56 @@ public class UIManager : Singleton<UIManager>
         scoreText.GetComponent<Animator>().Play("ScoreBump");
     }
 
-    public void SetControlText(string text, Image image)
+    public void SetControlText(string text)
     {
         controlsText.gameObject.SetActive(true);
         controlsText.text = "Press      To " + text;
-        controlsImage = image;
+
         controlCheck = text;
+
+        switch (controlCheck)
+        {
+            case "Slash":
+                if (PlayerPrefs.GetInt("Controller") == 0)
+                {
+                    controlsImage.sprite = mouse1;
+                    shownText.gameObject.SetActive(false);
+                }
+                else
+                {
+                    controlsImage.sprite = button;
+                    shownText.gameObject.SetActive(true);
+                    shownText.text = "X";
+                }
+                break;
+            case "Dodge":
+                if (PlayerPrefs.GetInt("Controller") == 0)
+                {
+                    controlsImage.sprite = key;
+                    shownText.gameObject.SetActive(true);
+                    shownText.text = "Space";
+                }
+                else
+                {
+                    controlsImage.sprite = bumper;
+                    shownText.gameObject.SetActive(true);
+                    shownText.text = "RB";
+                }
+                break;
+            case "Parry":
+                if (PlayerPrefs.GetInt("Controller") == 0)
+                {
+                    controlsImage.sprite = mouse2;
+                    shownText.gameObject.SetActive(false);
+                }
+                else
+                {
+                    controlsImage.sprite = bumper;
+                    shownText.gameObject.SetActive(true);
+                    shownText.text = "LB";
+                }
+                break;
+        }
     }
 
     void TutoControlCheck()

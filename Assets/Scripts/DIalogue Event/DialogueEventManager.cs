@@ -117,7 +117,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.FirstRoom();
                 GameManager.Instance.firstRoom = false;
                 UIManager.Instance.dps.S.SetActive(true);
-                UIManager.Instance.SetControlText("Slash",null);
+                UIManager.Instance.SetControlText("Slash");
                 yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
@@ -128,7 +128,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.mage.GetComponent<Mage>().tuto = false;
                 UIManager.Instance.dps.D.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
-                UIManager.Instance.SetControlText("Dodge", null);
+                UIManager.Instance.SetControlText("Dodge");
                 yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
@@ -139,7 +139,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 RoomManager.Instance.tuto = false;
                 UIManager.Instance.dps.P.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
-                UIManager.Instance.SetControlText("Parry", null);
+                UIManager.Instance.SetControlText("Parry");
                 yield return new WaitForSeconds(20);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);

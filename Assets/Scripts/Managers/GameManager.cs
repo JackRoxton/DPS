@@ -7,29 +7,29 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public float globalTimer = 60f;
-    public float altTimer = 7.5f;
+    [NonSerialized] public float globalTimer = 60f;
+    [NonSerialized] public float altTimer = 7.5f;
     float timer;
-    public int phase = 3;
+    [NonSerialized] public int phase = 3;
     bool tpeffectFlag = false;
-    public float speedMod = 1f;
+    [NonSerialized] public float speedMod = 1f;
 
-    public float mageHP = 5000;
+    [NonSerialized] public float mageHP = 5000;
     float threshold = 4000;
-    public float score = 0, combo = 0;
+    [NonSerialized] public float score = 0, combo = 0;
     //public float maxCombo = 0;
     //public float money = 0;
-    public bool endFlag = false;
-    public bool winFlag = false;
+    [NonSerialized] public bool endFlag = false;
+    [NonSerialized] public bool winFlag = false;
     bool midMinionFlag = true;
 
-    public float playerAttack = 5;
-    public float playerAttackSpeed = 1;
-    public float playerSpeedUp = 1;
-    public bool playerDashOnMovement = false;
+    [NonSerialized] public float playerAttack = 5;
+    [NonSerialized] public float playerAttackSpeed = 1;
+    [NonSerialized] public float playerSpeedUp = 1;
+    [NonSerialized] public bool playerDashOnMovement = false;
 
-    public bool tutorial = true;
-    public bool firstRoom = true;
+    [NonSerialized] public bool tutorial = true;
+    [NonSerialized] public bool firstRoom = true;
 
     bool memoryControl;
 

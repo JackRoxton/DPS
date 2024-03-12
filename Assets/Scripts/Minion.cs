@@ -59,7 +59,7 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(/*GameManager.Instance.currentState == GameManager.gameStates.SkillTree || */GameManager.Instance.endFlag == true) Destroy(this.gameObject);
+        if (GameManager.Instance.endFlag == true) Die();
 
         if (GameManager.Instance.currentState == GameManager.gameStates.Pause) return;
         if (pause) return;
@@ -115,7 +115,7 @@ public class Minion : MonoBehaviour
         }
         GameManager.Instance.ScreenShake();
         GameManager.Instance.AddScore();
-        Destroy(this.gameObject);
+        Die();
     }
 
     public void Stunned()
@@ -138,6 +138,12 @@ public class Minion : MonoBehaviour
         }
     }
 
+    void Die()
+    {
+        RoomManager.Instance.RemoveMinion(this.gameObject);
+        Destroy(this.gameObject);
+    }
+
     IEnumerator Attack()
     {
         dmgFlag = true;
@@ -147,6 +153,11 @@ public class Minion : MonoBehaviour
         rb.velocity = Vector2.zero;
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         yield return new WaitUntil(HitboxActive);
+        while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        if(stun) StopCoroutine(Attack());
         go = Instantiate(slash, transform.position, Quaternion.identity);
         go.transform.right = new Vector3(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y,0);
         go.GetComponentInChildren<VisualEffect>().Play();

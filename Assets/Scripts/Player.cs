@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using UnityEngine.InputSystem;
 using UnityEngine.XR;
+using UnityEngine.VFX;
+using UnityEditor.ShaderGraph.Internal;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class Player : MonoBehaviour
     public Weapon weapon;
     public GameObject shield;
     public GameObject circle;
+    public GameObject power;
+    bool powerHigh = false;
     //PlayerInput input;
 
     public bool endFlag = false;
@@ -98,6 +102,8 @@ public class Player : MonoBehaviour
             mouseControls = true;
         else
             mouseControls = false;
+
+        power.GetComponent<VisualEffect>().Stop();
     }
 
     // Update is called once per frame
@@ -373,6 +379,7 @@ public class Player : MonoBehaviour
             controller.Play("HitStun 1");
     }
 
+
     public void Shielded()
     {
         shielded = true;
@@ -395,9 +402,9 @@ public class Player : MonoBehaviour
     }
     IEnumerator _ModSpeed()
     {
-        speed *= 1.5f;
+        speed *= 1.4f;
         yield return new WaitForSeconds(10);
-        speed /= 1.5f;
+        speed /= 1.4f;
     }
 
     public void ModAttackSpeed()
@@ -406,22 +413,40 @@ public class Player : MonoBehaviour
     }
     IEnumerator _ModAttackSpeed()
     {
-        attackSpeedUpgrade += 0.5f;
+        attackSpeedUpgrade += 0.4f;
         weapon.controller.speed = attackSpeed + attackSpeedUpgrade;
         yield return new WaitForSeconds (10);
-        attackSpeedUpgrade -= 0.5f;
+        attackSpeedUpgrade -= 0.4f;
         weapon.controller.speed = attackSpeed;
     }
+
+    /*public void PowerLow()
+    {
+        if (powerHigh) return;
+        StartCoroutine(_PowerLow());
+    }
+    IEnumerator _PowerLow()
+    {
+        power.GetComponent<SpriteRenderer>().color = Color.red;
+        power.GetComponent<VisualEffect>().Play();
+        yield return new WaitForSeconds(1);
+        power.GetComponent<VisualEffect>().Stop();
+    }*/
 
     public void CirclePowerup(Color c)
     {
         circle.GetComponent<SpriteRenderer>().color = c;
         circle.SetActive(true);
+        power.GetComponent<VisualEffect>().SetVector4("Color", c);
         StartCoroutine(_CirclePowerup());
     }
     IEnumerator _CirclePowerup()
     {
+        powerHigh = true;
+        power.GetComponent<VisualEffect>().Play();
         yield return new WaitForSeconds(10);
+        power.GetComponent<VisualEffect>().Stop();
+        powerHigh = false;
         circle.SetActive(false);
     }
 
