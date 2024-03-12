@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 //using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     public WeaponParent weaponparent;
     public Weapon weapon;
     public GameObject shield;
+    public GameObject circle;
     //PlayerInput input;
 
     public bool endFlag = false;
@@ -387,16 +389,40 @@ public class Player : MonoBehaviour
         body.velocity += kb.normalized * kbForce;
     }
 
-    public void ModSpeed(float spd)
+    public void ModSpeed()
     {
-        speed += spd;
+        StartCoroutine(_ModSpeed());
+    }
+    IEnumerator _ModSpeed()
+    {
+        speed *= 1.5f;
+        yield return new WaitForSeconds(10);
+        speed /= 1.5f;
     }
 
-    public void ModAttackSpeed(float atk)
+    public void ModAttackSpeed()
     {
-        attackSpeedUpgrade += atk;
-        //controller.speed = attackSpeed;
+        StartCoroutine (_ModAttackSpeed());
+    }
+    IEnumerator _ModAttackSpeed()
+    {
+        attackSpeedUpgrade += 0.5f;
         weapon.controller.speed = attackSpeed + attackSpeedUpgrade;
+        yield return new WaitForSeconds (10);
+        attackSpeedUpgrade -= 0.5f;
+        weapon.controller.speed = attackSpeed;
+    }
+
+    public void CirclePowerup(Color c)
+    {
+        circle.GetComponent<SpriteRenderer>().color = c;
+        circle.SetActive(true);
+        StartCoroutine(_CirclePowerup());
+    }
+    IEnumerator _CirclePowerup()
+    {
+        yield return new WaitForSeconds(10);
+        circle.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

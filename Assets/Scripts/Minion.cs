@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Minion : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Minion : MonoBehaviour
     float timer = 0;
     float stunPower = 10f;
     float dashPower = 25f;
+    public GameObject slash;
+    GameObject go;
 
     public float phaseMult = 1;
 
@@ -38,6 +41,19 @@ public class Minion : MonoBehaviour
         controller = GetComponent<Animator>();
         speed = 0.025f + (phaseMult / 150);
         rb = this.GetComponent<Rigidbody2D>();
+
+        if (player == null) return;
+
+        if (transform.position.x < player.transform.position.x)
+        {
+            faceR = false;
+            this.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (transform.position.x > player.transform.position.x)
+        {
+            faceR = true;
+            this.GetComponent<SpriteRenderer>().flipX = false;
+        }
     }
 
     // Update is called once per frame
@@ -69,6 +85,17 @@ public class Minion : MonoBehaviour
         }
         else
             Follow();
+
+        if (transform.position.x < player.transform.position.x && faceR)
+        {
+            faceR = false;
+            this.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (transform.position.x > player.transform.position.x && !faceR)
+        {
+            faceR = true;
+            this.GetComponent<SpriteRenderer>().flipX = false;
+        }
 
         rb.velocity *= 0.9f;
     }
@@ -107,16 +134,7 @@ public class Minion : MonoBehaviour
         {
             Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, 0);
             transform.position = Vector3.MoveTowards(transform.position, newPos, speed);
-            if(transform.position.x < player.transform.position.x || faceR)
-            {
-                faceR = false;
-                this.GetComponent<SpriteRenderer>().flipX = false;
-            }
-            else if(transform.position.x > player.transform.position.x || !faceR)
-            {
-                faceR = true;
-                this.GetComponent<SpriteRenderer>().flipX = true;
-            }
+            
         }
     }
 
@@ -129,7 +147,12 @@ public class Minion : MonoBehaviour
         rb.velocity = Vector2.zero;
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
         yield return new WaitUntil(HitboxActive);
+        go = Instantiate(slash, transform.position, Quaternion.identity);
+        go.transform.right = new Vector3(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y,0);
+        go.GetComponentInChildren<VisualEffect>().Play();
         rb.velocity = new Vector2(player.transform.position.x - this.transform.position.x,player.transform.position.y - this.transform.position.y).normalized * dashPower;
+        yield return new WaitForSeconds(1.5f);
+        Destroy(go);
     }
 
     bool HitboxActive()
@@ -157,7 +180,7 @@ public class Minion : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision == null) return;
 
@@ -167,5 +190,5 @@ public class Minion : MonoBehaviour
             stop = true;
             timer = stopTimer;
         }
-    }
+    }*/
 }

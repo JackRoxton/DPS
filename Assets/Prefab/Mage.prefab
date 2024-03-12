@@ -101,12 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7a38e7f61f1a945a6ba31af7b15987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  player: {fileID: 0}
   ProjectilePrefab: {fileID: 5717790739917788765, guid: 33ff12954a616324aac96357c7f036e7, type: 3}
   AttackPrefab: {fileID: 571448682678014944, guid: ef69da05b7d92864692e8b1e480fb219, type: 3}
   LaserPrefab: {fileID: 5569403704549426649, guid: 9548305b8ab71a8499ccf8136259351c, type: 3}
-  projTime: 5
-  atkTime: 6
+  projTime: 3
+  atkTime: 5
   lasTime: 12
   spellSpeed: 0
   spell: 0

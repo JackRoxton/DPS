@@ -40,6 +40,7 @@ public class RoomManager : Singleton<RoomManager>
     List<Transform> MinionSpots = new List<Transform>();
     List<Transform> PickupsSpots = new List<Transform>();
 
+    int pickupCount = 0;
     int lastMageSpot = 0;
     public int phaseMult = 0;
 
@@ -85,8 +86,8 @@ public class RoomManager : Singleton<RoomManager>
             player.GetComponentInChildren<WeaponParent>().controller = false;
 
         //StartCoroutine(FirstRoomChange());
-        PlayerSpeed(GameManager.Instance.playerSpeedUp);
-        PlayerDash(GameManager.Instance.playerDashOnMovement);
+        //PlayerSpeed(GameManager.Instance.playerSpeedUp);
+        //PlayerDash(GameManager.Instance.playerDashOnMovement);
     }
 
     void Update()
@@ -134,7 +135,7 @@ public class RoomManager : Singleton<RoomManager>
         lastMageSpot = mageWhere;
         VFXManager.Instance.PlayEffectAt("Teleport_End", MageSpots[mageWhere]);
         mage = Instantiate(magePrefab, MageSpots[mageWhere].position,Quaternion.identity);
-        mage.GetComponent<Mage>().Player = player;
+        mage.GetComponent<Mage>().player = player;
         mage.GetComponent<Mage>().phaseMult = phaseMult;
         if(tuto)
             mage.GetComponent<Mage>().tuto = true;
@@ -197,7 +198,10 @@ public class RoomManager : Singleton<RoomManager>
         lastMageSpot = mageWhere;
 
         int pickupWhere = Random.Range(0, PickupsSpots.Count);
-        Instantiate(warning, (PickupsSpots[pickupWhere].position), Quaternion.identity);
+        if(pickupCount <= 0)
+        {
+            Instantiate(warning, (PickupsSpots[pickupWhere].position), Quaternion.identity);
+        }
 
         VFXManager.Instance.PlayEffectAt("Teleport_End", MageSpots[mageWhere]);
         mage.GetComponent<Mage>().Teleport(MageSpots[mageWhere]);
@@ -226,10 +230,11 @@ public class RoomManager : Singleton<RoomManager>
             minion.GetComponent<Minion>().phaseMult = phaseMult;
         }
 
-        if(pickup == null)
+        if(pickup == null && pickupCount <= 0)
         {
             pickup = Instantiate(pickupsTypes[pickupWhat], (PickupsSpots[pickupWhere].position), Quaternion.identity);
         }
+        pickupCount--;
 
         AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
         AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
@@ -414,7 +419,7 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().endFlag = state;
     }
 
-    public void PlayerSpeed(float speedMod)
+    /*public void PlayerSpeed(float speedMod)
     {
         player.GetComponent<Player>().speedUpgrade += speedMod;
     }
@@ -424,10 +429,10 @@ public class RoomManager : Singleton<RoomManager>
         player.GetComponent<Player>().ModAttackSpeed(speedMod);
     }
 
-    /*public void PlayerAttack()
+    public void PlayerAttack()
     {
         player.GetComponentInChildren<Weapon>().gameObject.transform.localScale *= 1.05f;
-    }*/
+    }
 
     public void PlayerParryPow(float pow)
     {
@@ -442,6 +447,20 @@ public class RoomManager : Singleton<RoomManager>
     public void PlayerDash(bool OnMovement)
     {
         player.GetComponent<Player>().dashOnMovement = OnMovement;
+    }*/
+
+    public void PickupSpeed()
+    {
+        player.GetComponent<Player>().ModSpeed();
+    }
+    public void PickupAttackSpeed()
+    {
+        player.GetComponent<Player>().ModAttackSpeed();
+    }
+    public void UnLock()
+    {
+        if (!pickup) return;
+        pickup.GetComponent<Pickup>().Unlock();
     }
 
     public void Shockwave()

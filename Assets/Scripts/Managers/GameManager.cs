@@ -247,6 +247,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.Resetvar();
     }
 
+
     public void AddScore()
     {
 
@@ -272,9 +273,9 @@ public class GameManager : Singleton<GameManager>
     {
         combo += 5;
         AddScore();
-        if(currentState == gameStates.InGame)
-            RoomManager.Instance.Shockwave();
+        RoomManager.Instance.Shockwave();
         UIManager.Instance.DpsScoreBump();
+        RoomManager.Instance.UnLock();
     }
 
     public void TakeDamage()
@@ -403,6 +404,17 @@ public class GameManager : Singleton<GameManager>
     public void StrongScreenShake()
     {
         Camera.main.GetComponent<CameraScript>().StrongScreenShake();
+    }
+
+    public void PickupStrength()
+    {
+        StartCoroutine(_PickupStrength());
+    }
+    IEnumerator _PickupStrength()
+    {
+        playerAttack += 25;
+        yield return new WaitForSeconds(10);
+        playerAttack -= 25;
     }
 
 }

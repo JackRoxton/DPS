@@ -6,12 +6,12 @@ using Random = UnityEngine.Random;
 
 public class Mage : MonoBehaviour
 {
-    public GameObject Player;
+    public GameObject player;
     public GameObject ProjectilePrefab;
     public GameObject AttackPrefab;
     public GameObject LaserPrefab;
     List<GameObject> CurrentSpells;
-    public float projTime = 4f;
+    public float projTime = 3f;
     [NonSerialized] public float ptimer;
     public float atkTime = 5f;
     [NonSerialized] public float atimer;
@@ -32,6 +32,8 @@ public class Mage : MonoBehaviour
 
     public int phaseMult = 1;
 
+    bool faceR = false;
+
     Animator controller;
 
     //bool faceR;
@@ -47,12 +49,25 @@ public class Mage : MonoBehaviour
         ltimer = lasTime;
         spellSpeed = 5f;
         controller = GetComponent<Animator>();
+
+        if (player == null) return;
+
+        if (transform.position.x < player.transform.position.x)
+        {
+            faceR = false;
+            this.GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (transform.position.x > player.transform.position.x)
+        {
+            faceR = true;
+            this.GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (tuto) return;
+        if(tuto) return;
         if(pause) return;
 
         if (stun)
@@ -65,10 +80,16 @@ public class Mage : MonoBehaviour
             return;
         }
 
-        /*if (Player.transform.position.x < this.transform.position.x)
+        if (transform.position.x < player.transform.position.x && faceR)
+        {
+            faceR = false;
+            this.GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (transform.position.x > player.transform.position.x && !faceR)
+        {
             faceR = true;
-        else
-            faceR = false;*/
+            this.GetComponent<SpriteRenderer>().flipX = true;
+        }
 
         ptimer -= Time.deltaTime;
         if (ptimer <= 0)
@@ -77,7 +98,7 @@ public class Mage : MonoBehaviour
             ptimer = projTime + Random.Range(0, 2);
         }
         
-        if (Vector3.Distance(Player.transform.position, this.transform.position) <= 4f)
+        if (Vector3.Distance(player.transform.position, this.transform.position) <= 4f)
         {
             atimer -= Time.deltaTime;
             if (atimer <= 0)
@@ -135,7 +156,7 @@ public class Mage : MonoBehaviour
 
         GameObject tmp = Instantiate(ProjectilePrefab, this.transform.position, Quaternion.identity);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>());
-        tmp.GetComponent<MageProjectile>().body.velocity = (new Vector2(Player.transform.position.x - this.transform.position.x, Player.transform.position.y - this.transform.position.y).normalized) * spellSpeed;
+        tmp.GetComponent<MageProjectile>().body.velocity = (new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y).normalized) * spellSpeed;
         CurrentSpells.Add(tmp);
 
         if(phaseMult == 2)
@@ -178,7 +199,7 @@ public class Mage : MonoBehaviour
         controller.Play("SpellCast", 0); // à chg?
         yield return new WaitUntil(ProjCast); //idm
         GameObject tmp = Instantiate(LaserPrefab,this.transform.position, Quaternion.identity);
-        tmp.transform.right = new Vector2(Player.transform.position.x - tmp.transform.position.x,Player.transform.position.y-tmp.transform.position.y);
+        tmp.transform.right = new Vector2(player.transform.position.x - tmp.transform.position.x,player.transform.position.y-tmp.transform.position.y);
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), tmp.GetComponentInChildren<Collider2D>());
         CurrentSpells.Add(tmp);
 

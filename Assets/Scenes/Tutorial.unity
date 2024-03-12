@@ -1901,12 +1901,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e150ae192842dd4f868787cc09554cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magePrefab: {fileID: 1215607283832134488, guid: f5ecb7b6e4b67024a82bb3ddd8241c88, type: 3}
-  minionPrefab: {fileID: 7014656980860405107, guid: d309cacdf31903641a0c7d8a878a257c, type: 3}
-  player: {fileID: 5097674866877607321}
-  mageSpot: {fileID: 1109540053}
-  minionSpot: {fileID: 106816130}
-  eventLock: 0
 --- !u!4 &861935346
 Transform:
   m_ObjectHideFlags: 0
@@ -8827,6 +8821,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  Player: {fileID: 0}
+  minClamp: {x: -2.5, y: -2}
+  maxClamp: {x: 2.5, y: 1.5}
 --- !u!114 &1807756712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9269,7 +9266,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
