@@ -26,6 +26,8 @@ public class InputManager : Singleton<InputManager>
                 if (isControllerInput())
                 {
                     InputState = InputType.Controller;
+                    PlayerPrefs.SetInt("Controller",1);
+                    GameManager.Instance.SetControls(true);
                     Debug.Log("Switched Input to Controller");
                 }
                 break;
@@ -33,6 +35,8 @@ public class InputManager : Singleton<InputManager>
                 if (isMouseKeyboard())
                 {
                     InputState = InputType.MouseKeyboard;
+                    PlayerPrefs.SetInt("Controller", 0);
+                    GameManager.Instance.SetControls(false);
                     Debug.Log("Switched Input to Mouse/Keyboard");
                 }
                 break;
@@ -52,7 +56,12 @@ public class InputManager : Singleton<InputManager>
     private bool isMouseKeyboard()
     {
         // mouse & keyboard buttons and mouse movement
-        if (Input.anyKey ||
+        if (Input.GetKey(KeyCode.Z) ||
+            Input.GetKey(KeyCode.Q) ||
+            Input.GetKey(KeyCode.S) ||
+            Input.GetKey(KeyCode.D) ||
+            Input.GetKey(KeyCode.W) ||
+            Input.GetKey(KeyCode.A) ||
             Input.GetMouseButton(0) ||
             Input.GetMouseButton(1) ||
             Input.GetMouseButton(2) ||
