@@ -13,14 +13,16 @@ public class CutsceneManager : Singleton<CutsceneManager>
     IEnumerator Cutscene()
     {
         //UIManager.Instance.SkillTreePanel.SetActive(false);
+        UIManager.Instance.InGamePanel.SetActive(false);
         yield return new WaitForSeconds(1);
         UIManager.Instance.Credits(true);
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0)); //se souvenir de ça et changer
         UIManager.Instance.Credits(true,false);
+        TeleportEffect.Instance.Effect();
+        yield return new WaitForSeconds(2);
         VFXManager.Instance.PlayEffectAt("Teleport_End", Tower.transform);
-        yield return new WaitForSeconds(1);
         Tower.SetActive(false);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         UIManager.Instance.FadeScene(0);
         UIManager.Instance.MainMenuPanel.SetActive(true);
         GameManager.Instance.ToMenu();
