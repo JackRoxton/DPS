@@ -141,6 +141,7 @@ public class Minion : MonoBehaviour
     void Die()
     {
         RoomManager.Instance.RemoveMinion(this.gameObject);
+        SoundManager.Instance.Play("hit");
         Destroy(this.gameObject);
     }
 

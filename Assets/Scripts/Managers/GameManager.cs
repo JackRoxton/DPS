@@ -69,6 +69,7 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         if(endFlag) return;
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Cutscene")) return;
 
         if (currentState == gameStates.InGame) {
             globalTimer -= Time.deltaTime;
