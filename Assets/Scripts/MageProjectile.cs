@@ -23,6 +23,8 @@ public class MageProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.right = body.velocity;
+
         if (GameManager.Instance.endFlag)
         {
             Die();
