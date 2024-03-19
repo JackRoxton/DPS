@@ -110,8 +110,8 @@ public class GameManager : Singleton<GameManager>
             midMinionFlag = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 0f;
-        if (Input.GetKeyDown(KeyCode.Return)) for (int i = 0; i < 100; i++) AddScore() ;
+        /*if (Input.GetKeyDown(KeyCode.Backspace)) globalTimer = 0f;
+        if (Input.GetKeyDown(KeyCode.Return)) for (int i = 0; i < 100; i++) AddScore() ;*/
     }
 
     public void Play()

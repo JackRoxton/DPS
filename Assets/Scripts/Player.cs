@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public GameObject shield;
     public GameObject circle;
     public GameObject power;
-    bool powerHigh = false;
+    //bool powerHigh = false;
     //PlayerInput input;
 
     public bool endFlag = false;
@@ -442,11 +442,11 @@ public class Player : MonoBehaviour
     }
     IEnumerator _CirclePowerup()
     {
-        powerHigh = true;
+        //powerHigh = true;
         power.GetComponent<VisualEffect>().Play();
         yield return new WaitForSeconds(10);
         power.GetComponent<VisualEffect>().Stop();
-        powerHigh = false;
+        //powerHigh = false;
         circle.SetActive(false);
     }
 

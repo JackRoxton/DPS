@@ -30,25 +30,32 @@ public class WeaponParent : MonoBehaviour
         {
             if(controller)
             {
-                Vector3 dir = new Vector3();
-                dir.x = Input.GetAxis("LookH");
-                dir.y = Input.GetAxis("LookV");
-                if (dir.x == 0 || dir.y == 0)
-                    dir = memPos;
-                else
-                    memPos = dir;
+                if (RoomManager.Instance.mage == null) return;
+                List<GameObject> list = RoomManager.Instance.minionList;
+                //list.Add(RoomManager.Instance.mage);
+                GameObject target = RoomManager.Instance.mage;
+                foreach(GameObject go in list)
+                {
+                    if (go == null) return;
+                    if(Vector3.Distance(go.transform.position,this.transform.position) < Vector3.Distance(target.transform.position, this.transform.position))
+                    {
+                        target = go;
+                    }
+                }
 
-                transform.right = dir;
-                if (dir.x < 0 && faceR)
+                Vector3 dir = new Vector3(target.transform.position.x - player.transform.position.x, target.transform.position.y - player.transform.position.y, player.transform.position.z).normalized;
+
+                if (target.transform.position.x < player.transform.position.x && faceR)
                 {
                     this.transform.localScale = new Vector3(this.transform.localScale.x, -this.transform.localScale.y, -this.transform.localScale.z);
                     faceR = false;
                 }
-                else if(dir.x > 0 && !faceR)
+                else if (target.transform.position.x >= player.transform.position.x && !faceR)
                 {
                     this.transform.localScale = new Vector3(this.transform.localScale.x, -this.transform.localScale.y, -this.transform.localScale.z);
                     faceR = true;
                 }
+                transform.right = dir;
             }
             else
             {

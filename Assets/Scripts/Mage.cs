@@ -11,7 +11,7 @@ public class Mage : MonoBehaviour
     public GameObject AttackPrefab;
     public GameObject LaserPrefab;
     List<GameObject> CurrentSpells;
-    public float projTime = 3f;
+    public float projTime = 4f;
     [NonSerialized] public float ptimer;
     public float atkTime = 5f;
     [NonSerialized] public float atimer;
