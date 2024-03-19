@@ -155,13 +155,13 @@ public class GameManager : Singleton<GameManager>
         }
         if(mouse)
         {
-            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = true;
-            RoomManager.Instance.player.GetComponent<Player>().mouseControls = false;
+            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
+            RoomManager.Instance.player.GetComponent<Player>().mouseControls = true;
         }
         else
         {
-            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
-            RoomManager.Instance.player.GetComponent<Player>().mouseControls = true;
+            RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = true;
+            RoomManager.Instance.player.GetComponent<Player>().mouseControls = false;
         }
     }
 

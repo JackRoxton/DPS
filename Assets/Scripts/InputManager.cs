@@ -27,7 +27,7 @@ public class InputManager : Singleton<InputManager>
                 {
                     InputState = InputType.Controller;
                     PlayerPrefs.SetInt("Controller",1);
-                    GameManager.Instance.SetControls(true);
+                    GameManager.Instance.SetControls(false);
                     Debug.Log("Switched Input to Controller");
                 }
                 break;
@@ -36,7 +36,7 @@ public class InputManager : Singleton<InputManager>
                 {
                     InputState = InputType.MouseKeyboard;
                     PlayerPrefs.SetInt("Controller", 0);
-                    GameManager.Instance.SetControls(false);
+                    GameManager.Instance.SetControls(true);
                     Debug.Log("Switched Input to Mouse/Keyboard");
                 }
                 break;

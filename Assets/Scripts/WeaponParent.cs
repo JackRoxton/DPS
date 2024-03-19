@@ -25,7 +25,12 @@ public class WeaponParent : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.Instance.currentState == GameManager.gameStates.InGame 
+        /*if (PlayerPrefs.GetInt("Controller") == 1)
+            controller = true;
+        else
+            controller = false;*/
+
+        if (GameManager.Instance.currentState == GameManager.gameStates.InGame 
             || GameManager.Instance.currentState == GameManager.gameStates.Tutorial) 
         {
             if(controller)

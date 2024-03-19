@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueEventManager : Singleton<DialogueEventManager>
 {
@@ -10,9 +11,8 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
     GameObject minion;
     public GameObject player;
     public Transform mageSpot;
-    public Transform minionSpot;
-    public bool eventLock = false;*/
-
+    public Transform minionSpot;*/
+    public bool eventLock = false;
     public void Event(string sentence)
     {
         UIManager.Instance.DialoguePanel.SetActive(false);
@@ -146,12 +146,14 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 DialogueManager.Instance.DisplayNextSentence();
                 break;
             case "TutoEnd":
+                eventLock = true;
                 UIManager.Instance.FloatingText(new Vector2(0, 0), "Tutorial Completed", false, null, Color.blue,20);
                 yield return new WaitForSeconds(1.5f);
                 UIManager.Instance.FloatingText(new Vector2(0, 0), "Now the Real Deal", false, null, Color.blue, 20);
                 TeleportEffect.Instance.Effect();
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 yield return new WaitForSeconds(1.9f);
+                eventLock = false;
                 UIManager.Instance.timer.gameObject.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
                 break;

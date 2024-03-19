@@ -615,9 +615,9 @@ public class UIManager : Singleton<UIManager>
                 }
                 else
                 {
-                    controlsImage.sprite = button;
+                    controlsImage.sprite = bumper;
                     shownText.gameObject.SetActive(true);
-                    shownText.text = "X";
+                    shownText.text = "RB";
                 }
                 break;
             case "Dodge":
@@ -631,7 +631,7 @@ public class UIManager : Singleton<UIManager>
                 {
                     controlsImage.sprite = bumper;
                     shownText.gameObject.SetActive(true);
-                    shownText.text = "RB";
+                    shownText.text = "LB";
                 }
                 break;
             case "Parry":
@@ -642,9 +642,9 @@ public class UIManager : Singleton<UIManager>
                 }
                 else
                 {
-                    controlsImage.sprite = bumper;
+                    controlsImage.sprite = button;
                     shownText.gameObject.SetActive(true);
-                    shownText.text = "LB";
+                    shownText.text = "X";
                 }
                 break;
         }
