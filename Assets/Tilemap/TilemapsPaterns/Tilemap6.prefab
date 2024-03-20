@@ -46,7 +46,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -66,7 +66,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -76,7 +76,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -86,7 +86,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -115,14 +115,10 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: f4ea3f3f75e8b2046bb5bf6c8545daee, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 2
-    m_Data: {fileID: 21300000, guid: 36b5f475f5d175046ac1b1dbbb8a246c, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 993fa7309525d1e42b374457877c98ba, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: 21300000, guid: 36b5f475f5d175046ac1b1dbbb8a246c, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 6d702bcecbddf71488b59e53cd612b48, type: 3}
   m_TileMatrixArray:
@@ -147,12 +143,6 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 6
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  - m_RefCount: 0
-    m_Data: {r: 8.1357e-41, g: 8.1357e-41, b: 8.1357e-41, a: 8.1357e-41}
-  - m_RefCount: 0
-    m_Data: {r: 8.1357e-41, g: 8.1357e-41, b: 8.1357e-41, a: 8.1357e-41}
-  - m_RefCount: 0
-    m_Data: {r: 8.1357e-41, g: 8.1357e-41, b: 8.1357e-41, a: 8.1357e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
