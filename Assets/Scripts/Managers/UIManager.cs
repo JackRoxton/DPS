@@ -70,6 +70,8 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        if (!PlayerPrefs.HasKey("Tuto"))
+            PlayerPrefs.SetInt("Tuto", 1);
         if (PlayerPrefs.GetInt("Tuto") == 1)
         {
             tutorial = true;
@@ -490,7 +492,7 @@ public class UIManager : Singleton<UIManager>
 
     public void SetControls()
     {
-        GameManager.Instance.SetControls(mouseToggle.isOn);
+        GameManager.Instance.SetControls(!mouseToggle.isOn);
 
         if (mouseToggle.isOn)
             PlayerPrefs.SetInt("Controller", 1);

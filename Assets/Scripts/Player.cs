@@ -109,6 +109,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(mouseControls);
+
         if (GameManager.Instance.currentState == GameManager.gameStates.InGame || GameManager.Instance.currentState == GameManager.gameStates.Tutorial) controller.speed = 1;
         else controller.speed = 0;
 

@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     [NonSerialized] public bool winFlag = false;
     bool midMinionFlag = true;
 
-    [NonSerialized] public float playerAttack = 5;
+    [NonSerialized] public float playerAttack = 10;
     [NonSerialized] public float playerAttackSpeed = 1;
     [NonSerialized] public float playerSpeedUp = 1;
     [NonSerialized] public bool playerDashOnMovement = false;
@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
     [NonSerialized] public bool tutorial = true;
     [NonSerialized] public bool firstRoom = true;
 
-    bool memoryControl;
+    //bool memoryControl;
 
     //public Skill[] skills;
 
@@ -54,6 +54,8 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         //PlayerPrefs.DeleteAll();
+        currentMusic = 2;
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
         timer = altTimer;
         DontDestroyOnLoad(this.gameObject);
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
@@ -136,7 +138,7 @@ public class GameManager : Singleton<GameManager>
             currentMusic = 1;
             SoundManager.Instance.PlayMusic(currentMusic.ToString());
 
-            SetControls(memoryControl);
+            //SetControls(memoryControl);
         }
 
     }
@@ -150,9 +152,10 @@ public class GameManager : Singleton<GameManager>
     {
         if (RoomManager.Instance == null) 
         { 
-            memoryControl = mouse; 
+            //memoryControl = mouse; 
             return;
         }
+        Debug.Log(mouse);
         if(mouse)
         {
             RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
@@ -203,6 +206,8 @@ public class GameManager : Singleton<GameManager>
     public void Cutscene()
     {
         SoundManager.Instance.StopMusic(currentMusic.ToString());
+        currentMusic = 2;
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
         winFlag = false;
         endFlag = false;
     }
@@ -211,6 +216,8 @@ public class GameManager : Singleton<GameManager>
     {
         //SetTimeScale(1);
         SoundManager.Instance.StopMusic(currentMusic.ToString());
+        currentMusic = 2;
+        SoundManager.Instance.PlayMusic(currentMusic.ToString());
         winFlag = false;
         endFlag = false;
         score = 0;
@@ -241,7 +248,7 @@ public class GameManager : Singleton<GameManager>
             skill.Resetvar();
         }*/
 
-        playerAttack = 5;
+        playerAttack = 10;
         playerSpeedUp = 1;
         playerAttackSpeed = 1;
 
