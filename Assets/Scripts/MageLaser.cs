@@ -6,8 +6,8 @@ using UnityEngine;
 public class MageLaser : MonoBehaviour
 {
     float lifeTime = 0.75f;
-    float expandSpeed = 0.025f;
-    float shrinkSpeed = 0.0025f;
+    float expandSpeed = 12.5f;
+    float shrinkSpeed = 2f;
     float maxSize = 10;
     float minShrink = 0.2f;
     float laserSize = 0.2f;
@@ -25,13 +25,13 @@ public class MageLaser : MonoBehaviour
 
         do
         {
-            Zone.transform.localScale = new Vector2(Zone.transform.localScale.x + expandSpeed, Zone.transform.localScale.y);
+            Zone.transform.localScale = new Vector2(Zone.transform.localScale.x + expandSpeed * Time.deltaTime, Zone.transform.localScale.y);
             yield return null;
         } while (Zone.transform.localScale.x < maxSize);
 
         do
         {
-            Zone.transform.localScale = new Vector2(Zone.transform.localScale.x, Zone.transform.localScale.y - shrinkSpeed);
+            Zone.transform.localScale = new Vector2(Zone.transform.localScale.x, Zone.transform.localScale.y - shrinkSpeed*Time.deltaTime);
             yield return null;
         } while (Zone.transform.localScale.y > minShrink);
 
