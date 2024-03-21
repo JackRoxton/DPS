@@ -67,6 +67,7 @@ public class DPSCycle : MonoBehaviour
                 }
                 break;
         }
+        RoomManager.Instance.SetPickupLightState();
         CheckLights();
     }
 

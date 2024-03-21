@@ -493,6 +493,17 @@ public class RoomManager : Singleton<RoomManager>
         VFXManager.Instance.PlayEffectOn("Strength",player.GetComponentInChildren<WeaponParent>().gameObject);
     }
 
+    public void SetPickupLightState()
+    {
+        if(!pickup) return;
+        if (UIManager.Instance.dps.GetD())
+            pickup.GetComponent<Pickup>().SetLightState("D");
+        if (UIManager.Instance.dps.GetP())
+            pickup.GetComponent<Pickup>().SetLightState("P");
+        if (UIManager.Instance.dps.GetS())
+            pickup.GetComponent<Pickup>().SetLightState("S");
+    }
+
     /*public void PlayConfettis()
     {
         vfx.Play();

@@ -8,6 +8,8 @@ public class Pickup : MonoBehaviour
     public bool locked = true;
     public GameObject Circle;
     public GameObject Lock;
+    public GameObject D, P, S;
+    //bool Dstate, Pstate, Sstate;
 
     public enum Powerup
     {
@@ -30,6 +32,7 @@ public class Pickup : MonoBehaviour
 
     public void Unlock()
     {
+        if (!locked) return;
         locked = false;
         Lock.SetActive(false);
         VFXManager.Instance.PlayEffectAt("Success",this.transform);
@@ -58,5 +61,24 @@ public class Pickup : MonoBehaviour
         SoundManager.Instance.Play("powerup");
         VFXManager.Instance.PlayEffectAt("Strength", this.transform);
         Destroy(this.gameObject);
+    }
+
+    public void SetLightState(string lamp)
+    {
+        switch(lamp)
+        {
+            case "D":
+                D.GetComponent<SpriteRenderer>().color = Color.yellow;
+                //Dstate = true;
+                break;
+            case "P":
+                P.GetComponent<SpriteRenderer>().color = Color.yellow;
+                //Pstate = true;
+                break;
+            case "S":
+                S.GetComponent<SpriteRenderer>().color = Color.yellow;
+                //Sstate = true;
+                break;
+        }
     }
 }

@@ -377,7 +377,7 @@ public class UIManager : Singleton<UIManager>
     public void EndPhaseDialogue()
     {
         DialoguePanel.SetActive(true);
-        dialogueClick.LockTimer();
+        dialogueClick.LockTimer(); //
         if (dialFlag)
         {
             currentDialogue = End;
