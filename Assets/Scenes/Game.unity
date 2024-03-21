@@ -1475,6 +1475,7 @@ MonoBehaviour:
   magePrefab: {fileID: 1215607283832134488, guid: f5ecb7b6e4b67024a82bb3ddd8241c88, type: 3}
   mage: {fileID: 0}
   minionPrefab: {fileID: 7014656980860405107, guid: d309cacdf31903641a0c7d8a878a257c, type: 3}
+  minionList: []
   warning: {fileID: 6891843197255496856, guid: d6f57662a2b353b4fb4db9613a098835, type: 3}
   player: {fileID: 5097674866877607321}
   AddWallTilemap: {fileID: 2066760552}
@@ -2202,7 +2203,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -3
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.012000024, y: 0.012000024, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -9501,7 +9502,7 @@ Tilemap:
   - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: 46f403608acd84a4296b7d430d006623, type: 2}
   - m_RefCount: 612
-    m_Data: {fileID: 11400000, guid: a4ffbc9b0424eb14f851aa0dcc7fb908, type: 2}
+    m_Data: {fileID: 11400000, guid: 28a33b07b03ce434a93e535cb0555fa4, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileSpriteArray:
@@ -9518,7 +9519,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 612
-    m_Data: {fileID: 21300000, guid: 7559c1a78bfb379478e8af30b0199ef3, type: 3}
+    m_Data: {fileID: 21300000, guid: 97cb85443374b984a9317df3dc135f56, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 727
     m_Data:
@@ -9744,6 +9745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e150ae192842dd4f868787cc09554cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventLock: 0
 --- !u!4 &1794211901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 810722009992161889, guid: 526c3ce9541912c41b6a811dd8782173, type: 3}
