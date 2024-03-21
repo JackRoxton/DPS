@@ -95,7 +95,7 @@ public class Mage : MonoBehaviour
         if (ptimer <= 0)
         {
             StartCoroutine(CastProj());
-            ptimer = projTime + Random.Range(0, 2);
+            ptimer = projTime + Random.Range(1, 3);
         }
         
         if (Vector3.Distance(player.transform.position, this.transform.position) <= 4f)
@@ -104,7 +104,7 @@ public class Mage : MonoBehaviour
             if (atimer <= 0)
             {
                 StartCoroutine(CastAtk());
-                atimer = atkTime + Random.Range(0, 2);
+                atimer = atkTime + Random.Range(1, 3);
             }
         }
 
@@ -139,6 +139,7 @@ public class Mage : MonoBehaviour
         {
             if (go != null)
             {
+                CurrentSpells.Remove(go);
                 Destroy(go);
             }
         }

@@ -14,6 +14,7 @@ public class CutsceneManager : Singleton<CutsceneManager>
     {
         //UIManager.Instance.SkillTreePanel.SetActive(false);
         UIManager.Instance.InGamePanel.SetActive(false);
+        UIManager.Instance.DialoguePanel.SetActive(false);
         yield return new WaitForSeconds(1);
         UIManager.Instance.Credits(true);
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0)); //se souvenir de ça et changer

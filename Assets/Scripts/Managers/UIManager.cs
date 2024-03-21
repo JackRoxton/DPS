@@ -52,6 +52,8 @@ public class UIManager : Singleton<UIManager>
     float fadeTime = 0.1f;
     bool fadeFlag = true;
 
+    public DialogueClick dialogueClick;
+
     bool dialFlag = true;
 
     public enum menuStates
@@ -375,6 +377,7 @@ public class UIManager : Singleton<UIManager>
     public void EndPhaseDialogue()
     {
         DialoguePanel.SetActive(true);
+        dialogueClick.LockTimer();
         if (dialFlag)
         {
             currentDialogue = End;

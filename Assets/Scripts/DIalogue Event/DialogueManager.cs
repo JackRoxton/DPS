@@ -13,6 +13,8 @@ public class DialogueManager : Singleton<DialogueManager>
     private Queue<string> sentences;
     private Queue<string> names;
 
+    //public DialogueClick dialogueClick;
+
     void Start()
     {
         sentences = new Queue<string>();
@@ -54,6 +56,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void DisplayNextSentence()
     {
+        //dialogueClick.LockTimer();
         if (DialogueEventManager.Instance != null)
             if (DialogueEventManager.Instance.eventLock == true)
                 return;
@@ -89,4 +92,9 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         UIManager.Instance.EndDialogue();
     }
+
+    /*public void LockDialogue()
+    {
+        dialogueClick.LockTimer();
+    }*/
 }
