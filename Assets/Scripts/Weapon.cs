@@ -71,7 +71,7 @@ public class Weapon : MonoBehaviour
                 if (!UIManager.Instance.dps.GetState("S"))
                 {
                     VFXManager.Instance.PlayEffectAt("Success", trs);
-                    UIManager.Instance.FloatingText(this.transform.position, "slash", false, null, Color.red);
+                    UIManager.Instance.FloatingText(this.transform.position, "slash", false, null, new Color32(0xea,0x34,0x34,255));//#ea3434
                 }
                 UIManager.Instance.dps.Light("S",true);
                 VFXManager.Instance.PlayEffectAt("Hit",trs);

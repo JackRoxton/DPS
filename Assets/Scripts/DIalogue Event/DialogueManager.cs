@@ -51,11 +51,11 @@ public class DialogueManager : Singleton<DialogueManager>
         foreach(char letter in sentence.ToCharArray())
         {
             if (letter == '1')
-                dialogueText.text += "<color=red>";
+                dialogueText.text += "<color=#ea3434>";
             else if (letter == '2')
-                dialogueText.text += "<color=green>";
+                dialogueText.text += "<color=#25ad18>";
             else if (letter == '3')
-                dialogueText.text += "<color=blue>";
+                dialogueText.text += "<color=#234bfc>";
             else if (letter == '0')
                 dialogueText.text += "</color>";
             else

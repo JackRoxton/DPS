@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public GameObject shield;
     public GameObject circle;
     public GameObject power;
+    public GameObject trail;
     //bool powerHigh = false;
     //PlayerInput input;
 
@@ -211,7 +212,7 @@ public class Player : MonoBehaviour
                 if (!UIManager.Instance.dps.GetState("P"))
                 { 
                     VFXManager.Instance.PlayEffectOn("Success", parriedMinion.gameObject);
-                    UIManager.Instance.FloatingText(this.transform.position, "parry", false, null, Color.blue);
+                    UIManager.Instance.FloatingText(this.transform.position, "parry", false, null, new Color32(0x23, 0x4b, 0xfc, 255));
                 }
                 UIManager.Instance.dps.Light("P",true);
                 parriedMinion.GetComponent<Minion>().Stunned();
@@ -227,7 +228,7 @@ public class Player : MonoBehaviour
                 timer = parryIFrameCD;
                 if (currentState == states.Dodge)
                 {
-                    UIManager.Instance.FloatingText(this.transform.position, "Should have <color=blue>Parried</color> ...", true, this.gameObject, Color.magenta, 6);
+                    UIManager.Instance.FloatingText(this.transform.position, "Should have <color=#234bfc>Parried</color> ...", false, null, Color.magenta, 6);
                 }
                 TakeDamage();
             }
@@ -339,7 +340,8 @@ public class Player : MonoBehaviour
             controller.Play("Dodge 1", 0);
 
         SoundManager.Instance.Play("dodge");
-        VFXManager.Instance.PlayEffectOn("DodgeTrail",this.gameObject);
+        StartCoroutine(TrailCD());
+        //VFXManager.Instance.PlayEffectOn("DodgeTrail",this.gameObject);
 
         Vector3 dir = Vector3.zero;
         
@@ -355,6 +357,13 @@ public class Player : MonoBehaviour
 
         dir.Normalize();
         body.velocity = new Vector2(dir.x * dashPower * dodgePow,dir.y * dashPower * dodgePow);
+    }
+
+    IEnumerator TrailCD()
+    {
+        trail.SetActive(true);
+        yield return new WaitForSeconds(0.25f);
+        trail.SetActive(false);
     }
 
     private void TakeDamage()
@@ -464,7 +473,7 @@ public class Player : MonoBehaviour
         {
             if(currentState == states.Parry)
             {
-                UIManager.Instance.FloatingText(this.transform.position, "Should have <color=green>Dodged</color> ...", true, this.gameObject, Color.magenta, 6);
+                UIManager.Instance.FloatingText(this.transform.position, "Should have <color=#25ad18>Dodged</color> ...", false, null, Color.magenta, 6);
             }
             if (collision.gameObject.GetComponent<MageProjectile>() != null)
             {
@@ -483,7 +492,7 @@ public class Player : MonoBehaviour
                         if (!UIManager.Instance.dps.GetState("D"))
                         {
                             VFXManager.Instance.PlayEffectAt("Success", transform);
-                            UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, Color.green);
+                            UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, new Color32(0x25,0xad,0x18,255)); //25ad18
                         }
                         UIManager.Instance.dps.Light("D", true);
                         if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
@@ -511,7 +520,7 @@ public class Player : MonoBehaviour
                         AddScore();
                         VFXManager.Instance.HitStop();
                         UIManager.Instance.dps.Light("D", true);
-                        UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, Color.green);
+                        UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, new Color32(0x25, 0xad, 0x18, 255));
                         if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                             VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
                         else
@@ -538,7 +547,7 @@ public class Player : MonoBehaviour
                         AddScore();
                         VFXManager.Instance.HitStop();
                         UIManager.Instance.dps.Light("D", true);
-                        UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, Color.green);
+                        UIManager.Instance.FloatingText(this.transform.position, "dodge", false, null, new Color32(0x25, 0xad, 0x18, 255));
                         if (this.gameObject.GetComponentInChildren<WeaponParent>().faceR)
                             VFXManager.Instance.PlayEffectAt("Dodge", this.transform, true);
                         else
@@ -566,7 +575,7 @@ public class Player : MonoBehaviour
                 {
                     if (currentState == states.Dodge)
                     {
-                        UIManager.Instance.FloatingText(this.transform.position, "Should have <color=blue>Parried</color> ...", true, this.gameObject, Color.magenta, 6);
+                        UIManager.Instance.FloatingText(this.transform.position, "Should have <color=#234bfc>Parried</color> ...", true, this.gameObject, Color.magenta, 6);
                     }
                     minion.dmgFlag = false;
                     TakeDamage();
@@ -578,7 +587,7 @@ public class Player : MonoBehaviour
                 if (!UIManager.Instance.dps.GetState("P"))
                 {
                     VFXManager.Instance.PlayEffectOn("Success", minion.gameObject);
-                    UIManager.Instance.FloatingText(this.transform.position, "parry", false, null, Color.blue);
+                    UIManager.Instance.FloatingText(this.transform.position, "parry", false, null, new Color32(0x23,0x4b,0xfc,255)); //#234b98
                 }
                 UIManager.Instance.dps.Light("P", true);
                 minion.Stunned();

@@ -9,7 +9,7 @@ public class DPSCycle : MonoBehaviour
     bool Dstate = false;
     bool Pstate = false;
     bool Sstate = false;
-    bool doneOnce = false;
+    //bool doneOnce = false;
     public bool locked = false;
 
 
@@ -113,7 +113,8 @@ public class DPSCycle : MonoBehaviour
             else
                 VFXManager.Instance.PlayEffectAt("Shockwave", VFXManager.Instance.transform);
             VFXManager.Instance.HitStop();
-            doneOnce = true;
+            UIManager.Instance.dpsTimes.GetComponent<Animator>().Play("MultBump");
+            //doneOnce = true;
         }
     }
 

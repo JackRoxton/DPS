@@ -379,7 +379,7 @@ public class UIManager : Singleton<UIManager>
     public void EndPhaseDialogue()
     {
         DialoguePanel.SetActive(true);
-        dialogueClick.LockTimer(); //
+        //dialogueClick.LockTimer(); //
         if (dialFlag)
         {
             currentDialogue = End;
@@ -553,6 +553,7 @@ public class UIManager : Singleton<UIManager>
 
     public void FloatingText(Vector2 pos, string text = "", bool attached = false, GameObject go = null, Color32? c = null, float size = 6)
     {
+        //Debug.Log(c);
         if(c == null)
         {
             c = Color.white;
@@ -608,13 +609,13 @@ public class UIManager : Singleton<UIManager>
     public void SetControlText(string text)
     {
         controlsText.gameObject.SetActive(true);
-        controlsText.text = "Press      To " + text;
-
+        //controlsText.text = "Press      To <color#ea3434>" + text;
         controlCheck = text;
 
         switch (controlCheck)
         {
             case "Slash":
+                controlsText.text = "Press      To <color=#ea3434> Slash";
                 if (PlayerPrefs.GetInt("Controller") == 0)
                 {
                     controlsImage.sprite = mouse1;
@@ -628,6 +629,7 @@ public class UIManager : Singleton<UIManager>
                 }
                 break;
             case "Dodge":
+                controlsText.text = "Press      To <color=#25ad18> Dodge";
                 if (PlayerPrefs.GetInt("Controller") == 0)
                 {
                     controlsImage.sprite = key;
@@ -642,6 +644,7 @@ public class UIManager : Singleton<UIManager>
                 }
                 break;
             case "Parry":
+                controlsText.text = "Press      To <color=#234bfc> Parry";
                 if (PlayerPrefs.GetInt("Controller") == 0)
                 {
                     controlsImage.sprite = mouse2;
