@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -49,7 +50,16 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueText.text = "";
         foreach(char letter in sentence.ToCharArray())
         {
-            dialogueText.text += letter;
+            if (letter == '1')
+                dialogueText.text += "<color=red>";
+            else if (letter == '2')
+                dialogueText.text += "<color=green>";
+            else if (letter == '3')
+                dialogueText.text += "<color=blue>";
+            else if (letter == '0')
+                dialogueText.text += "</color>";
+            else
+                dialogueText.text += letter;
             yield return null;
         }
     }

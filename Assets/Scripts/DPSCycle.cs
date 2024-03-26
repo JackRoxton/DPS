@@ -91,7 +91,7 @@ public class DPSCycle : MonoBehaviour
     }
     public bool GetP()
     {
-        return doneOnce;//pour tuto
+        return Pstate;
     }
     public bool GetS()
     {

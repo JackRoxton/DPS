@@ -19,6 +19,22 @@ public class Pickup : MonoBehaviour
     }
     public Powerup current;
 
+    private void Start()
+    {
+        if (UIManager.Instance.dps.GetD())
+        {
+            SetLightState("D");
+        }
+        if (UIManager.Instance.dps.GetP())
+        {
+            SetLightState("P");
+        }
+        if (UIManager.Instance.dps.GetS())
+        {
+            SetLightState("S");
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (locked) return;

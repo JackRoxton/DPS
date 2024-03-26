@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     public Animator controller;
     public bool hitboxActive = false;
     public Player player;
+    public WeaponParent parent;
     bool attackFlag = false;
     bool hitflag = false;
     public GameObject slash;
@@ -23,9 +24,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         this.transform.localPosition = Vector3.zero;
-        /*if(attackFlag)
-            if(!hitboxActive)
-                attackFlag = false;*/
+        
     }
 
     public void Attack()
@@ -34,6 +33,7 @@ public class Weapon : MonoBehaviour
         SoundManager.Instance.Play("slash");
         go = Instantiate(slash, transform.position, Quaternion.identity);
         go.transform.rotation = this.transform.rotation;
+        go.transform.localScale = parent.transform.localScale *1.25f;
         go.GetComponentInChildren<VisualEffect>().Play();
         controller.Play("Attack", 0);
         hitflag = false;
@@ -71,7 +71,7 @@ public class Weapon : MonoBehaviour
                 if (!UIManager.Instance.dps.GetState("S"))
                 {
                     VFXManager.Instance.PlayEffectAt("Success", trs);
-                    UIManager.Instance.FloatingText(this.transform.position, "slash", false, null, Color.blue);
+                    UIManager.Instance.FloatingText(this.transform.position, "slash", false, null, Color.red);
                 }
                 UIManager.Instance.dps.Light("S",true);
                 VFXManager.Instance.PlayEffectAt("Hit",trs);

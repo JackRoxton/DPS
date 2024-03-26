@@ -212,6 +212,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   hitboxActive: 0
   player: {fileID: 5097674866760596053}
+  parent: {fileID: 5097674867076717935}
   slash: {fileID: 2656497557098268572, guid: f75fcca95a9dde9438310d185a62602b, type: 3}
 --- !u!95 &5097674865692864680
 Animator:

@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 public class DialogueClick : MonoBehaviour
 {
     bool dialogueLock = false;
+
+    private void OnEnable()
+    {
+        LockTimer();
+    }
+
     void Update()
     {
         if (dialogueLock) return;

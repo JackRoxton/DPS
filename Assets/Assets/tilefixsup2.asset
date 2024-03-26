@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: obstacle_coin2
+  m_Name: tilefixsup2
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 723ac1a0eb8e6104188f30f91da86b20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc0e063f2003cce4399c638cb8941c71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
