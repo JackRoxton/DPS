@@ -12,6 +12,7 @@ public class DialogueClick : MonoBehaviour
         if (UIManager.Instance.DialogueIsActive()){
             if (Input.anyKeyDown)
             {
+                SoundManager.Instance.Play("next");
                 UIManager.Instance.NextDialogue();
                 LockTimer();
             }
@@ -26,7 +27,7 @@ public class DialogueClick : MonoBehaviour
     IEnumerator Timer()
     {
         dialogueLock = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.35f);
         dialogueLock = false;
     }
 

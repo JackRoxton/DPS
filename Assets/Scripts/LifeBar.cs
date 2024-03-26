@@ -17,9 +17,14 @@ public class LifeBar : MonoBehaviour
         //Debug.Log(c);
     }
 
+    private void Update()
+    {
+        boxes[i - 1].GetComponent<Image>().fillAmount = 5-(GameManager.Instance.score/1000 + (i - 1));
+    }
+
     public void HPDown()
     {
-        boxes[i-1].GetComponent<Image>().color = Color.white;
+        boxes[i-1].GetComponent<Image>().color = Color.black;
         boxes[i-1].GetComponent<Animator>().Play("lifebump",0);
         i--;
     }

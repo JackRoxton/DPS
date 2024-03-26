@@ -27,6 +27,7 @@ public class UIManager : Singleton<UIManager>
     public Image dialogueImageLeft, dialogueImageRight;
     public LifeBar lifebar;
     public DPSCycle dps;
+    public TMP_Text dpsTimes;
 
     [Header("Dialogues")]
     public Dialogue Tuto, Win;
@@ -136,6 +137,7 @@ public class UIManager : Singleton<UIManager>
             timer.fillAmount = GameManager.Instance.globalTimer / 60;
             timerText.text = ((int)GameManager.Instance.globalTimer).ToString();
             scoreText.text = GameManager.Instance.score.ToString();
+            dpsTimes.text = "x" + (GameManager.Instance.combo / 5).ToString();
         }
 
         if(currentState == menuStates.Tutorial && tutoFlag) 

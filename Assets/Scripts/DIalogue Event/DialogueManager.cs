@@ -74,15 +74,15 @@ public class DialogueManager : Singleton<DialogueManager>
             return;
         }
 
-        if (name.ToString() == "Player")
-        {
-            speakerLeft.gameObject.SetActive(true);
-            speakerRight.gameObject.SetActive(false);
-        }
-        else
+        if (name.ToString() == "Mage")
         {
             speakerLeft.gameObject.SetActive(false);
             speakerRight.gameObject.SetActive(true);
+        }
+        else
+        {
+            speakerLeft.gameObject.SetActive(true);
+            speakerRight.gameObject.SetActive(false);
         }
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence, name));
