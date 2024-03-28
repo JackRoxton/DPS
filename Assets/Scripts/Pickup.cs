@@ -84,15 +84,15 @@ public class Pickup : MonoBehaviour
         switch(lamp)
         {
             case "D":
-                D.GetComponent<SpriteRenderer>().color = Color.yellow;
+                D.GetComponent<SpriteRenderer>().color = new Color32(0xf8, 0xe0, 0x28, 255);
                 //Dstate = true;
                 break;
             case "P":
-                P.GetComponent<SpriteRenderer>().color = Color.yellow;
+                P.GetComponent<SpriteRenderer>().color = new Color32(0xf8, 0xe0, 0x28, 255);
                 //Pstate = true;
                 break;
             case "S":
-                S.GetComponent<SpriteRenderer>().color = Color.yellow;
+                S.GetComponent<SpriteRenderer>().color = new Color32(0xf8, 0xe0, 0x28, 255);
                 //Sstate = true;
                 break;
         }

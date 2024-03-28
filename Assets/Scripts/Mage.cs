@@ -123,7 +123,7 @@ public class Mage : MonoBehaviour
     public void Stunned()
     {
         VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
-        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow,12);
+        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject, new Color32(0xf8, 0xe0, 0x28, 255), 12);
         stun = true;
         stunTime = 2f;
     }
@@ -139,7 +139,7 @@ public class Mage : MonoBehaviour
         {
             if (go != null)
             {
-                CurrentSpells.Remove(go);
+                //CurrentSpells.Remove(go);
                 Destroy(go);
             }
         }

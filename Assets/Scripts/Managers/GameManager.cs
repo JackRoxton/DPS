@@ -87,6 +87,7 @@ public class GameManager : Singleton<GameManager>
         if (currentState == gameStates.Tutorial && !firstRoom && !UIManager.Instance.DialogueIsActive())
         {
             timer -= Time.deltaTime;
+            globalTimer -= Time.deltaTime;
         }
 
         if(timer < ((altTimer / speedMod)/2))
@@ -98,7 +99,7 @@ public class GameManager : Singleton<GameManager>
             }
         }
 
-        if(globalTimer <= 0) EndPhase();
+        if(globalTimer <= 0 && currentState != gameStates.Tutorial) EndPhase();
 
         if(timer <= 2 && !tpeffectFlag)
         {
@@ -255,10 +256,19 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.Resetvar();
     }
 
+    public void Burst()
+    {
+        StartCoroutine(_Burst());
+    }
+    IEnumerator _Burst()
+    {
+        playerAttack += 10f;
+        yield return new WaitForSeconds(2);
+        playerAttack -= 10f;
+    }
 
     public void AddScore()
     {
-
         score += playerAttack + combo;
         UIManager.Instance.ScoreBump();
         UIManager.Instance.HPBump();

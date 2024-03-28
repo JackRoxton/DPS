@@ -25,14 +25,14 @@ public class DPSCycle : MonoBehaviour
                 if (state == Dstate) return;
                 if (state)
                 {
-                    D.GetComponent<Image>().color = Color.yellow;
+                    D.GetComponent<Image>().color = new Color32(0xf8, 0xe0, 0x28, 255);
                     Dstate = true;
                     D.GetComponent<Animator>().Play("DBump");
                     SoundManager.Instance.Play("light");
                 }
                 else
                 {
-                    D.GetComponent<Image>().color = Color.white;
+                    D.GetComponent<Image>().color = new Color32(0xd1,0xd1,0xd1,255);
                     Dstate = false;
                 }
                 break;
@@ -40,14 +40,14 @@ public class DPSCycle : MonoBehaviour
                 if (state == Pstate) return;
                 if (state)
                 {
-                    P.GetComponent<Image>().color = Color.yellow;
+                    P.GetComponent<Image>().color = new Color32(0xf8, 0xe0, 0x28, 255);
                     Pstate = true;
                     P.GetComponent<Animator>().Play("PBump");
                     SoundManager.Instance.Play("light");
                 }
                 else
                 {
-                    P.GetComponent<Image>().color = Color.white;
+                    P.GetComponent<Image>().color = new Color32(0xd1, 0xd1, 0xd1, 255);
                     Pstate = false;
                 }
                 break;
@@ -55,19 +55,20 @@ public class DPSCycle : MonoBehaviour
                 if (state == Sstate) return;
                 if (state)
                 {
-                    S.GetComponent<Image>().color = Color.yellow;
+                    S.GetComponent<Image>().color = new Color32(0xf8, 0xe0, 0x28, 255);
                     Sstate = true;
                     S.GetComponent<Animator>().Play("SBump");
                     SoundManager.Instance.Play("light");
                 }
                 else
                 {
-                    S.GetComponent<Image>().color = Color.white;
+                    S.GetComponent<Image>().color = new Color32(0xd1, 0xd1, 0xd1, 255);
                     Sstate = false;
                 }
                 break;
         }
-        RoomManager.Instance.SetPickupLightState();
+        if(RoomManager.Instance != null)
+            RoomManager.Instance.SetPickupLightState();
         CheckLights();
     }
 
@@ -114,6 +115,8 @@ public class DPSCycle : MonoBehaviour
                 VFXManager.Instance.PlayEffectAt("Shockwave", VFXManager.Instance.transform);
             VFXManager.Instance.HitStop();
             UIManager.Instance.dpsTimes.GetComponent<Animator>().Play("MultBump");
+            RoomManager.Instance.player.GetComponent<Player>().Burst();
+            GameManager.Instance.Burst();
             //doneOnce = true;
         }
     }

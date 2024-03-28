@@ -14,13 +14,14 @@ public class DialogueClick : MonoBehaviour
 
     void Update()
     {
+        if (!this.gameObject.activeInHierarchy) return;
         if (dialogueLock) return;
         if (UIManager.Instance.DialogueIsActive()){
             if (Input.anyKeyDown)
             {
+                LockTimer();
                 SoundManager.Instance.Play("next");
                 UIManager.Instance.NextDialogue();
-                LockTimer();
             }
         }
     }
@@ -33,7 +34,7 @@ public class DialogueClick : MonoBehaviour
     IEnumerator Timer()
     {
         dialogueLock = true;
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.3f);
         dialogueLock = false;
     }
 

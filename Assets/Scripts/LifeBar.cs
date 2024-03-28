@@ -24,7 +24,7 @@ public class LifeBar : MonoBehaviour
 
     public void HPDown()
     {
-        boxes[i-1].GetComponent<Image>().color = Color.black;
+        boxes[i-1].GetComponent<Image>().color = Color.clear;
         boxes[i-1].GetComponent<Animator>().Play("lifebump",0);
         i--;
     }
@@ -41,6 +41,7 @@ public class LifeBar : MonoBehaviour
         foreach (GameObject obj in boxes)
         {
             obj.GetComponent<Image>().color = c;
+            obj.GetComponent<Image>().fillAmount = 1;
         }
     }
 }

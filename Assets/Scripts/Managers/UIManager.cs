@@ -172,6 +172,7 @@ public class UIManager : Singleton<UIManager>
                 break;
         }
         fade.gameObject.SetActive(false);
+        //yield return null;
     }
 
     public void Play()
@@ -565,7 +566,7 @@ public class UIManager : Singleton<UIManager>
             {
                 currentText = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
                 currentText.GetComponent<TextMeshPro>().fontSize = size;
-                currentText.transform.position += new Vector3(0, 1, 0);
+                currentText.transform.position += new Vector3(0, 1.5f, -0.01f);
                 currentText.GetComponent<TextMeshPro>().text = text;
                 //Debug.Log(c.Value);
                 if (c != null)
@@ -589,7 +590,7 @@ public class UIManager : Singleton<UIManager>
             GameObject a = Instantiate(FloatingTextPrefab, pos, Quaternion.identity);
             a.GetComponent<TextMeshPro>().fontSize = size;
             a.GetComponent<TextMeshPro>().text = text;
-            a.transform.position += new Vector3(0, 1, 0);
+            a.transform.position += new Vector3(0, 1.5f, -0.01f);
             //Debug.Log(c.Value);
             if (c != null)
                 a.GetComponent<TextMeshPro>().color = c.Value;

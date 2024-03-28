@@ -105,7 +105,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 UIManager.Instance.dps.D.SetActive(false);
                 UIManager.Instance.dps.P.SetActive(false);
                 UIManager.Instance.dps.S.SetActive(false);
-                UIManager.Instance.timer.gameObject.SetActive(false);
+                //UIManager.Instance.timer.gameObject.SetActive(false);
                 DialogueManager.Instance.DisplayNextSentence();
                 RoomManager.Instance.tuto = true;
                 //RoomManager.Instance.mage.GetComponent<Mage>().tuto = true;
@@ -118,7 +118,8 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 GameManager.Instance.firstRoom = false;
                 UIManager.Instance.dps.S.SetActive(true);
                 UIManager.Instance.SetControlText("Slash");
-                yield return new WaitForSeconds(20);
+                GameManager.Instance.globalTimer = 30f;
+                yield return new WaitForSeconds(30);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
@@ -129,7 +130,8 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 UIManager.Instance.dps.D.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 UIManager.Instance.SetControlText("Dodge");
-                yield return new WaitForSeconds(20);
+                GameManager.Instance.globalTimer = 30f;
+                yield return new WaitForSeconds(30);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
@@ -140,7 +142,8 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 UIManager.Instance.dps.P.SetActive(true);
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 UIManager.Instance.SetControlText("Parry");
-                yield return new WaitForSeconds(20);
+                GameManager.Instance.globalTimer = 30f;
+                yield return new WaitForSeconds(30);
                 RoomManager.Instance.Pause(true);
                 UIManager.Instance.DialoguePanel.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
@@ -154,7 +157,7 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 yield return new WaitForSeconds(1.9f);
                 eventLock = false;
-                UIManager.Instance.timer.gameObject.SetActive(true);
+                //UIManager.Instance.timer.gameObject.SetActive(true);
                 DialogueManager.Instance.DisplayNextSentence();
                 break;
         }

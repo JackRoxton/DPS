@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     [NonSerialized] public float parryPow = 1f;
     [NonSerialized] public float speedUpgrade = 1f;
     [NonSerialized] public float speed = 0.1f;
-    [NonSerialized] public float dashPower = 30f;
+    [NonSerialized] public float dashPower = 32.5f;
     float kbForce = 2f;
 
     bool stun = false;
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     bool parryIFrame = true;
     bool parryIFrameFlag = false;
     float parryIFrameCD = 1f;
-    float parryIFrameTimer = 0.1f;
+    float parryIFrameTimer = 0.125f;
     float timer;
 
     bool hitIFrame = false;
@@ -465,6 +465,19 @@ public class Player : MonoBehaviour
         circle.SetActive(false);
     }
 
+    public void Burst()
+    {
+        StartCoroutine(_Burst());
+    }
+    IEnumerator _Burst()
+    {
+        attackSpeedUpgrade += 0.2f;
+        speedUpgrade *= 1.1f;
+        yield return new WaitForSeconds(2);
+        attackSpeedUpgrade -= 0.2f;
+        speedUpgrade /= 1.1f;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision == null) return;
@@ -567,7 +580,7 @@ public class Player : MonoBehaviour
                 if (parryIFrame)
                 {
                     if (!parryIFrameFlag)
-                        timer = parryIFrameTimer + (parryPow / 20);
+                        timer = parryIFrameTimer /*+ (parryPow / 20)*/;
                     parryIFrameFlag = true;
                     parriedMinion = collision.gameObject;
                 }

@@ -21,8 +21,8 @@ public class Minion : MonoBehaviour
     float stunTimer = 2f;
     float stopTimer = 2f;
     float timer = 0;
-    float stunPower = 10f;
-    float dashPower = 25f;
+    float stunPower = 30f;
+    float dashPower = 30f;
     public GameObject slash;
     GameObject go;
 
@@ -38,6 +38,8 @@ public class Minion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.Instance.currentState == GameManager.gameStates.Pause) { Pause(true); }
+
         controller = GetComponent<Animator>();
         speed = 0.025f + (phaseMult / 150);
         rb = this.GetComponent<Rigidbody2D>();
@@ -61,6 +63,7 @@ public class Minion : MonoBehaviour
     {
         if (GameManager.Instance.endFlag == true) Die();
 
+        rb.velocity *= 0.9f;
         if (GameManager.Instance.currentState == GameManager.gameStates.Pause) return;
         if (pause) return;
 
@@ -97,7 +100,6 @@ public class Minion : MonoBehaviour
             this.GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        rb.velocity *= 0.9f;
     }
 
     public void Pause(bool pause)
@@ -121,8 +123,10 @@ public class Minion : MonoBehaviour
     public void Stunned()
     {
         VFXManager.Instance.PlayEffectOn("Stun", this.gameObject);
-        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,Color.yellow,12);
-        rb.velocity = new Vector2(this.transform.position.x - player.transform.position.x,this.transform.position.y - player.transform.position.y)*stunPower;
+        UIManager.Instance.FloatingText(this.transform.position, "stun", true, this.gameObject,new Color32(0xf8,0xe0,0x28,255),12); //#f8e028
+
+        rb.velocity = Vector2.zero;
+        rb.velocity = new Vector2(this.transform.position.x - player.transform.position.x,this.transform.position.y - player.transform.position.y).normalized*stunPower;
         stun = true;
         stop = false;
         timer = stunTimer;
