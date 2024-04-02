@@ -8,6 +8,7 @@ TagManager:
   - Minion
   - Mage
   - Spell
+  - Spikes
   layers:
   - Default
   - TransparentFX

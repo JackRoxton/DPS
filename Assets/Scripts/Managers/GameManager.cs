@@ -95,7 +95,7 @@ public class GameManager : Singleton<GameManager>
             if(midMinionFlag)
             {
                 midMinionFlag = false;
-                RoomManager.Instance.MidMinionSpawn();
+                RoomManager.Instance.MidWaveSpawns();
             }
         }
 

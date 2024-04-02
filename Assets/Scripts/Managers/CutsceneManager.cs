@@ -26,7 +26,7 @@ public class CutsceneManager : Singleton<CutsceneManager>
         yield return new WaitForSeconds(2);
         UIManager.Instance.FadeScene(0);
         UIManager.Instance.MainMenuPanel.SetActive(true);
-        GameManager.Instance.ToMenu();
+        UIManager.Instance.MainMenu();
     }
 
     /*bool GetMouseButton()

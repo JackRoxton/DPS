@@ -19,11 +19,13 @@ public class LifeBar : MonoBehaviour
 
     private void Update()
     {
+        if (i <= 0) return;
         boxes[i - 1].GetComponent<Image>().fillAmount = 5-(GameManager.Instance.score/1000 + (i - 1));
     }
 
     public void HPDown()
     {
+        if (i <= 0) return;
         boxes[i-1].GetComponent<Image>().color = Color.clear;
         boxes[i-1].GetComponent<Animator>().Play("lifebump",0);
         i--;
@@ -31,6 +33,7 @@ public class LifeBar : MonoBehaviour
 
     public void HPBump()
     {
+        if (i <= 0) return;
         boxes[i - 1].GetComponent<Animator>().Play("lifebump", 0);
     }
 

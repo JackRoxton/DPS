@@ -108,7 +108,7 @@ public class Mage : MonoBehaviour
             }
         }
 
-        if(phaseMult > 0)
+        /*if(phaseMult > 0)
         {
             ltimer -= Time.deltaTime;
             if(ltimer <= 0)
@@ -116,7 +116,7 @@ public class Mage : MonoBehaviour
                 StartCoroutine(CastLas());
                 ltimer = lasTime + Random.Range(0, 2);
             }
-        }
+        }*/
         
     }
 
@@ -191,7 +191,7 @@ public class Mage : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator CastLas()
+    /*public IEnumerator CastLas()
     {
         while (spell) yield return new WaitForEndOfFrame();
         spell = true;
@@ -206,7 +206,7 @@ public class Mage : MonoBehaviour
 
         spell = false;
         yield return null;
-    }
+    }*/
 
     public void Teleport(Transform spot)
     {

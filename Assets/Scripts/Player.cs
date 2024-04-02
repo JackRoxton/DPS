@@ -611,6 +611,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.tag == "Spikes")
+        {
+            if(currentState != states.Dodge)
+            {
+                TakeDamage();
+            }
+        }
+
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision == null) return;

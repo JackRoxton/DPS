@@ -22,8 +22,10 @@ public class RoomManager : Singleton<RoomManager>
 
     [Header("Tilemaps")]
     public Tilemap AddWallTilemap;
+    public Tilemap SpikesTilemap;
     public List<Tilemap> inWallPaterns;
     public List<Tilemap> outWallPaterns;
+    public List<Tilemap> spikePaterns;
 
     [Header("Spots")]
     public GameObject walls;
@@ -31,17 +33,20 @@ public class RoomManager : Singleton<RoomManager>
     public GameObject mages;
     public GameObject minions;
     public GameObject pickups;
+    public GameObject spikes;
     List<Transform> inWallSpots = new List<Transform>();
     List<Transform> outWallSpots = new List<Transform>();
     List<Transform> MageSpots = new List<Transform>();
     List<Transform> MinionSpots = new List<Transform>();
     List<Transform> PickupsSpots = new List<Transform>();
+    List<Transform> SpikeSpots = new List<Transform>();
 
     int pickupCount = 0;
     int lastMageSpot = 0;
     public List<GameObject> pickupsTypes;
     public int phaseMult = 0;
     public bool tuto = false;
+    int spikeCD = 2;
 
     void Start()
     {
@@ -75,6 +80,12 @@ public class RoomManager : Singleton<RoomManager>
             PickupsSpots.Add(t);
         }
         PickupsSpots.Remove(pickups.GetComponent<Transform>());
+        tr = spikes.GetComponentsInChildren<Transform>();
+        foreach (Transform t in tr)
+        {
+            SpikeSpots.Add(t);
+        }
+        SpikeSpots.Remove(spikes.GetComponent<Transform>());
 
         if (PlayerPrefs.GetInt("Controller") == 1)
             player.GetComponentInChildren<WeaponParent>().controller = true;
@@ -108,11 +119,13 @@ public class RoomManager : Singleton<RoomManager>
 
     public IEnumerator FirstRoomChange()
     {
+        //Random what paterns
         int inWallWhat = Random.Range(0, inWallPaterns.Count);
         int inWallWhat2 = Random.Range(0, inWallPaterns.Count);
         int outWallWhat = Random.Range(0, outWallPaterns.Count);
         int outWallWhat2 = Random.Range(0, outWallPaterns.Count);
 
+        //random where to put the paterns
         int inWallWhere = Random.Range(0, inWallSpots.Count);
         int inWallWhere2;
         do
@@ -126,6 +139,7 @@ public class RoomManager : Singleton<RoomManager>
             outWallWhere2 = Random.Range(0, outWallSpots.Count);
         } while (outWallWhere2 == outWallWhere);
 
+        //Random where to put the ennemies
         int minionWhere = Random.Range(0, MinionSpots.Count);
         int mageWhere = Random.Range(0, MageSpots.Count);
         lastMageSpot = mageWhere;
@@ -136,6 +150,7 @@ public class RoomManager : Singleton<RoomManager>
         if(tuto)
             mage.GetComponent<Mage>().tuto = true;
 
+        //Spawn Warnings
         AddInWarnings(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
         if(!tuto)
             Instantiate(warning, (MinionSpots[minionWhere].position), Quaternion.identity);
@@ -153,6 +168,7 @@ public class RoomManager : Singleton<RoomManager>
 
         SoundManager.Instance.Play("spawn");
 
+        //Spawn everything
         if (!tuto && minionList.Count < 3)
         {
             GameObject m = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
@@ -241,12 +257,22 @@ public class RoomManager : Singleton<RoomManager>
 
         AddInsidePaterns(inWallPaterns[inWallWhat], inWallPaterns[inWallWhat2], inWallWhere, inWallWhere2);
         AddOutsidePaterns(outWallPaterns[outWallWhat], outWallPaterns[outWallWhat2], outWallWhere, outWallWhere2);
+        spikeCD--;
     }
 
-    public void MidMinionSpawn()
+    public void MidWaveSpawns()
     {
-        if (tuto || minionList.Count >= 3) return;
-        StartCoroutine(_MidMinionSpawn());
+        if (tuto) return;
+
+        if (minionList.Count < 3)
+            StartCoroutine(_MidMinionSpawn());
+
+        Debug.Log(spikeCD);
+        if(spikeCD <= 0) 
+        {
+            spikeCD = 2;
+            StartCoroutine(_MidSpikeSpawn());
+        }
     }
 
     public IEnumerator _MidMinionSpawn()
@@ -261,6 +287,36 @@ public class RoomManager : Singleton<RoomManager>
         m.GetComponent<Minion>().player = this.player;
         m.GetComponent<Minion>().phaseMult = phaseMult;
         minionList.Add(m);
+    }
+
+    public IEnumerator _MidSpikeSpawn()
+    {
+        SpikesTilemap.ClearAllTiles();
+        int spikeWhere = Random.Range(0, SpikeSpots.Count);
+        Tilemap spikeWhat = spikePaterns[Random.Range(0, spikePaterns.Count)]; 
+        BoundsInt bounds = spikeWhat.cellBounds;
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            Tile tile = spikeWhat.GetTile<Tile>(pos);
+            if (tile != null)
+            {
+                Instantiate(warning, (Vector3)Vector3Int.FloorToInt(SpikeSpots[spikeWhere].position + pos) * SpikesTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
+            }
+        }
+        yield return new WaitForSeconds(2);
+        bounds = spikeWhat.cellBounds;
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            Tile tile = spikeWhat.GetTile<Tile>(pos);
+            if (tile != null)
+            {
+                SpikesTilemap.SetTile(Vector3Int.FloorToInt(SpikeSpots[spikeWhere].position + pos), tile);
+                Transform trs = transform;
+                trs.position = (Vector3)Vector3Int.FloorToInt(SpikeSpots[spikeWhere].position + pos) * SpikesTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f);
+                VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
+            }
+        }
+
     }
 
     public void ClearTiles()
@@ -389,13 +445,14 @@ public class RoomManager : Singleton<RoomManager>
     public void EndGame()
     {
         ClearTiles();
+        SpikesTilemap.ClearAllTiles();
         StopAllCoroutines();
         Destroy(mage);
-        foreach(GameObject m in minionList)
+        /*foreach(GameObject m in minionList)
         {
             minionList.Remove(m);
             Destroy(m);
-        }
+        }*/
         PlayerEndFlag(true);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }

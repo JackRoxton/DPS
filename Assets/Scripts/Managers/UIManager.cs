@@ -7,16 +7,16 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
-    [Header("Event System First")]
+    //[Header("Event System First")]
     public GameObject MainMenuFirst, SettingsFirst, PauseFirst, CreditsFirst, EndFirst/*, SkillTreeFirst*/;
 
-    [Header("Panels")]
+    //[Header("Panels")]
     public GameObject MainMenuPanel/*, SkillTreePanel*/;
     public GameObject InGamePanel, PausePanel, EndPanel, CreditsPanel;
     public GameObject CreditsMenuButton, CreditsButton, creditsText;
     public GameObject SettingsPanel, DialoguePanel;
 
-    [Header("In Game")]
+    //[Header("In Game")]
     public TMP_Text timerText, scoreText;
     public Image timer;
     public TMP_Text endComboText, endScoreText, endDpsText;
@@ -29,16 +29,16 @@ public class UIManager : Singleton<UIManager>
     public DPSCycle dps;
     public TMP_Text dpsTimes;
 
-    [Header("Dialogues")]
+    //[Header("Dialogues")]
     public Dialogue Tuto, Win;
     public Dialogue End;
     Dialogue currentDialogue;
 
-    [Header("Sound")]
+    //[Header("Sound")]
     public Slider masterSlider, musicsSlider, effectsSlider;
     public Toggle dodgeToggle, mouseToggle;
 
-    [Header("Tutorial")]
+    //[Header("Tutorial")]
     public bool tutorial = true;
     bool tutoFlag = true;
     public TMP_Text controlsText;
