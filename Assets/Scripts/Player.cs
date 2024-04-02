@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
     float timer;
 
     bool hitIFrame = false;
-    float hitIFrameTime = 0.15f;
+    float hitIFrameTime = 0.25f;
 
     GameObject parriedMinion;
 
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
             if(hitIFrameTime <= 0)
             {
                 hitIFrame = false;
-                hitIFrameTime = 0.15f;
+                hitIFrameTime = 0.25f;
             }
         }
 

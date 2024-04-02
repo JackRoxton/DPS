@@ -107,6 +107,11 @@ public class Weapon : MonoBehaviour
                 VFXManager.Instance.HitStop();
             }
         }
+
+        if (collision.tag == "Spikes")
+        {
+            Physics2D.IgnoreCollision(this.GetComponent<BoxCollider2D>(), collision);
+        }
     }
 
         private void OnTriggerExit2D(Collider2D collision)
