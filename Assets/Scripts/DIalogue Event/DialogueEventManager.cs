@@ -108,9 +108,11 @@ public class DialogueEventManager : Singleton<DialogueEventManager>
                 //UIManager.Instance.timer.gameObject.SetActive(false);
                 DialogueManager.Instance.DisplayNextSentence();
                 RoomManager.Instance.tuto = true;
+                RoomManager.Instance.Pause(true);
                 //RoomManager.Instance.mage.GetComponent<Mage>().tuto = true;
                 break;
             case "TutoSlash":
+                RoomManager.Instance.Pause(false);
                 TeleportEffect.Instance.Effect();
                 UIManager.Instance.DialoguePanel.SetActive(false);
                 yield return new WaitForSeconds(1.9f);

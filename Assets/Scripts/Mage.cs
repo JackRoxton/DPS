@@ -165,7 +165,7 @@ public class Mage : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
             GameObject bis = Instantiate(ProjectilePrefab, this.transform.position, Quaternion.identity);
             Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), bis.GetComponent<Collider2D>());
-            bis.GetComponent<MageProjectile>().body.velocity = tmp.GetComponent<MageProjectile>().body.velocity;
+            bis.GetComponent<MageProjectile>().body.velocity = (new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y).normalized) * spellSpeed;
             CurrentSpells.Add(bis);
         }
 

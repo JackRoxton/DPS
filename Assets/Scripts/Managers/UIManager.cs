@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -186,6 +187,8 @@ public class UIManager : Singleton<UIManager>
                 FadeScene(1);
 
             StartCoroutine(FadeTime(0));
+            MainMenuPanel.SetActive(false);
+            InGamePanel.SetActive(true);
             return;
         }
 
@@ -220,7 +223,11 @@ public class UIManager : Singleton<UIManager>
 
         RoomManager.Instance.Pause(false);
         InGamePanel.SetActive(true);
-        currentState = menuStates.InGame;
+
+        if(SceneManager.GetActiveScene().name == "Tuto")
+            currentState = menuStates.Tutorial;
+        else
+            currentState = menuStates.InGame;
 
         GameManager.Instance.Resume();
 

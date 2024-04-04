@@ -576,6 +576,7 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0, z: 0}
   faceR: 1
   player: {fileID: 5097674866760596052}
+  weapon: {fileID: 5097674865692864691}
 --- !u!1 &5654271966732484158
 GameObject:
   m_ObjectHideFlags: 0

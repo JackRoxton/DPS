@@ -157,18 +157,22 @@ public class Minion : MonoBehaviour
         timer = stopTimer;
         rb.velocity = Vector2.zero;
         VFXManager.Instance.PlayEffectOn("Circle", this.gameObject);
+        if (stun) StopCoroutine(Attack());
         yield return new WaitUntil(HitboxActive);
         while (GameManager.Instance.currentState == GameManager.gameStates.Pause)
         {
             yield return new WaitForEndOfFrame();
         }
-        if(stun) StopCoroutine(Attack());
-        go = Instantiate(slash, transform.position, Quaternion.identity);
-        go.transform.right = new Vector3(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y,0);
-        go.GetComponentInChildren<VisualEffect>().Play();
-        rb.velocity = new Vector2(player.transform.position.x - this.transform.position.x,player.transform.position.y - this.transform.position.y).normalized * dashPower;
+        if (!stun)
+        {
+            go = Instantiate(slash, transform.position, Quaternion.identity);
+            go.transform.right = new Vector3(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y,0);
+            go.GetComponentInChildren<VisualEffect>().Play();
+            rb.velocity = new Vector2(player.transform.position.x - this.transform.position.x,player.transform.position.y - this.transform.position.y).normalized * dashPower;
+        }
         yield return new WaitForSeconds(1.5f);
-        Destroy(go);
+        if(go)
+            Destroy(go);
     }
 
     bool HitboxActive()

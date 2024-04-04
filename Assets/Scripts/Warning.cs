@@ -31,11 +31,9 @@ public class Warning : MonoBehaviour
     void Die()
     {
         if (playerInHb)
-        {
             player.GetComponent<Rigidbody2D>().velocity = (player.transform.position - this.transform.position).normalized * 30f;
-        }
 
-        if (minionInHb)
+        if (minionInHb == true && minion != null)
             minion.GetComponent<Rigidbody2D>().velocity = (minion.transform.position - this.transform.position).normalized * 30f;
 
         Destroy(this.gameObject);

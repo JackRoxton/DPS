@@ -2585,8 +2585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.49993896, y: -1}
-  m_SizeDelta: {x: -1, y: 2}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.00012207, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &261781534
 MonoBehaviour:
@@ -2643,10 +2643,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0068244934
-      value: 0.99560547
-      inSlope: -10.642657
-      outSlope: -10.642657
+      time: 0.040153503
+      value: 1.001461
+      inSlope: -16.628695
+      outSlope: -16.628695
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -2654,8 +2654,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.10038781
       value: -0.00015687151
-      inSlope: -10.642657
-      outSlope: -10.642657
+      inSlope: -16.628695
+      outSlope: -16.628695
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

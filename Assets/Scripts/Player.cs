@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     //PlayerInput input;
 
     public bool endFlag = false;
-    bool pause = false;
+    [NonSerialized] public bool pause = false;
     //bool mouseLock = false;
 
     public enum states
@@ -112,10 +112,10 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(mouseControls);
 
-        if (GameManager.Instance.currentState == GameManager.gameStates.InGame || GameManager.Instance.currentState == GameManager.gameStates.Tutorial) controller.speed = 1;
+        if ((GameManager.Instance.currentState == GameManager.gameStates.InGame || GameManager.Instance.currentState == GameManager.gameStates.Tutorial)) controller.speed = 1;
         else controller.speed = 0;
 
-        if(GameManager.Instance.endFlag)
+        if(GameManager.Instance.endFlag || pause)
             controller.speed = 0;
 
         if (endFlag) return;
@@ -366,7 +366,7 @@ public class Player : MonoBehaviour
         trail.SetActive(false);
     }
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
         if (hitIFrame)
             return;
@@ -611,7 +611,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    /*private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.tag == "Spikes")
         {
@@ -621,7 +621,7 @@ public class Player : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     private void OnTriggerExit2D(Collider2D collision)
     {

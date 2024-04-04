@@ -17311,6 +17311,7 @@ GameObject:
   - component: {fileID: 1773196433}
   - component: {fileID: 1773196432}
   - component: {fileID: 1773196431}
+  - component: {fileID: 1773196435}
   m_Layer: 0
   m_Name: SpikesTilemap
   m_TagString: Spikes
@@ -17485,6 +17486,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1773196435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773196429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b02cb930471bb5438eeb293c2a0ab10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1788017450
 GameObject:
   m_ObjectHideFlags: 0
@@ -18129,6 +18142,10 @@ PrefabInstance:
     - target: {fileID: 810722009502434961, guid: 526c3ce9541912c41b6a811dd8782173, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 810722009621770633, guid: 526c3ce9541912c41b6a811dd8782173, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 810722009621770635, guid: 526c3ce9541912c41b6a811dd8782173, type: 3}
       propertyPath: m_LocalPosition.x

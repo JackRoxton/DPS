@@ -62,6 +62,7 @@ public class MageProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == null) return;
+        if (collision.tag == "Spikes") return;
 
         if(collision.gameObject.GetComponent<TilemapCollider2D>() != null)
         {

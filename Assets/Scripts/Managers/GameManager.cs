@@ -179,16 +179,21 @@ public class GameManager : Singleton<GameManager>
         SoundManager.Instance.UnpauseMusic(currentMusic.ToString());
         //SetTimeScale(1);
         RoomManager.Instance.Pause(false);
-        currentState = gameStates.InGame;
+        if (SceneManager.GetActiveScene().name == "Tuto")
+            currentState = gameStates.Tutorial;
+        else
+            currentState = gameStates.InGame;
     }
 
     public void Pause()
     {
+        if (UIManager.Instance.DialogueIsActive())
+            return;
         if(currentState == gameStates.Pause)
         {
             UIManager.Instance.Resume();
         }
-        else if (currentState == gameStates.InGame)
+        else if (currentState == gameStates.InGame || currentState == gameStates.Tutorial)
         {
             SoundManager.Instance.PauseMusic(currentMusic.ToString());
             //SetTimeScale(0);

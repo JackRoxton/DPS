@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -47,6 +48,10 @@ public class RoomManager : Singleton<RoomManager>
     public int phaseMult = 0;
     public bool tuto = false;
     int spikeCD = 2;
+    
+    //
+    // je devrais vraiment rework le code en faisant une fonction "summon patern" ou qqch comme ça
+    //
 
     void Start()
     {
@@ -262,17 +267,17 @@ public class RoomManager : Singleton<RoomManager>
 
     public void MidWaveSpawns()
     {
-        if (tuto) return;
 
-        if (minionList.Count < 3)
-            StartCoroutine(_MidMinionSpawn());
-
-        Debug.Log(spikeCD);
         if(spikeCD <= 0) 
         {
             spikeCD = 2;
             StartCoroutine(_MidSpikeSpawn());
         }
+
+        if (tuto) return;
+        
+        if (minionList.Count < 3)
+            StartCoroutine(_MidMinionSpawn());
     }
 
     public IEnumerator _MidMinionSpawn()
@@ -292,7 +297,16 @@ public class RoomManager : Singleton<RoomManager>
     public IEnumerator _MidSpikeSpawn()
     {
         SpikesTilemap.ClearAllTiles();
-        int spikeWhere = Random.Range(0, SpikeSpots.Count);
+
+        /*LineRenderer line = new LineRenderer();
+        line.positionCount = 2;
+        line.SetPosition(0, player.transform.position);
+        line.SetPosition(1, mage.transform.position);*/
+        int x = Random.Range(10, 91)/10;
+        Vector3 P = x * Vector3.Normalize(mage.transform.position - player.transform.position) + player.transform.position;
+
+
+
         Tilemap spikeWhat = spikePaterns[Random.Range(0, spikePaterns.Count)]; 
         BoundsInt bounds = spikeWhat.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
@@ -300,14 +314,41 @@ public class RoomManager : Singleton<RoomManager>
             Tile tile = spikeWhat.GetTile<Tile>(pos);
             if (tile != null)
             {
+                Instantiate(warning, (Vector3)Vector3Int.FloorToInt(P + pos) * SpikesTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
+            }
+        }
+
+        int spikeWhere = Random.Range(0, SpikeSpots.Count);
+        Tilemap spikeWhat2 = spikePaterns[Random.Range(0, spikePaterns.Count)];
+        BoundsInt bounds2 = spikeWhat2.cellBounds;
+        foreach (Vector3Int pos in bounds2.allPositionsWithin)
+        {
+            Tile tile = spikeWhat2.GetTile<Tile>(pos);
+            if (tile != null)
+            {
                 Instantiate(warning, (Vector3)Vector3Int.FloorToInt(SpikeSpots[spikeWhere].position + pos) * SpikesTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f), Quaternion.identity);
             }
         }
+
         yield return new WaitForSeconds(2);
+
         bounds = spikeWhat.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             Tile tile = spikeWhat.GetTile<Tile>(pos);
+            if (tile != null)
+            {
+                SpikesTilemap.SetTile(Vector3Int.FloorToInt(P + pos), tile);
+                Transform trs = transform;
+                trs.position = (Vector3)Vector3Int.FloorToInt(P + pos) * SpikesTilemap.transform.localScale.x + new Vector3(0.4f, 0.4f);
+                VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
+            }
+        }
+        
+        bounds2 = spikeWhat2.cellBounds;
+        foreach (Vector3Int pos in bounds2.allPositionsWithin)
+        {
+            Tile tile = spikeWhat2.GetTile<Tile>(pos);
             if (tile != null)
             {
                 SpikesTilemap.SetTile(Vector3Int.FloorToInt(SpikeSpots[spikeWhere].position + pos), tile);
@@ -316,7 +357,6 @@ public class RoomManager : Singleton<RoomManager>
                 VFXManager.Instance.PlayEffectAt("Teleport_End", trs);
             }
         }
-
     }
 
     public void ClearTiles()
@@ -473,11 +513,15 @@ public class RoomManager : Singleton<RoomManager>
     public void Pause(bool pause)
     {
         player.GetComponent<Player>().Pause(pause);
-        foreach (GameObject m in minionList)
+        if (minionList.Count > 0)
         {
-            m.GetComponent<Minion>().Pause(pause);
+            foreach (GameObject m in minionList)
+            {
+                m.GetComponent<Minion>().Pause(pause);
+            }
         }
-        mage.GetComponent<Mage>().Pause(pause);
+        if(mage)
+            mage.GetComponent<Mage>().Pause(pause);
     }
 
     public void Resetvar()
