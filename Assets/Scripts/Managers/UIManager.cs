@@ -37,7 +37,7 @@ public class UIManager : Singleton<UIManager>
 
     //[Header("Sound")]
     public Slider masterSlider, musicsSlider, effectsSlider;
-    public Toggle dodgeToggle, mouseToggle;
+    public Toggle dodgeToggle, mouseToggle, aimToggle;
 
     //[Header("Tutorial")]
     public bool tutorial = true;
@@ -126,6 +126,17 @@ public class UIManager : Singleton<UIManager>
             else
                 mouseToggle.isOn = false;
             DodgeControlCheck();
+        }
+
+        if (!PlayerPrefs.HasKey("AutoAim"))
+            PlayerPrefs.SetInt("AutoAim", 0);
+        else
+        {
+            if (PlayerPrefs.GetInt("AutoAim") == 1)
+                dodgeToggle.isOn = true;
+            else
+                dodgeToggle.isOn = false;
+            //DodgeControlCheck();
         }
 
     }
@@ -540,6 +551,21 @@ public class UIManager : Singleton<UIManager>
             PlayerPrefs.SetInt("DodgeOnM", 1);
         else
             PlayerPrefs.SetInt("DodgeOnM", 0);
+    }
+
+    public void AutoAimCheck()
+    {
+        GameManager.Instance.playerAutoAim = aimToggle.isOn;
+
+        if (aimToggle.isOn)
+            PlayerPrefs.SetInt("AutoAim", 1);
+        else
+            PlayerPrefs.SetInt("AutoAim", 0);
+
+        if(RoomManager.Instance != null)
+        {
+            RoomManager.Instance.AutoAimChange();
+        }
     }
 
     public void ReTuto()

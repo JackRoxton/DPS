@@ -14,6 +14,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioMixer audioMix;
 
     public float masterVolume, musicVolume, sfxVolume;
+    bool pauseMod = false;
 
     protected override void Awake()
     {
@@ -82,6 +83,29 @@ public class SoundManager : Singleton<SoundManager>
         }
         s.source.playOnAwake = playOnAwake;
     }
+
+    public void PauseMod(bool a)
+    {
+        if(pauseMod == a) return;
+        if (a)
+        {
+            foreach (Sound s in musics)
+            {
+                s.source.volume /= 5;
+                s.volume /= 5;
+            }
+        }
+        else
+        {
+            foreach (Sound s in musics)
+            {
+                s.source.volume *= 5;
+                s.volume *= 5;
+            }
+        }
+        pauseMod = a;
+    }
+
     public void PauseSound(string name)
     {
         Sound s = Array.Find(soundsEffects, sound => sound.name == name);

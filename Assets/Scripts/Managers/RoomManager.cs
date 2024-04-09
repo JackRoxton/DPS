@@ -97,6 +97,11 @@ public class RoomManager : Singleton<RoomManager>
         else
             player.GetComponentInChildren<WeaponParent>().controller = false;
 
+        if (PlayerPrefs.GetInt("AutoAim") == 1)
+            player.GetComponentInChildren<WeaponParent>().autoaim = true;
+        else
+            player.GetComponentInChildren<WeaponParent>().autoaim = false;
+
         /*StartCoroutine(FirstRoomChange());
         PlayerSpeed(GameManager.Instance.playerSpeedUp);
         PlayerDash(GameManager.Instance.playerDashOnMovement);*/
@@ -302,10 +307,8 @@ public class RoomManager : Singleton<RoomManager>
         line.positionCount = 2;
         line.SetPosition(0, player.transform.position);
         line.SetPosition(1, mage.transform.position);*/
-        int x = Random.Range(10, 91)/10;
+        int x = Random.Range(10, 51)/10;
         Vector3 P = x * Vector3.Normalize(mage.transform.position - player.transform.position) + player.transform.position;
-
-
 
         Tilemap spikeWhat = spikePaterns[Random.Range(0, spikePaterns.Count)]; 
         BoundsInt bounds = spikeWhat.cellBounds;
@@ -572,6 +575,15 @@ public class RoomManager : Singleton<RoomManager>
     {
         player.GetComponent<Player>().ModAttackSpeed();
     }
+
+    public void AutoAimChange()
+    {
+        if(PlayerPrefs.GetInt("AutoAim") == 1)
+            player.GetComponentInChildren<WeaponParent>().autoaim = true;
+        else
+            player.GetComponentInChildren<WeaponParent>().autoaim = false;
+    }
+
     public void UnLock()
     {
         if (!pickup) return;

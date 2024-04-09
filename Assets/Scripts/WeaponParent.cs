@@ -10,12 +10,12 @@ public class WeaponParent : MonoBehaviour
 {
     public Vector3 mousePos;
     public bool faceR = true;
-    //bool fixFlag = false;
     public GameObject player;
     //public GameObject weapon;
     Vector3 memPos;
 
     [NonSerialized]public bool controller = false;
+    [NonSerialized]public bool autoaim = false;
 
     private void Start()
     {
@@ -23,6 +23,11 @@ public class WeaponParent : MonoBehaviour
             controller = true;
         else
             controller = false;
+
+        if (PlayerPrefs.GetInt("AutoAim") == 1)
+            autoaim = true;
+        else
+            autoaim = false;
     }
 
     private void Update()
@@ -33,7 +38,7 @@ public class WeaponParent : MonoBehaviour
         if (GameManager.Instance.currentState == GameManager.gameStates.InGame 
             || GameManager.Instance.currentState == GameManager.gameStates.Tutorial) 
         {
-            if(controller)
+            if(controller || autoaim)
             {
                 if (RoomManager.Instance.mage == null) return;
                 List<GameObject> list = RoomManager.Instance.minionList;
@@ -67,20 +72,7 @@ public class WeaponParent : MonoBehaviour
                 Vector3 dir = new Vector3(mousePos.x - player.transform.position.x,mousePos.y - player.transform.position.y, player.transform.position.z).normalized;
             
                 transform.right = dir;
-
-                /*Debug.Log(dir);
-                if (mousePos.x < player.transform.position.x && dir.y == 0 && !fixFlag)
-                {
-                    this.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
-                    fixFlag = true;
-                    return;
-                }
-                if(fixFlag && dir.y != 0)
-                {
-                    this.transform.localScale = new Vector3(this.transform.localScale.x, -1, 1);
-                    fixFlag = false;
-                    return;
-                }*/
+                //Debug.Log(dir);
 
                 if (mousePos.x < player.transform.position.x && faceR)
                 {

@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     [NonSerialized] public float playerAttack = 10;
     [NonSerialized] public float playerAttackSpeed = 1;
     [NonSerialized] public float playerSpeedUp = 1;
-    [NonSerialized] public bool playerDashOnMovement = false;
+    [NonSerialized] public bool playerDashOnMovement = false, playerAutoAim = false;
 
     [NonSerialized] public bool tutorial = true;
     [NonSerialized] public bool firstRoom = true;
@@ -141,6 +141,7 @@ public class GameManager : Singleton<GameManager>
 
             //SetControls(memoryControl);
         }
+        RoomManager.Instance.AutoAimChange();
 
     }
 
@@ -156,7 +157,7 @@ public class GameManager : Singleton<GameManager>
             //memoryControl = mouse; 
             return;
         }
-        Debug.Log(mouse);
+        //Debug.Log(mouse);
         if(mouse)
         {
             RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = false;
@@ -167,6 +168,7 @@ public class GameManager : Singleton<GameManager>
             RoomManager.Instance.player.GetComponentInChildren<WeaponParent>().controller = true;
             RoomManager.Instance.player.GetComponent<Player>().mouseControls = false;
         }
+        RoomManager.Instance.AutoAimChange();
     }
 
     public void SetTimeScale(int i)
@@ -176,7 +178,8 @@ public class GameManager : Singleton<GameManager>
 
     public void Resume()
     {
-        SoundManager.Instance.UnpauseMusic(currentMusic.ToString());
+        SoundManager.Instance.PauseMod(false);
+        //SoundManager.Instance.UnpauseMusic(currentMusic.ToString());
         //SetTimeScale(1);
         RoomManager.Instance.Pause(false);
         if (SceneManager.GetActiveScene().name == "Tuto")
@@ -189,13 +192,15 @@ public class GameManager : Singleton<GameManager>
     {
         if (UIManager.Instance.DialogueIsActive())
             return;
+
         if(currentState == gameStates.Pause)
         {
             UIManager.Instance.Resume();
         }
         else if (currentState == gameStates.InGame || currentState == gameStates.Tutorial)
         {
-            SoundManager.Instance.PauseMusic(currentMusic.ToString());
+            SoundManager.Instance.PauseMod(true);
+            //SoundManager.Instance.PauseMusic(currentMusic.ToString());
             //SetTimeScale(0);
             currentState = gameStates.Pause;
             UIManager.Instance.Pause();
@@ -211,6 +216,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Cutscene()
     {
+        SoundManager.Instance.PauseMod(false);
         SoundManager.Instance.StopMusic(currentMusic.ToString());
         currentMusic = 2;
         SoundManager.Instance.PlayMusic(currentMusic.ToString());
@@ -221,6 +227,7 @@ public class GameManager : Singleton<GameManager>
     public void ToMenu()
     {
         //SetTimeScale(1);
+        SoundManager.Instance.PauseMod(false);
         SoundManager.Instance.StopMusic(currentMusic.ToString());
         currentMusic = 2;
         SoundManager.Instance.PlayMusic(currentMusic.ToString());
@@ -329,7 +336,8 @@ public class GameManager : Singleton<GameManager>
     public void EndPhase()
     {
         endFlag = true;
-        SoundManager.Instance.StopMusic(currentMusic.ToString());
+        SoundManager.Instance.PauseMod(true);
+        //SoundManager.Instance.StopMusic(currentMusic.ToString());
         phase -= 1;
 
         UIManager.Instance.EndPhaseDialogue();
@@ -348,6 +356,7 @@ public class GameManager : Singleton<GameManager>
         currentState = gameStates.InGame;
         RoomManager.Instance.NextPhase();
         currentMusic = 1;
+        SoundManager.Instance.PauseMod(false);
         SoundManager.Instance.PlayMusic(currentMusic.ToString());
     }
 
