@@ -610,17 +610,27 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     /*private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == "Spikes")
+        Debug.Log(collision.gameObject);
+        if (collision.gameObject.tag == "Spikes")
         {
-            if(currentState != states.Dodge)
+            if (currentState != states.Dodge)
             {
                 TakeDamage();
             }
         }
-
+    }*/
+    /*private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject);
+        if (collision.gameObject.tag == "Spikes")
+        {
+            if (currentState != states.Dodge)
+            {
+                TakeDamage();
+            }
+        }
     }*/
 
     private void OnTriggerExit2D(Collider2D collision)

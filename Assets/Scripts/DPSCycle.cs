@@ -110,9 +110,15 @@ public class DPSCycle : MonoBehaviour
             GameManager.Instance.DPSCycle();
             SoundManager.Instance.Play("dps");
             if(RoomManager.Instance != null)
+            {
                 VFXManager.Instance.PlayEffectAt("Shockwave", RoomManager.Instance.player.transform);
+                VFXManager.Instance.PlayEffectAt("Shockwave 1", RoomManager.Instance.player.transform);
+            }
             else
+            {
                 VFXManager.Instance.PlayEffectAt("Shockwave", VFXManager.Instance.transform);
+                VFXManager.Instance.PlayEffectAt("Shockwave 1", VFXManager.Instance.transform);
+            }
             VFXManager.Instance.HitStop();
             UIManager.Instance.dpsTimes.GetComponent<Animator>().Play("MultBump");
             RoomManager.Instance.player.GetComponent<Player>().Burst();

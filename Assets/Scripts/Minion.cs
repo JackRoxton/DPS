@@ -149,7 +149,7 @@ public class Minion : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    IEnumerator Attack()
+    public IEnumerator Attack()
     {
         dmgFlag = true;
         controller.Play("MinionAttack", 0);
@@ -180,7 +180,7 @@ public class Minion : MonoBehaviour
         return hitboxActive;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == null) return;
 
@@ -198,7 +198,7 @@ public class Minion : MonoBehaviour
         {
             StartCoroutine(Attack());
         }
-    }
+    }*/
 
     /*private void OnCollisionEnter2D(Collision2D collision)
     {

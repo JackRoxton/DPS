@@ -24,7 +24,6 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         this.transform.localPosition = Vector3.zero;
-        
     }
 
     public void Attack()
@@ -61,9 +60,9 @@ public class Weapon : MonoBehaviour
                 player.KnockBack(player.transform.position - collision.gameObject.transform.position);
             }
         }*/
-        else if (collision.gameObject.GetComponent<Minion>() != null)
+        if (collision.gameObject.GetComponent<Minion>() != null)
         {
-            if (hitboxActive && !collision.isTrigger) 
+            if (hitboxActive && collision.tag == "Minion") 
             {
                 collision.gameObject.GetComponent<Minion>().TakeDamage();
                 Transform trs = this.transform;
