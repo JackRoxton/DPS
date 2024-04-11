@@ -133,9 +133,9 @@ public class UIManager : Singleton<UIManager>
         else
         {
             if (PlayerPrefs.GetInt("AutoAim") == 1)
-                dodgeToggle.isOn = true;
+                aimToggle.isOn = true;
             else
-                dodgeToggle.isOn = false;
+                aimToggle.isOn = false;
             //DodgeControlCheck();
         }
 
