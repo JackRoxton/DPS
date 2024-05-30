@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     [NonSerialized] public float playerAttack = 10;
     [NonSerialized] public float playerAttackSpeed = 1;
     [NonSerialized] public float playerSpeedUp = 1;
-    [NonSerialized] public bool playerDashOnMovement = false, playerAutoAim = false;
+    [NonSerialized] public bool /*playerDashOnMovement = false,*/ playerAutoAim = false;
 
     [NonSerialized] public bool tutorial = true;
     [NonSerialized] public bool firstRoom = true;

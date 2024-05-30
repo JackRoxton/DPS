@@ -584,6 +584,14 @@ public class RoomManager : Singleton<RoomManager>
             player.GetComponentInChildren<WeaponParent>().autoaim = false;
     }
 
+    public void DashChange()
+    {
+        if (PlayerPrefs.GetInt("DodgeOnM") == 1)
+            player.GetComponentInChildren<Player>().dashOnMovement = true;
+        else
+            player.GetComponentInChildren<Player>().dashOnMovement = false;
+    }
+
     public void UnLock()
     {
         if (!pickup) return;
