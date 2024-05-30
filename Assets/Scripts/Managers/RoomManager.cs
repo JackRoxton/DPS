@@ -250,6 +250,7 @@ public class RoomManager : Singleton<RoomManager>
         if (!tuto && minionList.Count < 3)
         {
             GameObject m = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+            VFXManager.Instance.PlayEffectAt("Teleport_End", MinionSpots[minionWhere]);
             m.GetComponent<Minion>().player = this.player;
             m.GetComponent<Minion>().phaseMult = phaseMult;
             minionList.Add(m);
@@ -294,6 +295,7 @@ public class RoomManager : Singleton<RoomManager>
         yield return new WaitForSeconds(2);
 
         GameObject m = Instantiate(minionPrefab, MinionSpots[minionWhere].position, Quaternion.identity);
+        VFXManager.Instance.PlayEffectAt("Teleport_End", MinionSpots[minionWhere]);
         m.GetComponent<Minion>().player = this.player;
         m.GetComponent<Minion>().phaseMult = phaseMult;
         minionList.Add(m);
