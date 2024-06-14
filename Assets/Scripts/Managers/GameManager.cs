@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
 
     //public Skill[] skills;
 
-    int currentMusic = 0;
+    public int currentMusic = 0;
 
     [NonSerialized] public bool mouseControls = true;
 

@@ -13,6 +13,9 @@ public class CutsceneManager : Singleton<CutsceneManager>
     IEnumerator Cutscene()
     {
         //UIManager.Instance.SkillTreePanel.SetActive(false);
+        SoundManager.Instance.StopMusic("1");
+        GameManager.Instance.currentMusic = 2;
+        SoundManager.Instance.PlayMusic("2");
         UIManager.Instance.InGamePanel.SetActive(false);
         UIManager.Instance.DialoguePanel.SetActive(false);
         yield return new WaitForSeconds(1);

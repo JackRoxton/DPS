@@ -2846,6 +2846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9427ad5da7f265408bc1a895802304e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMusic: 0
   currentState: 0
 --- !u!4 &313329225
 Transform:
